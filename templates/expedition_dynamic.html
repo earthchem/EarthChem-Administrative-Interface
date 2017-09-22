@@ -1,0 +1,95 @@
+
+
+
+		<div class="templateHeader">Expedition</div>
+		<div class="templateID">Expedition ID: <input type="text" id="expeditionid" value="" size="6" readonly="readonly"></div>
+		
+		<table>
+			<tr>
+				<td>Expedition Name:</td>
+				<td>
+					<input type="text" id="expedition_name" size="59" />
+				</td>
+			</tr>
+			<tr>
+				<td>Expedition Type:</td>
+				<td>
+					<select id="expedition_type">
+						<option value="">select...</option>
+						<!--<option value="1">Not Applicable</option>-->
+						<!--<option value="2">Unknown</option>-->
+						<option value="3">Cruise</option>
+						<option value="11">Expedition</option>
+						<option value="12">Field Activity</option>
+						<option value="19">Site Visit</option>
+						<option value="25">Submersible Launch</option>
+
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Sponsor Organization:</td>
+				<td>
+					<input id="expedition_sponsor_organization" size="56"/>
+				</td>
+			</tr>
+			<tr>
+				<td>Description:</td>
+				<td>
+					<textarea id="expedition_description" cols="50" rows="7"></textarea>
+				</td>
+			</tr>
+
+		</table>
+		
+		<div id="showDetailsButtonDiv">
+			<button class="greenbutton" onClick="showObjectDetails();"><span>Show&nbsp;Details</span></button>
+		</div>
+		
+		<div id="hideDetailsButtonDiv" style="display:none;">
+			<button class="redbutton" onClick="hideObjectDetails();"><span>Hide&nbsp;Details</span></button>
+		</div>
+		
+		<div id="objectdetails" style="display:none;">
+			
+			<table>
+				<tr>
+					<td>Dates:</td>
+					<td>Begin Date: <input type="text" id="expedition_begin_date" size="10">&nbsp;&nbsp;&nbsp;End Date: <input type="text" id="expedition_end_date" size="10"></td>
+				</tr>
+				<tr>
+					<td>Equipment:</td>
+					<td><input type="text" id="expedition_equipment" size="59"></td>
+				</tr>
+				<tr>
+					<td>Identifier:</td>
+					<td><input type="text" id="expedition_identifier" size="59"></td>
+				</tr>
+				<tr>
+					<td valign="top">Alternate Names:</td>
+					<td>
+						<input type="text" id="expedition_alternate_names" size="59"><br>
+						<div class="directions">(Comma-separated list of alternative expedition names.)</div>
+					</td>
+				</tr>
+
+			</table>
+		</div>
+
+
+		<div id="resultsdiv">
+		
+		</div>
+
+		<div>
+			<input id="expedition_hidden_sponsor_organization"/>
+		</div>
+
+		<script src="/resources/autocomplete_setups.js"></script>
+
+
+
+
+
+
+

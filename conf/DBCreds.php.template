@@ -1,0 +1,22 @@
+<?php
+
+if(!defined('SERVERNAME'))
+  define("SERVERNAME","dbservernamehere");
+
+if(!defined('PORT'))
+  define("PORT","dbporthere");
+
+if(!defined('DBNAME'))
+  define("DBNAME","dbnamehere");
+
+if(!defined('DBLOGIN_WEB'))
+  define("DBLOGIN_WEB","dbloginhere");
+
+if(!defined('DBPASSWORD_WEB'))
+  define("DBPASSWORD_WEB","dbpasswordhere");
+
+if(!defined('MDS_PREFIX'))
+  define('MDS_PREFIX','IE');
+
+
+?>
