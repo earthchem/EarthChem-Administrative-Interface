@@ -106,11 +106,11 @@ var doSearch = function() {
 		if(selectedObject=="equipment"){
 	
 			//$("#rightwrapper").html(val);
-			url = "REST/equipment?query="+val;
+			url = "/REST/equipment?query="+val;
 	
 		}else if(selectedObject=="expedition"){
 	
-			url = "REST/expedition?query="+val;
+			url = "/REST/expedition?query="+val;
 	
 		}else if(selectedObject==""){
 		
@@ -156,14 +156,14 @@ var doNew = function() {
 	
 	if(selectedObject=="equipment"){
 	
-		$.get("templates/equipment_dynamic.html", function(data) {
+		$.get("/templates/equipment_dynamic.html", function(data) {
 			$("#rightwrapper").html(data);
 			showBottomButtons();
 		});
 	
 	}else if(selectedObject=="expedition"){
 	
-		$.get("templates/expedition_dynamic.html", function(data) {
+		$.get("/templates/expedition_dynamic.html", function(data) {
 			$("#rightwrapper").html(data);
 			showBottomButtons();
 		});
@@ -331,6 +331,8 @@ var doSave = function() {
 				data.equipment_description = $('#equipment_description').val();
 
 				var saveJSON = JSON.stringify(data);
+				
+				console.log(saveJSON);
 
 				var id = $('#equipmentid').val();
 			

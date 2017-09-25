@@ -21,7 +21,7 @@ class OrganizationController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from organization where organization_num = $searchid");
+				$row = $this->db->get_row("select * from earthchem.organization where organization_num = $searchid");
 
 				if($row->organization_num){
 
@@ -45,7 +45,7 @@ class OrganizationController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or organization_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from organization where lower(organization_name) like '%$querystring%' $numquery order by organization_name;");
+					$rows = $this->db->get_results("select * from earthchem.organization where lower(organization_name) like '%$querystring%' $numquery order by organization_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){

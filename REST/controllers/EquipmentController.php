@@ -133,7 +133,7 @@ class EquipmentController extends RESTController
 			if($p['equipment_photo_file_name']!=""){ $equipment_photo_file_name = "'".$p['equipment_photo_file_name']."',"; }else{ $equipment_photo_file_name = "null,"; }
 			if($p['equipment_description']!=""){ $equipment_description = "'".$p['equipment_description']."',"; }else{ $equipment_description = "null,"; }
 			
-			$equipment_num = $this->db->get_var("select nextval('equipment_equipment_num_seq')");
+			$equipment_num = $this->db->get_var("select nextval('earthchem.equipment_equipment_num_seq')");
 			$p['equipment_num']=$equipment_num;
 			
 			$query = "insert into earthchem.equipment (	equipment_num,
@@ -187,7 +187,7 @@ class EquipmentController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthche.equipment where equipment_num = $searchid");
+				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid");
 
 				if($row->equipment_num){
 
@@ -195,18 +195,18 @@ class EquipmentController extends RESTController
 
 					$p = $request->parameters;
 						
-					if($p['equipment_code'])$equipment_code = $p['equipment_code'];
-					if($p['equipment_name'])$equipment_name = $p['equipment_name'];
-					if($p['equipment_type_num'])$equipment_type_num = $p['equipment_type_num'];
-					if($p['model_id'])$model_id = $p['model_id'];
-					if($p['equipment_serial_num'])$equipment_serial_num = $p['equipment_serial_num'];
-					if($p['equipment_inventory_num'])$equipment_inventory_num = $p['equipment_inventory_num'];
-					if($p['equipment_owner_id'])$equipment_owner_id = $p['equipment_owner_id'];
-					if($p['equipment_vendor_id'])$equipment_vendor_id = $p['equipment_vendor_id'];
-					if($p['equipment_phurchase_date'])$equipment_phurchase_date = $p['equipment_phurchase_date'];
-					if($p['equipment_phurchase_order_num'])$equipment_phurchase_order_num = $p['equipment_phurchase_order_num'];
-					if($p['equipment_photo_file_name'])$equipment_photo_file_name = $p['equipment_photo_file_name'];
-					if($p['equipment_description'])$equipment_description = $p['equipment_description'];
+					if($p['equipment_code']!="")$equipment_code = $p['equipment_code'];
+					if($p['equipment_name']!="")$equipment_name = $p['equipment_name'];
+					if($p['equipment_type_num']!="")$equipment_type_num = $p['equipment_type_num'];
+					if($p['model_id']!="")$model_id = $p['model_id'];
+					if($p['equipment_serial_num']!="")$equipment_serial_num = $p['equipment_serial_num'];
+					if($p['equipment_inventory_num']!="")$equipment_inventory_num = $p['equipment_inventory_num'];
+					if($p['equipment_owner_id']!="")$equipment_owner_id = $p['equipment_owner_id'];
+					if($p['equipment_vendor_id']!="")$equipment_vendor_id = $p['equipment_vendor_id'];
+					if($p['equipment_phurchase_date']!="")$equipment_phurchase_date = $p['equipment_phurchase_date'];
+					if($p['equipment_phurchase_order_num']!="")$equipment_phurchase_order_num = $p['equipment_phurchase_order_num'];
+					if($p['equipment_photo_file_name']!="")$equipment_photo_file_name = $p['equipment_photo_file_name'];
+					if($p['equipment_description']!="")$equipment_description = $p['equipment_description'];
 
 					if($p['equipment_name']!=""){$query.="equipment_name = '$equipment_name',\n";}else{$query.="equipment_name = null,\n";}
 					if($p['equipment_type_num']!=""){$query.="equipment_type_num = '$equipment_type_num',\n";}else{$query.="equipment_type_num = null,\n";}

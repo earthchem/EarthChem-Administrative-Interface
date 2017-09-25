@@ -1,4 +1,5 @@
 conf/DBCreds.php
 debug/
 templates/bkup*
+REST/log.txt
 

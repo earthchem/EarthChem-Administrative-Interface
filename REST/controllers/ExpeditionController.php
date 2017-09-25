@@ -10,7 +10,7 @@ Description: This controller enables the creation/retrieval of
 ******************************************************************
 */
 
-class ExpeditonController extends RESTController
+class ExpeditionController extends RESTController
 {
  
     public function getAction($request) {
@@ -21,7 +21,7 @@ class ExpeditonController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from equipment where equipment_num = $searchid");
+				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid");
 
 				if($row->equipment_num){
 
@@ -45,7 +45,7 @@ class ExpeditonController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or equipment_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from equipment where lower(equipment_name) like '%$querystring%' $numquery order by equipment_name;");
+					$rows = $this->db->get_results("select * from earthchem.equipment where lower(equipment_name) like '%$querystring%' $numquery order by equipment_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){

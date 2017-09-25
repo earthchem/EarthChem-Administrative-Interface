@@ -8026,3 +8026,696 @@ REQUEST: Equipment
 REQUEST_URI: /REST/equipment/18
 
 Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{"equipment_name":"AGULHAS","equipment_type_num":"2","model_id":"0","equipment_serial_num":"0","equipment_owner_id":"N/A","equipment_vendor_id":"N/A","equipment_photo_file_name":"","equipment_description":""}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{"equipment_name":"AGULHAS","equipment_type_num":"2","model_id":"0","equipment_serial_num":"0","equipment_owner_id":"N/A","equipment_vendor_id":"N/A","equipment_photo_file_name":"","equipment_description":""}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=a
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{"equipment_name":"AGULHAS","equipment_type_num":"2","model_id":"0","equipment_serial_num":"0","equipment_owner_id":"N/A","equipment_vendor_id":"N/A","equipment_photo_file_name":"","equipment_description":""}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{
+   "equipment_name":"AGULHAS",
+   "equipment_type_num":"2",
+   "model_id":"0",
+   "equipment_serial_num":"0",
+   "equipment_owner_id":"N/A",
+   "equipment_vendor_id":"N/A",
+   "equipment_photo_file_name":"",
+   "equipment_description":""
+}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{"equipment_name":"AGULHAS","equipment_type_num":"2","model_id":"0","equipment_serial_num":"0","equipment_owner_id":"N/A","equipment_vendor_id":"N/A","equipment_photo_file_name":"","equipment_description":""}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/18
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/65
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+{"equipment_name":"AGULHAS","equipment_type_num":"1","model_id":"0","equipment_serial_num":"0","equipment_owner_id":"N/A","equipment_vendor_id":"N/A","equipment_photo_file_name":"","equipment_description":""}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/65
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/27
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/8
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/109
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/110
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/120
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment
+
+Raw Input:
+{"equipment_name":"Foo Bar","equipment_type_num":"4","model_id":"123","equipment_serial_num":"345","equipment_owner_id":"lkajsdflkj","equipment_vendor_id":"Foo, Inc.","equipment_photo_file_name":"lkajsdflkj","equipment_description":"This is a test"}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment
+
+Raw Input:
+{"equipment_name":"Foo Bar","equipment_type_num":"4","model_id":"123","equipment_serial_num":"345","equipment_owner_id":"lkajsdflkj","equipment_vendor_id":"Foo, Inc.","equipment_photo_file_name":"lkajsdflkj","equipment_description":"This is a test"}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/167
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=f
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=fo
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=foo
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/167
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/167
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/167
+
+Raw Input:
+{"equipment_name":"Foo Bar","equipment_type_num":"4","model_id":"123","equipment_serial_num":"345","equipment_owner_id":"lkajsdflkj","equipment_vendor_id":"Foo, Inc.","equipment_photo_file_name":"lkajsdflkj","equipment_description":"This is a test changed"}
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/167
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=f
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment?query=fo
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Equipment
+
+REQUEST_URI: /REST/equipment/167
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Organization
+
+REQUEST_URI: /REST/organization?query=sa
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Organization
+
+REQUEST_URI: /REST/organization?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Organization
+
+REQUEST_URI: /REST/organization?query=asd
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Organization
+
+REQUEST_URI: /REST/organization?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Organization
+
+REQUEST_URI: /REST/organization?query=asd
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Organization
+
+REQUEST_URI: /REST/organization?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=q
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=a
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=a
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=as
+
+Raw Input:
+
+
+************************************************************************************************************************
+
+REQUEST: Expedition
+
+REQUEST_URI: /REST/expedition?query=as
+
+Raw Input:
