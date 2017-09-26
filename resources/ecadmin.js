@@ -46,7 +46,7 @@ var hideObjectDetails = function() {
 var showObjectDetails = function() {
 	$('#showDetailsButtonDiv').hide();
 	$('#hideDetailsButtonDiv').show();
-	$('#objectdetails').show("slow");
+	$('#objectdetails').css("display:block;");
 }
 
 
@@ -191,7 +191,7 @@ var showStatic = function(id) {
 	
 	if(selectedObject!=""){
 	
-		$.get("templates/"+selectedObject+"_static.html", function(newpage) {
+		$.get("/templates/"+selectedObject+"_static.html", function(newpage) {
 			$("#rightwrapper").html(newpage);
 
 
@@ -200,7 +200,7 @@ var showStatic = function(id) {
 			
 
 			
-				$.getJSON("REST/equipment/"+id, function(data){
+				$.getJSON("/REST/equipment/"+id, function(data){
 					$('#equipmentid').val(data.equipment_num);
 					$('#equipment_name').html(data.equipment_name);
 				
@@ -227,7 +227,69 @@ var showStatic = function(id) {
 				});
 			
 			}else if(selectedObject=="expedition"){
-			
+
+				$.getJSON("/REST/expedition/"+id, function(data){
+					
+					//console.log(JSON.stringify(data));
+					$('#expeditionid').val(data.expedition_num);
+					$("#expedition_name").html(data.expedition_name);
+
+					//translate expedition_type_num
+					var show_expedition_type_num = "";
+					_.each(expedition_types, function(extype){
+						if(extype.num==data.expedition_type_num){
+							show_expedition_type_num=extype.name;
+						}
+					});
+					
+					$('#expedition_type_num').html(show_expedition_type_num);
+					
+					//get organization name
+					if(data.sponsor_organization!=""){
+						$.getJSON("/REST/organization/"+data.sponsor_organization, function(orgdata){
+							$('#expedition_sponsor_organization').html(orgdata.organization_name);
+						});
+					}
+					
+					$("#expedition_description").html(data.description);
+					$("#expedition_begin_date").html(data.begin_date_time);
+					$("#expedition_end_date").html(data.end_date_time);
+					
+					
+					$("#expedition_identifier").html(data.identifier);
+					
+					if(data.alternate_names.length > 0){
+						$("#expedition_alternate_names").html(data.alternate_names.join(", "));
+					}
+
+					//get equipment
+					if(data.equipment_nums.length>0){
+						_.each(data.equipment_nums, function(eqnum){
+							$.getJSON("/REST/equipment/"+eqnum, function(eqdata){
+								$("#expedition_equipment").append("<div>"+eqdata.equipment_name+"</div>");
+							});
+						});
+					}
+
+
+				});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			}
 
 
@@ -253,17 +315,17 @@ var doEdit = function() {
 	var selectedObject = $('#objselect').find(":selected").val();
 	var html = "";
 	
-	var id = $('#equipmentid').val();
+	var id = $('#'+selectedObject+'id').val();
 	
 	if(selectedObject!=""){
 	
-		$.get("templates/"+selectedObject+"_dynamic.html", function(newpage) {
+		$.get("/templates/"+selectedObject+"_dynamic.html", function(newpage) {
 			$("#rightwrapper").html(newpage);
 
 			//load data from server
 			if(selectedObject=="equipment"){
 			
-				$.getJSON("REST/equipment/"+id, function(data){
+				$.getJSON("/REST/equipment/"+id, function(data){
 					$('#equipmentid').val(data.equipment_num);
 					$('#equipment_name').val(data.equipment_name);
 					$('#model_id').val(data.model_id);
@@ -283,7 +345,76 @@ var doEdit = function() {
 				});
 			
 			}else if(selectedObject=="expedition"){
-			
+
+				$.getJSON("/REST/expedition/"+id, function(data){
+					
+					//console.log(JSON.stringify(data));
+					$('#expeditionid').val(data.expedition_num);
+					$("#expedition_name").val(data.expedition_name);
+
+					$("#expedition_type_num").children('[value='+data.expedition_type_num+']').attr('selected', true);
+					
+					
+					//get organization name
+					if(data.sponsor_organization!=""){
+						$('#expedition_hidden_sponsor_organization').val(data.sponsor_organization);
+						$.getJSON("/REST/organization/"+data.sponsor_organization, function(orgdata){
+							$('#expedition_sponsor_organization').val(orgdata.organization_name);
+						});
+					}
+					
+					$("#expedition_description").val(data.description);
+					$("#expedition_begin_date").val(data.begin_date_time);
+					$("#expedition_end_date").val(data.end_date_time);
+					
+					
+					$("#expedition_identifier").val(data.identifier);
+					
+					if(data.alternate_names.length > 0){
+						$("#expedition_alternate_names").val(data.alternate_names.join(", "));
+					}
+
+					//get equipment
+					
+					
+					
+					if(data.equipment_nums.length>0){
+						var thiseqnum=1;
+						_.each(data.equipment_nums, function(eqnum){
+							console.log("thisequnum: "+thiseqnum);
+							$.getJSON("/REST/equipment/"+eqnum, function(eqdata){
+								$("#expedition_equipment"+thiseqnum).val(eqdata.equipment_name);
+								$("#expedition_hidden_equipment"+thiseqnum).val(eqnum);
+								$("#expedition_equipment"+thiseqnum).show();
+								thiseqnum++;
+							});
+						});
+					}
+					
+
+				});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			}
 
 			hideEditButton();
@@ -341,7 +472,7 @@ var doSave = function() {
 					console.log(id);
 				
 					//update (PUT)
-					var url = "REST/equipment/"+id;
+					var url = "/REST/equipment/"+id;
 
 				
 					console.log(saveJSON);
@@ -368,7 +499,7 @@ var doSave = function() {
 					
 					//save new (POST)
 					
-					var url = "REST/equipment";
+					var url = "/REST/equipment";
 					
 					$.ajax({
 						type: "POST",
@@ -394,7 +525,138 @@ var doSave = function() {
 				}
 			
 			}else if(selectedObject=="expedition"){
+
+				var data = {};
+
+				data.expedition_name = $('#expedition_name').val();
+				data.expedition_type_num = $('#expedition_type_num').val();
+
+
+				data.expedition_name = $('#expedition_name').val();
+				data.expedition_type_num = $('#expedition_type_num').val();
+				data.expedition_sponsor_organization = $('#expedition_hidden_sponsor_organization').val();
+				data.expedition_description = $('#expedition_description').val();
+				data.expedition_begin_date = $('#expedition_begin_date').val();
+				data.expedition_end_date = $('#expedition_end_date').val();
+				data.expedition_identifier = $('#expedition_identifier').val();
+				
+				//expedition_alternate_names alternate_names
+				var altnames = [];
+				data.alternate_names=[];
+				if($('#expedition_alternate_names').val()!=""){
+					var thesenames = $('#expedition_alternate_names').val().split(",");
+					_.each(thesenames, function(thisname){
+						data.alternate_names.push(thisname);
+					});
+				}
+
+				//equipment_nums
+				data.equipment_nums = [];
+				var eqnums = ["1","2","3","4","5","6","7","8","9"];
+				_.each(eqnums, function(num){
+					if($('#expedition_hidden_equipment'+num).val()!=""){
+						data.equipment_nums.push($('#expedition_hidden_equipment'+num).val());
+					}
+				});
+				
+				console.log(data);
+
+				var saveJSON = JSON.stringify(data);
+				
+				console.log(saveJSON);
+
+				var id = $('#expeditionid').val();
 			
+				
+				if(id!=""){
+			
+					console.log(id);
+				
+					//update (PUT)
+					var url = "/REST/expedition/"+id;
+
+				
+					console.log(saveJSON);
+				
+					$.ajax({
+						type: "PUT",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							showStatic(id);
+							$("#successmessage").html('Expedition Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Expedition.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}else{
+					
+					//save new (POST)
+					
+					var url = "/REST/expedition";
+					
+					$.ajax({
+						type: "POST",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							
+							var id = msg.expedition_num;
+							//console.log(msg);
+							showStatic(id);
+							$("#successmessage").html('Expedition Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Expedition.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+				
+				}
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			}
 
 		}else{
@@ -448,7 +710,25 @@ var checkForm = function() {
 
 	}else if(selectedObject == "expedition"){
 	
-		
+		if($('#expedition_name').val()==""){
+			errors += errordelim+"Expedition name cannot be blank.";
+			errordelim = "\n";
+		}
+
+		if($('#expedition_type_num').val()==""){
+			errors += errordelim+"Expedition type cannot be blank.";
+			errordelim = "\n";
+		}
+
+		if($('#expedition_hidden_sponsor_organization').val()==""){
+			errors += errordelim+"Sponsor organization cannot be blank.";
+			errordelim = "\n";
+		}
+
+
+
+
+
 	
 	}
 	
@@ -498,7 +778,20 @@ var doCancel = function() {
 }
 
 
-
+ var addEquipment = function() {
+ 	var eqnums = ["1","2","3","4","5","6","7","8","9"];
+ 	var go="yes";
+	_.each(eqnums, function(eqnum){
+		if(go=="yes"){
+			if ($('#expedition_equipment'+eqnum).is(':visible')){
+				//console.log(eqnum+" is visible.");
+			}else{
+				$('#expedition_equipment'+eqnum).show();
+				go="no";	
+			}
+		}
+	});
+ }
 
 
 

@@ -14,7 +14,7 @@
 			<tr>
 				<td>Expedition Type:</td>
 				<td>
-					<select id="expedition_type">
+					<select id="expedition_type_num">
 						<option value="">select...</option>
 						<!--<option value="1">Not Applicable</option>-->
 						<!--<option value="2">Unknown</option>-->
@@ -40,6 +40,8 @@
 				</td>
 			</tr>
 
+
+<!---
 		</table>
 		
 		<div id="showDetailsButtonDiv">
@@ -50,16 +52,29 @@
 			<button class="redbutton" onClick="hideObjectDetails();"><span>Hide&nbsp;Details</span></button>
 		</div>
 		
-		<div id="objectdetails" style="display:none;">
+		<div id="objectdetails">
 			
 			<table>
+--->
+
 				<tr>
 					<td>Dates:</td>
 					<td>Begin Date: <input type="text" id="expedition_begin_date" size="10">&nbsp;&nbsp;&nbsp;End Date: <input type="text" id="expedition_end_date" size="10"></td>
 				</tr>
 				<tr>
-					<td>Equipment:</td>
-					<td><input type="text" id="expedition_equipment" size="59"></td>
+					<td valign="top">Equipment:</td>
+					<td>
+						<input id="expedition_equipment1" size="59"/>
+						<input id="expedition_equipment2" size="59" style="display:none;"/>
+						<input id="expedition_equipment3" size="59" style="display:none;"/>
+						<input id="expedition_equipment4" size="59" style="display:none;"/>
+						<input id="expedition_equipment5" size="59" style="display:none;"/>
+						<input id="expedition_equipment6" size="59" style="display:none;"/>
+						<input id="expedition_equipment7" size="59" style="display:none;"/>
+						<input id="expedition_equipment8" size="59" style="display:none;"/>
+						<input id="expedition_equipment9" size="59" style="display:none;"/>
+						<img src="/resources/images/plus.png" style="cursor:pointer;" onClick="addEquipment();">
+					</td>
 				</tr>
 				<tr>
 					<td>Identifier:</td>
@@ -82,7 +97,16 @@
 		</div>
 
 		<div>
-			<input id="expedition_hidden_sponsor_organization"/>
+			<input id="expedition_hidden_sponsor_organization" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment1" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment2" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment3" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment4" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment5" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment6" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment7" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment8" style="display:none;"/><br>
+			<input id="expedition_hidden_equipment9" style="display:none;"/><br>
 		</div>
 
 		<script src="/resources/autocomplete_setups.js"></script>
