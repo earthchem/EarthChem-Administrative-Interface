@@ -546,6 +546,7 @@ var doSave = function() {
 				if($('#expedition_alternate_names').val()!=""){
 					var thesenames = $('#expedition_alternate_names').val().split(",");
 					_.each(thesenames, function(thisname){
+						thisname = thisname.trim();
 						data.alternate_names.push(thisname);
 					});
 				}

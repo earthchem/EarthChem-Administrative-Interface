@@ -50,7 +50,7 @@ body {
 
 #header {
 	font-family: 'Oswald', sans-serif;
-	width: 960px;
+	width: 1060px;
 	margin: 0px auto;
 	margin-top: 0px;
 	margin-top: 0px;
@@ -69,7 +69,10 @@ body {
 	margin-top: 0px;
 	padding: 0px 10px 10px 15px;
 	font-size: 16px;
-	background-color:#f2ffe6;
+	background-color:#fcfcfc;
+	height:100vh;
+	border-left: 1px #999 solid;
+	border-right: 1px #999 solid;
 }
 
 #leftBarContent {

@@ -241,7 +241,7 @@ function dumpVar($var){
 
 		
 		</div>
-		<div style="padding-top:200px;"/>
+		
 
 	</div>
 
