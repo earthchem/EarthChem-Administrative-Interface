@@ -75,7 +75,30 @@ _.each(eqnums, function(eqnum){
 });
 
 
+/*********************************************
 
+Method Lab (Organization)
+
+*********************************************/
+var method_lab_options = base_options;
+method_lab_options.url="/REST/organization";
+method_lab_options.getValue = function(element) {return element.organization_name;}
+method_lab_options.list.onChooseEvent = function() {
+	var selectedItemValue = $("#method_lab").getSelectedItemData();
+	$("#method_lab_hidden").val(selectedItemValue.organization_num);
+};
+		
+method_lab_options.preparePostData = function(data) {
+	data.query = $("#method_lab").val();
+return data;
+};
+
+$("#method_lab").easyAutocomplete(method_lab_options);
+
+$( "#method_lab" ).keyup(function() {
+	//clear hidden
+	$("#method_lab_hidden").val("");
+});
 
 
 

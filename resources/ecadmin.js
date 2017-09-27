@@ -111,6 +111,10 @@ var doSearch = function() {
 		}else if(selectedObject=="expedition"){
 	
 			url = "/REST/expedition?query="+val;
+			
+		}else if(selectedObject=="analytical_method"){
+	
+			url = "/REST/method?query="+val;
 	
 		}else if(selectedObject==""){
 		
@@ -128,6 +132,8 @@ var doSearch = function() {
 							thishtml=thishtml+'<div><span class="searchItem" onclick="showStatic(\''+res.equipment_num+'\');">'+res.equipment_name+'</span></div>';
 						}else if (selectedObject=="expedition"){
 							thishtml=thishtml+'<div><span class="searchItem" onclick="showStatic(\''+res.expedition_num+'\');">'+res.expedition_name+'</span></div>';
+						}else if (selectedObject=="analytical_method"){
+							thishtml=thishtml+'<div><span class="searchItem" onclick="showStatic(\''+res.method_num+'\');">'+res.method_name+'</span></div>';
 						}
 					});
 				}
@@ -154,23 +160,12 @@ var doNew = function() {
 	var selectedObject = $('#objselect').find(":selected").val();
 	var html = "";
 	
-	if(selectedObject=="equipment"){
+	if(selectedObject!=""){
 	
-		$.get("/templates/equipment_dynamic.html", function(data) {
+		$.get("/templates/"+selectedObject+"_dynamic.html", function(data) {
 			$("#rightwrapper").html(data);
 			showBottomButtons();
 		});
-	
-	}else if(selectedObject=="expedition"){
-	
-		$.get("/templates/expedition_dynamic.html", function(data) {
-			$("#rightwrapper").html(data);
-			showBottomButtons();
-		});
-	
-	}else if(selectedObject==""){
-		
-		
 	
 	}
 	
@@ -178,7 +173,6 @@ var doNew = function() {
 	hideDeleteButton();
 	showCancelButton();
 	showSaveButton();
-	
 
 }
 
@@ -274,21 +268,42 @@ var showStatic = function(id) {
 
 				});
 
+			}else if(selectedObject=="analytical_method"){
+
+				$.getJSON("/REST/method/"+id, function(data){
+					
+					//console.log(JSON.stringify(data));
+					$('#analytical_methodid').val(data.method_num);
+					$("#method_name").html(data.method_name);
+					$("#method_short_name").html(data.method_code);
+
+
+					//translate method_type_num
+					var show_method_type_num = "";
+					_.each(method_types, function(methtype){
+						if(methtype.num==data.method_type_num){
+							show_method_type_num=methtype.name;
+						}
+					});
+					
+					$('#method_type_num').html(show_method_type_num);
+					
+					//get organization name
+					if(data.organization_num!=""){
+						$.getJSON("/REST/organization/"+data.organization_num, function(orgdata){
+							$('#method_lab').html(orgdata.organization_name);
+						});
+					}
+					
+					$("#method_description").html(data.method_description);
+					$("#method_link").html(data.method_link);
+					
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
+				});
 
 			}
 
@@ -394,24 +409,42 @@ var doEdit = function() {
 
 				});
 
+			}else if(selectedObject=="analytical_method"){
+
+				$.getJSON("/REST/method/"+id, function(data){
+					
+
+					//console.log(JSON.stringify(data));
+					$('#analytical_methodid').val(data.method_num);
+					$("#method_name").val(data.method_name);
+					$("#method_short_name").val(data.method_code);
+
+
+					$("#method_type_num").children('[value='+data.method_type_num+']').attr('selected', true);
+
+					
+					//get organization name
+					if(data.organization_num!=""){
+						$.getJSON("/REST/organization/"+data.organization_num, function(orgdata){
+							$('#method_lab').html(orgdata.organization_name);
+						});
+					}
+
+					//get organization name
+					if(data.organization_num!=""){
+						$('#method_lab_hidden').val(data.organization_num);
+						$.getJSON("/REST/organization/"+data.organization_num, function(orgdata){
+							$('#method_lab').val(orgdata.organization_name);
+						});
+					}
 
 
 
+					$("#method_description").val(data.method_description);
+					$("#method_link").val(data.method_link);
+										
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				});
 
 
 
@@ -626,18 +659,84 @@ var doSave = function() {
 				
 				}
 				
+			}else if(selectedObject=="analytical_method"){
 
+				var data = {};
 
+				data.method_type_num = $('#method_type_num').val();
+				data.method_code = $('#method_short_name').val();
+				data.method_name = $('#method_name').val();
+				data.method_description = $('#method_description').val();
+				data.method_link = $('#method_link').val();
+				data.organization_num = $('#method_lab_hidden').val();
 
+				
+				console.log(data);
 
+				var saveJSON = JSON.stringify(data);
+				
+				console.log(saveJSON);
 
+				var id = $('#analytical_methodid').val();
 
+				
+				if(id!=""){
+			
+					console.log(id);
+				
+					//update (PUT)
+					var url = "/REST/method/"+id;
 
-
-
-
-
-
+				
+					console.log(saveJSON);
+				
+					$.ajax({
+						type: "PUT",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							showStatic(id);
+							$("#successmessage").html('Method Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Method.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}else{
+					
+					//save new (POST)
+					
+					var url = "/REST/method";
+					
+					$.ajax({
+						type: "POST",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							
+							var id = msg.method_num;
+							//console.log(msg);
+							showStatic(id);
+							$("#successmessage").html('Method Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Method.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+				
+				}
+				
 
 
 
@@ -723,6 +822,24 @@ var checkForm = function() {
 
 		if($('#expedition_hidden_sponsor_organization').val()==""){
 			errors += errordelim+"Sponsor organization cannot be blank.";
+			errordelim = "\n";
+		}
+
+
+	}else if(selectedObject == "analytical_method"){
+	
+		if($('#method_name').val()==""){
+			errors += errordelim+"Method name cannot be blank.";
+			errordelim = "\n";
+		}
+
+		if($('#method_type_num').val()==""){
+			errors += errordelim+"Method type cannot be blank.";
+			errordelim = "\n";
+		}
+
+		if($('#method_short_name').val()==""){
+			errors += errordelim+"Method short name cannot be blank.";
 			errordelim = "\n";
 		}
 
@@ -816,6 +933,15 @@ expedition_types.push({num:12,name:"Field Activity"});
 expedition_types.push({num:19,name:"Site Visit"});
 expedition_types.push({num:25,name:"Submersible Launch"});
 
+var method_types=[];
+method_types.push({num:1,name:"Not Applicable"});
+method_types.push({num:2,name:"Unknown"});
+method_types.push({num:3,name:"Lab Analyses"});
+method_types.push({num:4,name:"Sampling Technique"});
+method_types.push({num:5,name:"Sample Preparation"});
+method_types.push({num:6,name:"Sample Preservation"});
+method_types.push({num:7,name:"Sample Fractionation"});
+method_types.push({num:8,name:"Navigation"});
 
 
 

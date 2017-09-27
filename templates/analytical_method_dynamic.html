@@ -1,0 +1,64 @@
+		<div class="templateHeader">Analytical Method</div>
+		<div class="templateID">Method ID: <input type="text" id="analytical_methodid" value="" size="6" readonly="readonly"></div>
+		
+		<table>
+			<tr>
+				<td>Method Name:</td>
+				<td>
+					<input type="text" id="method_name" size="59" />
+				</td>
+			</tr>
+			<tr>
+				<td>Method Type:</td>
+				<td>
+					<select id="method_type_num">
+						<option value="">select...</option>
+						<option value="1">Not Applicable</option>
+						<option value="2">Unknown</option>
+						<option value="3">Lab Analyses</option>
+						<option value="4">Sampling Technique</option>
+						<option value="5">Sample Preparation</option>
+						<option value="6">Sample Preservation</option>
+						<option value="7">Sample Fractionation</option>
+						<option value="8">Navigation</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Method Short Name:</td>
+				<td>
+					<input id="method_short_name" size="56"/>
+				</td>
+			</tr>
+			<tr>
+				<td>Lab Name:</td>
+				<td>
+					<input id="method_lab" size="56"/>
+				</td>
+			</tr>
+			<tr>
+				<td>Description:</td>
+				<td>
+					<textarea id="method_description" cols="50" rows="7"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>Link for More Information:</td>
+				<td>
+					<input id="method_link" size="56"/>
+				</td>
+			</tr>
+
+			</table>
+		</div>
+
+
+		<div id="methodresultsdiv">
+		
+		</div>
+
+		<div>
+			<input id="method_lab_hidden" style="display:block;"/>
+		</div>
+
+		<script src="/resources/autocomplete_setups.js"></script>
