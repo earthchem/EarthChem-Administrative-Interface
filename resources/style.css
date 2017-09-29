@@ -148,6 +148,10 @@ body {
 .searchItem {
 	font-size:12px;
 	cursor: pointer;
+	background-color:#f8f8f8;
+	margin-bottom:3px;
+	padding:2px;
+	border:1px #d8d8d8 solid;
 }
 
 

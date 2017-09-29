@@ -72,6 +72,7 @@ function dumpVar($var){
 						<select id="objselect" class="ecselect" onchange="updateRightSide();">
 							<option value="">Select...</option>
 							<option value="analytical_method">Analytical Method</option>
+							<option value="chemical_analysis">Chemical Analysis</option>
 							<option value="equipment">Equipment</option>
 							<option value="expedition">Expedition</option>
 						</select>
@@ -182,8 +183,6 @@ function dumpVar($var){
 
 
 		
-
-
 
 
 
