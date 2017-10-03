@@ -3,14 +3,14 @@
 /*
 ******************************************************************
 EC Admin REST API
-Organization Controller
+Variable Controller
 Author: Jason Ash (jasonash@ku.edu)
 Description: This controller enables the creation/retrieval of
-				organization entries in the ECDB.
+				variable entries in the ECDB.
 ******************************************************************
 */
 
-class OrganizationController extends RESTController
+class VariableController extends RESTController
 {
  
     public function getAction($request) {
@@ -21,18 +21,21 @@ class OrganizationController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.organization where organization_num = $searchid");
 
-				if($row->organization_num){
+				$row = $this->db->get_row("select * from earthchem.variable where variable_num = $searchid");
 
+				if($row->variable_num){
+
+						
 						$data=$row;
+						
 				}else{
 					header("Not Found", true, 404);
-					$data["Error"] = "Organization $id not found.";
+					$data["Error"] = "Variable $id not found.";
 				}
 			}else{
 				header("Not Found", true, 404);
-				$data["Error"] = "Organization $id not found.";
+				$data["Error"] = "Variable $id not found.";
 			}
 
         } else {
@@ -43,26 +46,21 @@ class OrganizationController extends RESTController
 
 					$querystring = strtolower($_GET['query']);
 					
-					if($this->is_whole_int($querystring)){$numquery = " or organization_num = $querystring";}
+					if($this->is_whole_int($querystring)){$numquery = " or action_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.organization where 
-													lower(organization_name) like '%$querystring%' or 
-													lower(department) like '%$querystring%' or
-													lower(organization_name)||' - '||lower(department) like '%$querystring%'
-													$numquery order by organization_name;");
+					$rows = $this->db->get_results("select * from earthchem.variable where
+													lower(variable_name) like '%$querystring%' $numquery order by variable_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
 						$results = [];
 						foreach($rows as $row){
 							
-							$num = $row->organization_num;
-							$name = $row->organization_name;
-							$department = $row->department;
+							$num = $row->variable_num;
+							$name = $row->variable_name;
 							
-							$thisresult['organization_num']=$num;
-							$thisresult['organization_name']=$name;
-							$thisresult['department']=$department;
+							$thisresult['variable_num']=$num;
+							$thisresult['variable_name']=$name;
 					
 							$data['results'][]=$thisresult;
 							
@@ -115,37 +113,20 @@ class OrganizationController extends RESTController
 
     public function postAction($request) {
     
-        if(isset($request->url_elements[2])) {
-        
-			header("Bad Request", true, 400);
-			$data["Error"] = "Invalid Request.";
+		header("Bad Request", true, 400);
+		$data["Error"] = "Bad Request.";
 
-        }else{
-
-			$p = $request->parameters;
-
-
-
-			$data=$p;
-
-        }
-        
         return $data;
-
 
 	}
 
     public function putAction($request) {
-    
-        if(isset($request->url_elements[2])) {
 
-        } else {
+		header("Bad Request", true, 400);
+		$data["Error"] = "Bad Request.";
 
-			header("Bad Request", true, 400);
-			$data["Error"] = "Invalid Request.";
-
-        }
         return $data;
+
     }
 
     public function optionsAction($request) {

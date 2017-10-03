@@ -75,6 +75,7 @@ function dumpVar($var){
 							<option value="chemical_analysis">Chemical Analysis</option>
 							<option value="equipment">Equipment</option>
 							<option value="expedition">Expedition</option>
+							<option value="reporting_variable">Reporting Variable</option>
 						</select>
 						
 						<div id="newbutton" style="padding-top:20px;display:none;"><button class="menubutton" onClick="doNew();"><span>NEW</span></button></div>
@@ -183,6 +184,58 @@ function dumpVar($var){
 
 
 		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

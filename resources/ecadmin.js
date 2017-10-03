@@ -120,6 +120,10 @@ var doSearch = function() {
 	
 			url = "/REST/chemicalanalysis?query="+val;
 	
+		}else if(selectedObject=="reporting_variable"){
+	
+			url = "/REST/resulttemplate?query="+val;
+	
 		}else if(selectedObject==""){
 		
 		
@@ -140,6 +144,8 @@ var doSearch = function() {
 							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.method_num+'\');">'+res.method_name+'</div>';
 						}else if (selectedObject=="chemical_analysis"){
 							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.chemical_analysis_num+'\');">'+res.chemical_analysis_num+'</div>';
+						}else if (selectedObject=="reporting_variable"){
+							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.result_template_num+'\');">'+res.reporting_variable_name+'</div>';
 						}
 
 						/*
@@ -258,9 +264,13 @@ var showStatic = function(id) {
 					$('#expedition_type_num').html(show_expedition_type_num);
 					
 					//get organization name
-					if(data.sponsor_organization!=""){
+					if(data.sponsor_organization){
 						$.getJSON("/REST/organization/"+data.sponsor_organization, function(orgdata){
-							$('#expedition_sponsor_organization').html(orgdata.organization_name);
+							var showlab = orgdata.organization_name;
+							if(orgdata.department){
+								showlab+=" - "+orgdata.department;
+							}
+							$('#expedition_sponsor_organization').html(showlab);
 						});
 					}
 					
@@ -308,9 +318,13 @@ var showStatic = function(id) {
 					$('#method_type_num').html(show_method_type_num);
 					
 					//get organization name
-					if(data.organization_num!=""){
+					if(data.organization_num){
 						$.getJSON("/REST/organization/"+data.organization_num, function(orgdata){
-							$('#method_lab').html(orgdata.organization_name);
+							var showlab = orgdata.organization_name;
+							if(orgdata.department){
+								showlab+=" - "+orgdata.department;
+							}
+							$('#method_lab').html(showlab);
 						});
 					}
 					
@@ -353,9 +367,13 @@ var showStatic = function(id) {
 					}
 
 					//get lab name
-					if(data.lab_num!=""){
-						$.getJSON("/REST/organization/"+data.lab_num, function(data){
-							$('#chemical_analysis_lab').html(data.organization_name);
+					if(data.lab_num){
+						$.getJSON("/REST/organization/"+data.lab_num, function(orgdata){
+							var showlab = orgdata.organization_name;
+							if(orgdata.department){
+								showlab+=" - "+orgdata.department;
+							}
+							$('#chemical_analysis_lab').html(showlab);
 						});
 					}
 
@@ -384,6 +402,55 @@ var showStatic = function(id) {
 
 
 				});
+
+
+			}else if(selectedObject=="reporting_variable"){
+
+				$.getJSON("/REST/resulttemplate/"+id, function(data){
+				
+					console.log(data);
+
+					$('#reporting_variableid').val(data.result_template_num);
+					$('#reporting_variable_name').html(data.reporting_variable_name);
+					
+
+					if(data.analysis_event){
+						$.getJSON("/REST/action/"+data.analysis_event, function(data){
+							$('#reporting_variable_action_num').html(data.action_name);
+						});
+					}
+
+					if(data.variable_num){
+						$.getJSON("/REST/variable/"+data.variable_num, function(data){
+							$('#reporting_variable_variable_num').html(data.variable_name);
+						});
+					}
+
+					if(data.unit_num){
+						$.getJSON("/REST/unit/"+data.unit_num, function(data){
+							$('#reporting_variable_unit_num').html(data.unit_name);
+						});
+					}
+					
+					//uncertainty_types
+					var show_uncertainty = "";
+					_.each(uncertainty_types, function(ctype){
+						if(ctype.num==data.uncertainty_type){
+							show_uncertainty=ctype.name;
+						}
+					});
+					$('#reporting_variable_uncertainty_type').html(show_uncertainty);
+
+					$('#reporting_variable_uncertainty_value').html(data.uncertainty_value);
+					$('#reporting_variable_description').html(data.description);
+
+				});
+
+
+
+
+
+
 
 			}
 
@@ -451,11 +518,15 @@ var doEdit = function() {
 					
 					
 					//get organization name
-					if(data.sponsor_organization!=""){
-						$('#expedition_hidden_sponsor_organization').val(data.sponsor_organization);
+					if(data.sponsor_organization){
 						$.getJSON("/REST/organization/"+data.sponsor_organization, function(orgdata){
-							$('#expedition_sponsor_organization').val(orgdata.organization_name);
+							var showlab = orgdata.organization_name;
+							if(orgdata.department){
+								showlab+=" - "+orgdata.department;
+							}
+							$('#expedition_sponsor_organization').val(showlab);
 						});
+						$('#expedition_hidden_sponsor_organization').val(data.sponsor_organization);
 					}
 					
 					$("#expedition_description").val(data.description);
@@ -502,22 +573,16 @@ var doEdit = function() {
 
 					$("#method_type_num").children('[value='+data.method_type_num+']').attr('selected', true);
 
-					
 					//get organization name
-					if(data.organization_num!=""){
+					if(data.organization_num){
 						$.getJSON("/REST/organization/"+data.organization_num, function(orgdata){
-							$('#method_lab').html(orgdata.organization_name);
+							var showlab = orgdata.organization_name;
+							if(orgdata.department){
+								showlab+=" - "+orgdata.department;
+							}
+							$('#method_lab').val(showlab);
 						});
 					}
-
-					//get organization name
-					if(data.organization_num!=""){
-						$('#method_lab_hidden').val(data.organization_num);
-						$.getJSON("/REST/organization/"+data.organization_num, function(orgdata){
-							$('#method_lab').val(orgdata.organization_name);
-						});
-					}
-
 
 
 					$("#method_description").val(data.method_description);
@@ -553,9 +618,13 @@ var doEdit = function() {
 					
 
 					//get lab name
-					if(data.lab_num!=""){
-						$.getJSON("/REST/organization/"+data.lab_num, function(nextdata){
-							$('#chemical_analysis_lab').val(nextdata.organization_name);
+					if(data.lab_num){
+						$.getJSON("/REST/organization/"+data.lab_num, function(orgdata){
+							var showlab = orgdata.organization_name;
+							if(orgdata.department){
+								showlab+=" - "+orgdata.department;
+							}
+							$('#chemical_analysis_lab').val(showlab);
 							$('#chemical_analysis_lab_hidden').val(data.lab_num);
 						});
 					}
@@ -587,6 +656,46 @@ var doEdit = function() {
 
 
 					//$('#chemical_analysis_lab_hidden').val("12345");
+
+				});
+
+			}else if(selectedObject=="reporting_variable"){
+
+				$.getJSON("/REST/resulttemplate/"+id, function(data){
+				
+					console.log(data);
+
+					$('#reporting_variableid').val(data.result_template_num);
+					$('#reporting_variable_name').val(data.reporting_variable_name);
+					
+
+					if(data.analysis_event){
+						$.getJSON("/REST/action/"+data.analysis_event, function(data){
+							$('#reporting_variable_action_num').val(data.action_name);
+							$('#reporting_variable_action_num_hidden').val(data.action_type_num);
+						});
+					}
+
+					if(data.variable_num){
+						$.getJSON("/REST/variable/"+data.variable_num, function(data){
+							$('#reporting_variable_variable_num').val(data.variable_name);
+							$('#reporting_variable_variable_num_hidden').val(data.variable_num);
+						});
+					}
+
+					if(data.unit_num){
+						$.getJSON("/REST/unit/"+data.unit_num, function(data){
+							$('#reporting_variable_unit_num').val(data.unit_name);
+							$('#reporting_variable_unit_num_hidden').val(data.unit_num);
+						});
+					}
+					
+
+					
+					$("#reporting_variable_uncertainty_type").children('[value='+data.uncertainty_type+']').attr('selected', true);
+
+					$('#reporting_variable_uncertainty_value').val(data.uncertainty_value);
+					$('#reporting_variable_description').val(data.description);
 
 				});
 
@@ -985,6 +1094,88 @@ var doSave = function() {
 				
 				}
 				
+			}else if(selectedObject=="reporting_variable"){
+
+				var data = {};
+
+				data.result_template_num = $('#reporting_variableid').val();
+				data.reporting_variable_name = $('#reporting_variable_name').val();
+				
+				data.analysis_event = $('#reporting_variable_action_num_hidden').val();
+				data.variable_num = $('#reporting_variable_variable_num_hidden').val();
+				data.unit_num = $('#reporting_variable_unit_num_hidden').val();
+				
+				data.uncertainty_type = $('#reporting_variable_uncertainty_type').val();
+				data.uncertainty_value = $('#reporting_variable_uncertainty_value').val();
+				data.description = $('#reporting_variable_description').val();
+
+				//console.log(data);
+
+				var saveJSON = JSON.stringify(data);
+				
+				console.log(saveJSON);
+
+				var id = $('#reporting_variableid').val();
+
+				
+				
+				if(id!=""){
+			
+					console.log(id);
+				
+					//update (PUT)
+					var url = "/REST/resulttemplate/"+id;
+
+				
+					console.log(saveJSON);
+				
+					$.ajax({
+						type: "PUT",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							showStatic(id);
+							$("#successmessage").html('Reporting Variable Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Reporting Variable.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}else{
+					
+					//save new (POST)
+					
+					var url = "/REST/resulttemplate";
+					
+					$.ajax({
+						type: "POST",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							
+							var id = msg.result_template_num;
+							//console.log(msg);
+							showStatic(id);
+							$("#successmessage").html('Reporting Variable Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Reporting Variable.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+				
+				}
+				
 
 				
 
@@ -1145,7 +1336,35 @@ var checkForm = function() {
 			errordelim = "\n";
 		}
 
+	}else if(selectedObject == "reporting_variable"){
 
+
+reporting_variable_name
+reporting_variable_action_num_hidden
+reporting_variable_variable_num_hidden
+reporting_variable_unit_num_hidden
+
+
+
+		if($('#reporting_variable_name').val()==""){
+			errors += errordelim+"Invalid variable name. Variable name must be provided.";
+			errordelim = "\n";
+		}
+
+		if($('#reporting_variable_action_num_hidden').val()==""){
+			errors += errordelim+"Invalid Analysis Event. Analysis must be provided.";
+			errordelim = "\n";
+		}
+
+		if($('#reporting_variable_variable_num_hidden').val()==""){
+			errors += errordelim+"Invalid variable. Variable must be provided.";
+			errordelim = "\n";
+		}
+
+		if($('#reporting_variable_unit_num_hidden').val()==""){
+			errors += errordelim+"Invalid Unit. Unit must be provided.";
+			errordelim = "\n";
+		}
 
 
 
@@ -1251,6 +1470,35 @@ chemical_analysis_types.push({num:28,name:"Blank Measurement"});
 chemical_analysis_types.push({num:29,name:"Standard Specimen Analysis"});
 chemical_analysis_types.push({num:30,name:"Reference Analysis"});
 chemical_analysis_types.push({num:31,name:"Analytical Uncertainty"});
+
+
+uncertainty_types=[];
+uncertainty_types.push({num:1,name:"1S"});
+uncertainty_types.push({num:3,name:"1S-ABS"});
+uncertainty_types.push({num:2,name:"1S REL"});
+uncertainty_types.push({num:4,name:"1S-REL"});
+uncertainty_types.push({num:5,name:"2S"});
+uncertainty_types.push({num:6,name:"2S-ABS"});
+uncertainty_types.push({num:7,name:"2S-REL"});
+uncertainty_types.push({num:8,name:"3S-REL"});
+uncertainty_types.push({num:9,name:"ABS"});
+uncertainty_types.push({num:10,name:"AJ"});
+uncertainty_types.push({num:15,name:"per amu"});
+uncertainty_types.push({num:11,name:"REL"});
+uncertainty_types.push({num:12,name:"S"});
+uncertainty_types.push({num:13,name:"S-ABS"});
+uncertainty_types.push({num:14,name:"S-REL"});
+
+
+
+
+
+
+
+
+
+
+
 
 function isInt(value) {
   var x;
