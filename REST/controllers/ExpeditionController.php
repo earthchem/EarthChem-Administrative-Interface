@@ -186,7 +186,7 @@ expedition_end_date
 */
 
 			$id = $this->db->get_var("select nextval('earthchem.action_action_num_seq')");
-			$p['action_num']=$id;
+			$p['expedition_num']=$id;
 			
 			$query = "insert into earthchem.action (	action_num,
 						action_name,
