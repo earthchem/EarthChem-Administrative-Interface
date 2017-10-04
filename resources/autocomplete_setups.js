@@ -367,7 +367,33 @@ $( "#reporting_variable_unit_num" ).keyup(function() {
 });
 
 
+/*********************************************
 
+Reporting Variable Variable
+
+*********************************************/
+thisitem="new_method_lab";
+var new_method_lab_options = base_options;
+new_method_lab_options.url="/REST/organization";
+new_method_lab_options.getValue = function(element) {return element.organization_name;}
+new_method_lab_options.list.onChooseEvent = function() {
+	var selectedItemValue = $("#new_method_lab").getSelectedItemData();
+	$("#new_method_lab_hidden").val(selectedItemValue.organization_num);
+};
+		
+new_method_lab_options.preparePostData = function(data) {
+	data.query = $("#new_method_lab").val();
+	return data;
+};
+
+$("#new_method_lab").easyAutocomplete(new_method_lab_options);
+
+$( "#new_method_lab" ).keyup(function() {
+	//clear hidden
+	if($('#new_method_lab').val()==""){
+		$("#new_method_lab_hidden").val("");
+	}
+});
 
 
 

@@ -1417,9 +1417,9 @@ var doCancel = function() {
 }
 
 
- var addEquipment = function() {
- 	var eqnums = ["1","2","3","4","5","6","7","8","9"];
- 	var go="yes";
+var addEquipment = function() {
+	var eqnums = ["1","2","3","4","5","6","7","8","9"];
+	var go="yes";
 	_.each(eqnums, function(eqnum){
 		if(go=="yes"){
 			if ($('#expedition_equipment'+eqnum).is(':visible')){
@@ -1430,12 +1430,576 @@ var doCancel = function() {
 			}
 		}
 	});
- }
+}
+
+
+
+/*
+********************************************************************
+
+			Functions below for new object modals
+
+********************************************************************
+*/
+
+var cancelModal = function(){
+	var result = confirm("Are you sure?");
+	if (result) {
+		$.fancybox.close(true);
+	}
+}
+
+var showNewOrg = function(){
+
+	$('#new_organization_name').val("");
+	$('#new_organization_department').val("");
+	$("#new_organization_type").val("");
+	$('#new_organization_link').val("");
+	$('#new_organization_city').val("");
+	$('#new_organization_state').val("");
+	$('#new_organization_country').val("");
+	$('#new_organization_address').val("");
+	$('#new_organization_description').val("");
+
+	$.fancybox.open({src :'#add_organization_hidden',type:'inline'});
+
+}
+
+var checkNewOrg = function(){
+	var errors="";
+	var errordelim="";
+
+	if($('#new_organization_name').val()==""){
+		errors+=errordelim+"Organization Name cannot be blank";
+		errordelim="\n";
+	}
+	
+	if($('#new_organization_type').val()==""){
+		errors+=errordelim+"Organization Type must be provided.";
+		errordelim="\n";
+	}
+	
+	return errors;
+	
+}
+
+var saveNewOrg = function(){
+	var errors = checkNewOrg();
+	if(errors==""){
+
+		/*
+		organization_name
+		department
+		organization_type_num
+		organization_link
+		city
+		state_num
+		country_num
+		address_part1
+		organization_description
+
+		new_organization_name
+		new_organization_department
+		new_organization_type
+		new_organization_link
+		new_organization_city
+		new_organization_state
+		new_organization_country
+		new_organization_address
+		new_organization_description
+		*/
+
+		var data = {};
+		data.organization_name = $('#new_organization_name').val();
+		data.department = $('#new_organization_department').val();
+		data.organization_type_num = $('#new_organization_type').val();
+		data.organization_link = $('#new_organization_link').val();
+		data.city = $('#new_organization_city').val();
+		data.state_num = $('#new_organization_state').val();
+		data.country_num = $('#new_organization_country').val();
+		data.address_part1 = $('#new_organization_address').val();
+		data.organization_description = $('#new_organization_description').val();
+
+		var saveJSON = JSON.stringify(data);
+		
+		//console.log(saveJSON);
+
+		var url = "/REST/organization";
+		
+		$.ajax({
+			type: "POST",
+			url: url,
+			contentType: "application/json",
+			data: saveJSON,
+			success: function (msg) {
+				
+				var id = msg.organization_num;
+				console.log(msg);
+				
+				//populate values
+				
+				var labname = msg.organization_name;
+				if(msg.department!=""){
+					labname += ' - '+msg.department;
+				}
+				
+				var selectedObject = $('#objselect').find(":selected").val();
+				if(selectedObject=="analytical_method"){
+					$('#method_lab').val(labname);
+					$('#method_lab_hidden').val(msg.organization_num);
+				}else if(selectedObject=="chemical_analysis"){
+					$('#chemical_analysis_lab').val(labname);
+					$('#chemical_analysis_lab_hidden').val(msg.organization_num);
+				}else if(selectedObject=="expedition"){
+					$('#expedition_sponsor_organization').val(labname);
+					$('#expedition_hidden_sponsor_organization').val(msg.organization_num);
+				}
+				
+				$.fancybox.close(true);
+				$("#successmessage").html('Organization Saved Successfully.');
+				$("#successmessage").fadeIn();
+				$("#successmessage").fadeOut(2000);
+			},
+			error: function (err){
+				$("#errormessage").html('There was an error saving Organization.');
+				$("#errormessage").fadeIn();
+				$("#errormessage").fadeOut(2000);
+			}
+		});
+
+	}else{
+		errors="Error!\n"+errors;
+		alert(errors);
+	}
+}
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+/*
+new_equipment_name
+new_equipment_type_num
+new_equipment_description
+new_equipment_model_id
+new_equipment_serial_num
+new_equipment_vendor_id
+new_equipment_purchase_date
+new_equipment_photo_file_name
+new_equipment_owner_id
+*/
+
+
+var showNewEquip = function(){
+
+	$('#new_equipment_name').val("");
+	$("#new_equipment_type_num").val("");
+	$('#new_equipment_description').val("");
+	$('#new_equipment_model_id').val("");
+	$('#new_equipment_serial_num').val("");
+	$('#new_equipment_vendor_id').val("");
+	$('#new_equipment_purchase_date').val("");
+	$('#new_equipment_photo_file_name').val("");
+	$('#new_equipment_owner_id').val("");
+
+	$.fancybox.open({src :'#add_equipment_hidden',type:'inline'});
+
+}
+
+var checkNewEquip = function(){
+	var errors="";
+	var errordelim="";
+
+	//check for integers and existence of required fields.
+	if($('#new_equipment_name').val()==""){
+		errors += errordelim+"Equipment name cannot be blank.";
+		errordelim = "\n";
+	}
+	
+	if($('#new_equipment_type_num').val()==""){
+		errors += errordelim+"Equipment type cannot be blank.";
+		errordelim = "\n";
+	}
+	
+	if($('#new_equipment_model_id').val()!=""){
+		if(!isInt($('#new_equipment_model_id').val())){
+			errors += errordelim+"Model ID can only be an integer.";
+			errordelim = "\n";
+		}
+	}
+
+	if($('#new_equipment_serial_num').val()!=""){
+		if(!isInt($('#new_equipment_serial_num').val())){
+			errors += errordelim+"Serial number can only be an integer.";
+			errordelim = "\n";
+		}
+	}
+	
+	return errors;
+	
+}
+
+var saveNewEquip = function(){
+	var errors = checkNewEquip();
+	if(errors==""){
+
+		/*
+		equipment_num
+
+		new_equipment_name
+		new_equipment_type_num
+		new_equipment_description
+		new_equipment_model_id
+		new_equipment_serial_num
+		new_equipment_vendor_id
+		new_equipment_purchase_date
+		new_equipment_photo_file_name
+		new_equipment_owner_id
+
+		equipment_name
+		equipment_type_num
+		equipment_description
+		model_id
+		equipment_serial_num
+		equipment_vendor_id
+		equipment_phurchase_date
+		equipment_photo_file_name
+		equipment_owner_id
+		*/
+
+		var data = {};
+		data.equipment_name = $('#new_equipment_name').val();
+		data.equipment_type_num = $('#new_equipment_type_num').val();
+		data.equipment_description = $('#new_equipment_description').val();
+		data.model_id = $('#new_equipment_model_id').val();
+		data.equipment_serial_num = $('#new_equipment_serial_num').val();
+		data.equipment_vendor_id = $('#new_equipment_vendor_id').val();
+		data.equipment_phurchase_date = $('#new_equipment_purchase_date').val();
+		data.equipment_photo_file_name = $('#new_equipment_photo_file_name').val();
+		data.equipment_owner_id = $('#new_equipment_owner_id').val();
+
+		var saveJSON = JSON.stringify(data);
+		
+		//console.log(saveJSON);
+
+		
+		
+		var url = "/REST/equipment";
+		
+		$.ajax({
+			type: "POST",
+			url: url,
+			contentType: "application/json",
+			data: saveJSON,
+			success: function (msg) {
+				
+				var id = msg.equipment_num;
+				console.log(msg);
+				
+				//populate values
+				var selectedObject = $('#objselect').find(":selected").val();
+				if(selectedObject=="chemical_analysis"){
+					$('#chemical_analysis_equipment').val(msg.equipment_name);
+					$('#chemical_analysis_equipment_hidden').val(msg.equipment_num);
+				}else if(selectedObject=="expedition"){
+					//figure out first blank equipment
+					var eqnums = ["1","2","3","4","5","6","7","8","9"];
+					var go_on="yes";
+					_.each(eqnums, function(num){
+						if(go_on=="yes"){
+							if($('#expedition_hidden_equipment'+num).val()==""){
+								$('#expedition_hidden_equipment'+num).val(msg.equipment_num);
+								$('#expedition_equipment'+num).val(msg.equipment_name);
+								$('#expedition_equipment'+num).show();
+								go_on="no";
+							}
+						}
+					});
+
+
+
+
+
+				}
+				
+				$.fancybox.close(true);
+				$("#successmessage").html('Equipment Saved Successfully.');
+				$("#successmessage").fadeIn();
+				$("#successmessage").fadeOut(2000);
+			},
+			error: function (err){
+				$("#errormessage").html('There was an error saving Equipment.');
+				$("#errormessage").fadeIn();
+				$("#errormessage").fadeOut(2000);
+			}
+		});
+		
+		
+
+	}else{
+		errors="Error!\n"+errors;
+		alert(errors);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var showNewMeth = function(){
+
+	$('#new_method_name').val("");
+	$('#new_method_type_num').val("");
+	$('#new_method_short_name').val("");
+	$('#new_method_lab').val("");
+	$('#new_method_description').val("");
+	$('#new_method_link').val("");
+
+	$.fancybox.open({src :'#add_analytical_method_hidden',type:'inline'});
+
+}
+
+var checkNewMeth = function(){
+	var errors="";
+	var errordelim="";
+
+	//check for integers and existence of required fields.
+	if($('#new_method_name').val()==""){
+		errors += errordelim+"Method name cannot be blank.";
+		errordelim = "\n";
+	}
+
+	if($('#new_method_type_num').val()==""){
+		errors += errordelim+"Method type cannot be blank.";
+		errordelim = "\n";
+	}
+
+	if($('#new_method_short_name').val()==""){
+		errors += errordelim+"Method short name cannot be blank.";
+		errordelim = "\n";
+	}
+	
+	return errors;
+	
+}
+
+var saveNewMeth = function(){
+	var errors = checkNewMeth();
+	if(errors==""){
+
+		/*
+		method_num
+
+		method_type_num
+		method_code
+		method_name
+		method_description
+		method_link
+		organization_num
+
+		new_method_type_num
+		new_method_short_name
+		new_method_name
+		new_method_description
+		new_method_link
+		new_method_lab
+		*/
+
+		var data = {};
+		data.method_type_num = $('#new_method_type_num').val();
+		data.method_code = $('#new_method_short_name').val();
+		data.method_name = $('#new_method_name').val();
+		data.method_description = $('#new_method_description').val();
+		data.method_link = $('#new_method_link').val();
+		data.organization_num = $('#new_method_lab_hidden').val();
+
+		var saveJSON = JSON.stringify(data);
+		
+		console.log(saveJSON);
+
+		var url = "/REST/method";
+		
+		//chemical_analysis_method
+		//chemical_analysis_method_hidden
+		
+		
+		$.ajax({
+			type: "POST",
+			url: url,
+			contentType: "application/json",
+			data: saveJSON,
+			success: function (msg) {
+				
+				var id = msg.method_num;
+				console.log(msg);
+				
+				//populate values
+				var selectedObject = $('#objselect').find(":selected").val();
+				if(selectedObject=="chemical_analysis"){
+					$('#chemical_analysis_method').val(msg.method_name);
+					$('#chemical_analysis_method_hidden').val(msg.method_num);
+				}else if(selectedObject=="ddd"){
+					//$('#chemical_analysis_lab').val(labname);
+					//$('#chemical_analysis_lab_hidden').val(msg.organization_num);
+				}
+				
+				$.fancybox.close(true);
+				$("#successmessage").html('Method Saved Successfully.');
+				$("#successmessage").fadeIn();
+				$("#successmessage").fadeOut(2000);
+			},
+			error: function (err){
+				$("#errormessage").html('There was an error saving Method.');
+				$("#errormessage").fadeIn();
+				$("#errormessage").fadeOut(2000);
+			}
+		});
+		
+		
+
+	}else{
+		errors="Error!\n"+errors;
+		alert(errors);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+chemical_analysis_types=[];
+chemical_analysis_types.push({num:20,name:"Specimen Analysis"});
+chemical_analysis_types.push({num:28,name:"Blank Measurement"});
+chemical_analysis_types.push({num:29,name:"Standard Specimen Analysis"});
+chemical_analysis_types.push({num:30,name:"Reference Analysis"});
+chemical_analysis_types.push({num:31,name:"Analytical Uncertainty"});
 
 var equipment_types=[];
 equipment_types.push({num:1,name:"Ship"});
@@ -1464,13 +2028,30 @@ method_types.push({num:6,name:"Sample Preservation"});
 method_types.push({num:7,name:"Sample Fractionation"});
 method_types.push({num:8,name:"Navigation"});
 
-chemical_analysis_types=[];
-chemical_analysis_types.push({num:20,name:"Specimen Analysis"});
-chemical_analysis_types.push({num:28,name:"Blank Measurement"});
-chemical_analysis_types.push({num:29,name:"Standard Specimen Analysis"});
-chemical_analysis_types.push({num:30,name:"Reference Analysis"});
-chemical_analysis_types.push({num:31,name:"Analytical Uncertainty"});
-
+var organization_types=[];
+organization_types.push({num:1,name:"Not Applicable"});
+organization_types.push({num:2,name:"Unknown"});
+organization_types.push({num:3,name:"Association"});
+organization_types.push({num:4,name:"Center"});
+organization_types.push({num:5,name:"College"});
+organization_types.push({num:6,name:"Company"});
+organization_types.push({num:7,name:"Consortium"});
+organization_types.push({num:8,name:"Department"});
+organization_types.push({num:9,name:"Division"});
+organization_types.push({num:10,name:"Foundation"});
+organization_types.push({num:11,name:"Funding Organization"});
+organization_types.push({num:12,name:"Government Agency"});
+organization_types.push({num:13,name:"Hospital"});
+organization_types.push({num:14,name:"Institute"});
+organization_types.push({num:15,name:"Laboratory"});
+organization_types.push({num:16,name:"Library"});
+organization_types.push({num:17,name:"Museum"});
+organization_types.push({num:18,name:"Program"});
+organization_types.push({num:19,name:"Publisher"});
+organization_types.push({num:20,name:"Research organization"});
+organization_types.push({num:21,name:"School"});
+organization_types.push({num:22,name:"Student Organization"});
+organization_types.push({num:23,name:"University"});
 
 uncertainty_types=[];
 uncertainty_types.push({num:1,name:"1S"});
@@ -1488,16 +2069,6 @@ uncertainty_types.push({num:11,name:"REL"});
 uncertainty_types.push({num:12,name:"S"});
 uncertainty_types.push({num:13,name:"S-ABS"});
 uncertainty_types.push({num:14,name:"S-REL"});
-
-
-
-
-
-
-
-
-
-
 
 
 function isInt(value) {
