@@ -1991,7 +1991,7 @@ var saveNewMeth = function(){
 
 
 
-<<<<<<< HEAD
+
 var buildSelect = function(elementid,myvar){
 
 	$('#'+elementid)
@@ -2034,13 +2034,13 @@ var countries = fetchVocab("/vocabulary/country");
 var states = fetchVocab("/vocabulary/state");
 
 
-
+/*
 buildSelect('new_organization_state',states);
 buildSelect('new_organization_country',countries);
 buildSelect('new_organization_type',organization_types);
 buildSelect('new_equipment_type_num',equipment_types);
 buildSelect('new_method_type_num',method_types);
-
+*/
 
 
 
@@ -2060,93 +2060,4 @@ function isInt(value) {
 
 
 
-
-
-
-=======
->>>>>>> parent of 54430ae... Moved all selects to controlled vocabulary services
-
-
-
-chemical_analysis_types=[];
-chemical_analysis_types.push({num:20,name:"Specimen Analysis"});
-chemical_analysis_types.push({num:28,name:"Blank Measurement"});
-chemical_analysis_types.push({num:29,name:"Standard Specimen Analysis"});
-chemical_analysis_types.push({num:30,name:"Reference Analysis"});
-chemical_analysis_types.push({num:31,name:"Analytical Uncertainty"});
-
-var equipment_types=[];
-equipment_types.push({num:1,name:"Ship"});
-equipment_types.push({num:2,name:"AUV"});
-equipment_types.push({num:3,name:"HOV"});
-equipment_types.push({num:4,name:"ROV"});
-equipment_types.push({num:5,name:"Submersible / HOV"});
-equipment_types.push({num:6,name:"LaboratoryInstrument"});
-
-var expedition_types=[];
-//expedition_types.push({num:1,name:"Not Applicable"});
-//expedition_types.push({num:2,name:"Unknown"});
-expedition_types.push({num:3,name:"Cruise"});
-expedition_types.push({num:11,name:"Expedition"});
-expedition_types.push({num:12,name:"Field Activity"});
-expedition_types.push({num:19,name:"Site Visit"});
-expedition_types.push({num:25,name:"Submersible Launch"});
-
-var method_types=[];
-method_types.push({num:1,name:"Not Applicable"});
-method_types.push({num:2,name:"Unknown"});
-method_types.push({num:3,name:"Lab Analyses"});
-method_types.push({num:4,name:"Sampling Technique"});
-method_types.push({num:5,name:"Sample Preparation"});
-method_types.push({num:6,name:"Sample Preservation"});
-method_types.push({num:7,name:"Sample Fractionation"});
-method_types.push({num:8,name:"Navigation"});
-
-var organization_types=[];
-organization_types.push({num:1,name:"Not Applicable"});
-organization_types.push({num:2,name:"Unknown"});
-organization_types.push({num:3,name:"Association"});
-organization_types.push({num:4,name:"Center"});
-organization_types.push({num:5,name:"College"});
-organization_types.push({num:6,name:"Company"});
-organization_types.push({num:7,name:"Consortium"});
-organization_types.push({num:8,name:"Department"});
-organization_types.push({num:9,name:"Division"});
-organization_types.push({num:10,name:"Foundation"});
-organization_types.push({num:11,name:"Funding Organization"});
-organization_types.push({num:12,name:"Government Agency"});
-organization_types.push({num:13,name:"Hospital"});
-organization_types.push({num:14,name:"Institute"});
-organization_types.push({num:15,name:"Laboratory"});
-organization_types.push({num:16,name:"Library"});
-organization_types.push({num:17,name:"Museum"});
-organization_types.push({num:18,name:"Program"});
-organization_types.push({num:19,name:"Publisher"});
-organization_types.push({num:20,name:"Research organization"});
-organization_types.push({num:21,name:"School"});
-organization_types.push({num:22,name:"Student Organization"});
-organization_types.push({num:23,name:"University"});
-
-uncertainty_types=[];
-uncertainty_types.push({num:1,name:"1S"});
-uncertainty_types.push({num:3,name:"1S-ABS"});
-uncertainty_types.push({num:2,name:"1S REL"});
-uncertainty_types.push({num:4,name:"1S-REL"});
-uncertainty_types.push({num:5,name:"2S"});
-uncertainty_types.push({num:6,name:"2S-ABS"});
-uncertainty_types.push({num:7,name:"2S-REL"});
-uncertainty_types.push({num:8,name:"3S-REL"});
-uncertainty_types.push({num:9,name:"ABS"});
-uncertainty_types.push({num:10,name:"AJ"});
-uncertainty_types.push({num:15,name:"per amu"});
-uncertainty_types.push({num:11,name:"REL"});
-uncertainty_types.push({num:12,name:"S"});
-uncertainty_types.push({num:13,name:"S-ABS"});
-uncertainty_types.push({num:14,name:"S-REL"});
-
-
-function isInt(value) {
-  var x;
-  return isNaN(value) ? !1 : (x = parseFloat(value), (0 | x) === x);
-}
 
