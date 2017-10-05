@@ -530,14 +530,7 @@ function dumpVar($var){
 	</div>
 
 
-	<script>
-		buildSelect('new_organization_state',states);
-		buildSelect('new_organization_country',countries);
-		buildSelect('new_organization_type',organization_types);
-		buildSelect('new_equipment_type_num',equipment_types);
-		buildSelect('new_method_type_num',method_types);
 
-	</script>
 
 
 

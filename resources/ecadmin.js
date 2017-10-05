@@ -2047,6 +2047,17 @@ var uncertainty_types = fetchVocab("/vocabulary/uncertaintyType");
 var countries = fetchVocab("/vocabulary/country");
 var states = fetchVocab("/vocabulary/state");
 
+
+
+buildSelect('new_organization_state',states);
+buildSelect('new_organization_country',countries);
+buildSelect('new_organization_type',organization_types);
+buildSelect('new_equipment_type_num',equipment_types);
+buildSelect('new_method_type_num',method_types);
+
+
+
+
 function isInt(value) {
   var x;
   return isNaN(value) ? !1 : (x = parseFloat(value), (0 | x) === x);
