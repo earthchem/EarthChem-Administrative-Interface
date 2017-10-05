@@ -45,7 +45,19 @@ class EquipmentController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or equipment_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.equipment where lower(equipment_name) like '%$querystring%' $numquery order by equipment_name;");
+					$query = "select * from earthchem.equipment eq, earthchem.equipment_type et 
+													where 
+													eq.equipment_type_num = et.equipment_type_num and
+													(
+													lower(equipment_name) like '%$querystring%' or
+													lower(equipment_type_name) = '$querystring'
+													$numquery 
+													)
+													order by equipment_name;";
+													
+					//echo $query;exit();
+					
+					$rows = $this->db->get_results($query);
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
