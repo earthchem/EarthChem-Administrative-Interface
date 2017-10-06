@@ -189,6 +189,29 @@ var doNew = function() {
 	
 		$.get("/templates/"+selectedObject+"_dynamic.html", function(data) {
 			$("#rightwrapper").html(data);
+
+			if(selectedObject=="equipment"){
+
+				buildSelect('equipment_type_num',vocabs.equipment_types);
+
+			}else if(selectedObject=="expedition"){
+
+				buildSelect('expedition_type_num',vocabs.expedition_types);
+
+			}else if(selectedObject=="analytical_method"){
+
+				buildSelect('method_type_num',vocabs.method_types);
+
+			}else if(selectedObject=="chemical_analysis"){
+
+				buildSelect('chemical_analysis_type_num',vocabs.chemical_analysis_types);
+
+			}else if(selectedObject=="reporting_variable"){
+
+				buildSelect('reporting_variable_uncertainty_type',vocabs.uncertainty_types);
+
+			}
+
 			showBottomButtons();
 		});
 	
@@ -235,7 +258,7 @@ var showStatic = function(id) {
 
 					//translate equipment_type_num
 					var show_equipment_type = "";
-					_.each(equipment_types, function(eqtype){
+					_.each(vocabs.equipment_types, function(eqtype){
 						if(eqtype.num==data.equipment_type_num){
 							show_equipment_type=eqtype.name;
 						}
@@ -255,7 +278,7 @@ var showStatic = function(id) {
 
 					//translate expedition_type_num
 					var show_expedition_type_num = "";
-					_.each(expedition_types, function(extype){
+					_.each(vocabs.expedition_types, function(extype){
 						if(extype.num==data.expedition_type_num){
 							show_expedition_type_num=extype.name;
 						}
@@ -309,7 +332,7 @@ var showStatic = function(id) {
 
 					//translate method_type_num
 					var show_method_type_num = "";
-					_.each(method_types, function(methtype){
+					_.each(vocabs.method_types, function(methtype){
 						if(methtype.num==data.method_type_num){
 							show_method_type_num=methtype.name;
 						}
@@ -349,7 +372,7 @@ var showStatic = function(id) {
 					$('#chemical_analysis_action_name').html(data.chemical_analysis_name);
 
 					var show_chemical_analysis_type_num = "";
-					_.each(chemical_analysis_types, function(ctype){
+					_.each(vocabs.chemical_analysis_types, function(ctype){
 						if(ctype.num==data.chemical_analysis_type_num){
 							show_chemical_analysis_type_num=ctype.name;
 						}
@@ -434,7 +457,7 @@ var showStatic = function(id) {
 					
 					//uncertainty_types
 					var show_uncertainty = "";
-					_.each(uncertainty_types, function(ctype){
+					_.each(vocabs.uncertainty_types, function(ctype){
 						if(ctype.num==data.uncertainty_type){
 							show_uncertainty=ctype.name;
 						}
@@ -499,11 +522,15 @@ var doEdit = function() {
 					$('#equipment_phurchase_order_num').val(data.equipment_phurchase_order_num);
 					$('#equipment_photo_file_name').val(data.equipment_photo_file_name);
 					$('#equipment_description').val(data.equipment_description);
-				
+					
+					//build select
+					buildSelect('equipment_type_num',vocabs.equipment_types);
+					
 					//turn on appropriate equipment type select value
 					//$('#equipment_type_num option[value=data.equipment_type_num]').prop('selected', true)
 					//$('#equipment_type_num option[value=data.equipment_type_num]').attr("selected", "selected");
 					$("#equipment_type_num").children('[value='+data.equipment_type_num+']').attr('selected', true);
+					
 				});
 			
 			}else if(selectedObject=="expedition"){
@@ -513,6 +540,9 @@ var doEdit = function() {
 					//console.log(JSON.stringify(data));
 					$('#expeditionid').val(data.expedition_num);
 					$("#expedition_name").val(data.expedition_name);
+
+					//build select
+					buildSelect('expedition_type_num',vocabs.expedition_types);
 
 					$("#expedition_type_num").children('[value='+data.expedition_type_num+']').attr('selected', true);
 					
@@ -570,6 +600,8 @@ var doEdit = function() {
 					$("#method_name").val(data.method_name);
 					$("#method_short_name").val(data.method_code);
 
+					//build select
+					buildSelect('method_type_num',vocabs.method_types);
 
 					$("#method_type_num").children('[value='+data.method_type_num+']').attr('selected', true);
 
@@ -603,6 +635,9 @@ var doEdit = function() {
 					
 					$('#chemical_analysis_action_name').val(data.chemical_analysis_name);
 
+					//build select
+					buildSelect('chemical_analysis_type_num',vocabs.chemical_analysis_types);
+					
 					$("#chemical_analysis_type_num").children('[value='+data.chemical_analysis_type_num+']').attr('selected', true);
 					
 					//translate these four
@@ -690,7 +725,8 @@ var doEdit = function() {
 						});
 					}
 					
-
+					//build select
+					buildSelect('reporting_variable_uncertainty_type',vocabs.uncertainty_types);
 					
 					$("#reporting_variable_uncertainty_type").children('[value='+data.uncertainty_type+']').attr('selected', true);
 
@@ -698,27 +734,6 @@ var doEdit = function() {
 					$('#reporting_variable_description').val(data.description);
 
 				});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2063,7 +2078,12 @@ fetchVocab("/vocabulary/chemicalAnalysisType","chemical_analysis_types").then(fu
 					fetchVocab("/vocabulary/uncertaintyType","uncertainty_types").then(function(){
 						fetchVocab("/vocabulary/country","countries").then(function(){
 							fetchVocab("/vocabulary/state","states").then(function(){
-								console.log(vocabs.states);
+								//console.log(vocabs.states);
+								buildSelect('new_organization_state',vocabs.states);
+								buildSelect('new_organization_country',vocabs.countries);
+								buildSelect('new_organization_type',vocabs.organization_types);
+								buildSelect('new_equipment_type_num',vocabs.equipment_types);
+								buildSelect('new_method_type_num',vocabs.method_types);
 							});
 						});
 					});
@@ -2119,11 +2139,12 @@ var states = fetchVocab("/vocabulary/state");
 */
 
 /*
-buildSelect('new_organization_state',states);
-buildSelect('new_organization_country',countries);
+//buildSelect('new_organization_state',states);
+//buildSelect('new_organization_country',countries);
 buildSelect('new_organization_type',organization_types);
 buildSelect('new_equipment_type_num',equipment_types);
 buildSelect('new_method_type_num',method_types);
+
 */
 
 
