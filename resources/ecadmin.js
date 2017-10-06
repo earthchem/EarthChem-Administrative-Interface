@@ -2009,19 +2009,103 @@ var buildSelect = function(elementid,myvar){
 	});
 }
 
-var fetchVocab = function(url){ //fetches vocabularies from earthchem vocabulary services
+var sssfetchVocab = function(url){ //fetches vocabularies from earthchem vocabulary services
 	var returnarray=[];
 	$.getJSON(url, function(data){
-		
 		var results = data.results;
 		_.each(results, function(result){
 			returnarray.push({num:result.id,name:result.prefLabel.en});
 		});
-	
 	});
 	
 	return returnarray;
 }
+
+
+
+
+
+function fetchVocab(url,name) {
+	// Return a new promise.
+
+	return new Promise(function(resolve, reject) {
+		
+		var returnarray=[];
+		$.getJSON(url, function(data){
+			var results = data.results;
+			_.each(results, function(result){
+				returnarray.push({num:result.id,name:result.prefLabel.en});
+			});
+			//console.log("name: "+name);
+			//console.log("returnarray: "+returnarray);
+			vocabs[name]=returnarray;
+			//vocabs['name']="blah";
+			//vocabs=["foobar"];
+			resolve();
+		});
+	});
+}
+
+
+
+
+
+
+
+console.log(vocabs);
+
+var vocabs = {};
+fetchVocab("/vocabulary/chemicalAnalysisType","chemical_analysis_types").then(function(){
+	fetchVocab("/vocabulary/equipmentType","equipment_types").then(function(){
+		fetchVocab("/vocabulary/expeditionType","expedition_types").then(function(){
+			fetchVocab("/vocabulary/methodType","method_types").then(function(){
+				fetchVocab("/vocabulary/organizationType","organization_types").then(function(){
+					fetchVocab("/vocabulary/uncertaintyType","uncertainty_types").then(function(){
+						fetchVocab("/vocabulary/country","countries").then(function(){
+							fetchVocab("/vocabulary/state","states").then(function(){
+								console.log(vocabs.states);
+							});
+						});
+					});
+				});
+			});
+		});
+	});
+});
+
+
+
+
+//fetchVocab("/vocabulary/chemicalAnalysisType","chemical_analysis_types");
+//fetchVocab("/vocabulary/equipmentType","equipment_types");
+//fetchVocab("/vocabulary/expeditionType","expedition_types");
+//fetchVocab("/vocabulary/methodType","method_types");
+//fetchVocab("/vocabulary/organizationType","organization_types");
+//fetchVocab("/vocabulary/uncertaintyType","uncertainty_types");
+//fetchVocab("/vocabulary/country","countries");
+//fetchVocab("/vocabulary/state","states");
+
+
+/*
+
+chemical_analysis_types
+equipment_types
+expedition_types
+method_types
+organization_types
+uncertainty_types
+countries
+states
+
+/vocabulary/chemicalAnalysisType
+/vocabulary/equipmentType
+/vocabulary/expeditionType
+/vocabulary/methodType
+/vocabulary/organizationType
+/vocabulary/uncertaintyType
+/vocabulary/country
+/vocabulary/state
+
 
 //fetch all vocabularies
 var chemical_analysis_types = fetchVocab("/vocabulary/chemicalAnalysisType");
@@ -2032,7 +2116,7 @@ var organization_types = fetchVocab("/vocabulary/organizationType");
 var uncertainty_types = fetchVocab("/vocabulary/uncertaintyType");
 var countries = fetchVocab("/vocabulary/country");
 var states = fetchVocab("/vocabulary/state");
-
+*/
 
 /*
 buildSelect('new_organization_state',states);
@@ -2057,7 +2141,33 @@ function isInt(value) {
 
 
 
+/*
 
+var fetchVocab = function(url){ //fetches vocabularies from earthchem vocabulary services
+	var returnarray=[];
+	$.getJSON(url, function(data){
+		
+		var results = data.results;
+		_.each(results, function(result){
+			returnarray.push({num:result.id,name:result.prefLabel.en});
+		});
+	
+	});
+	
+	return returnarray;
+}
+
+//fetch all vocabularies
+var chemical_analysis_types = fetchVocab("/vocabulary/chemicalAnalysisType");
+var equipment_types = fetchVocab("/vocabulary/equipmentType");
+var expedition_types = fetchVocab("/vocabulary/expeditionType");
+var method_types = fetchVocab("/vocabulary/methodType");
+var organization_types = fetchVocab("/vocabulary/organizationType");
+var uncertainty_types = fetchVocab("/vocabulary/uncertaintyType");
+var countries = fetchVocab("/vocabulary/country");
+var states = fetchVocab("/vocabulary/state");
+
+*/
 
 
 
