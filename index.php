@@ -111,6 +111,10 @@ function dumpVar($var){
 						There was an error saving!
 					</div>
 					
+					<div id="loadingmessage">
+						<img src="/resources/images/iedaloading.gif" width="30px"> Loading Data...
+					</div>
+					
 					<div id="rightwrapper">
 					
 

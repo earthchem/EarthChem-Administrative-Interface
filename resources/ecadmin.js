@@ -2378,6 +2378,7 @@ function pageLoad(){ //check for GET variable "page" and pre-load content
     		doNew();
 		}
     }
+    $('#loadingmessage').hide();
 }
 
 /*
