@@ -2341,6 +2341,94 @@ function isInt(value) {
 
 
 
+function pageLoad(){ //check for GET variable "page" and pre-load content
+    var landingpage = findGetParameter("page");
+    if(landingpage){
+    	
+    	landingpage=landingpage.toLowerCase()
+    	
+    	if(landingpage=="analyticalmethod"){
+    		$("#objselect").children('[value=\'analytical_method\']').attr('selected', true);
+    		updateRightSide();
+    	}else if(landingpage=="chemicalanalysis"){
+    		$("#objselect").children('[value=\'chemical_analysis\']').attr('selected', true);
+    		updateRightSide();
+    	}else if(landingpage=="equipment"){
+    		$("#objselect").children('[value=\'equipment\']').attr('selected', true);
+    		updateRightSide();
+    	}else if(landingpage=="expedition"){
+    		$("#objselect").children('[value=\'expedition\']').attr('selected', true);
+    		updateRightSide();
+    	}else if(landingpage=="analyticalmethod_new"){
+    		$("#objselect").children('[value=\'analytical_method\']').attr('selected', true);
+    		updateRightSide();
+    		doNew();
+    	}else if(landingpage=="chemicalanalysis_new"){
+    		$("#objselect").children('[value=\'chemical_analysis\']').attr('selected', true);
+    		updateRightSide();
+    		doNew();
+    	}else if(landingpage=="equipment_new"){
+    		$("#objselect").children('[value=\'equipment\']').attr('selected', true);
+    		updateRightSide();
+    		doNew();
+    	}else if(landingpage=="expedition_new"){
+    		$("#objselect").children('[value=\'expedition\']').attr('selected', true);
+    		updateRightSide();
+    		doNew();
+		}
+    }
+}
+
+if(window.addEventListener){
+	window.addEventListener('load',pageLoad,false); //W3C
+}
+else{
+	window.attachEvent('onload',pageLoad); //IE
+}
+
+
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    var items = location.search.substr(1).split("&");
+    for (var index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
