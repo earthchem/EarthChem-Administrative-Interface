@@ -60,7 +60,7 @@ var hideBottomButtons = function() {
 }
 
 var showDeleteButton = function() {
-	$('#deletebutton').html('<button class="menubutton" onClick="doDeprecate();"><span>DELETE</span></button>');
+	$('#deletebutton').html('<button class="menubutton" onClick="doDeprecate();"><span>DEPRECATE</span></button>');
 }
 
 var showEditButton = function() {
@@ -77,7 +77,7 @@ var showSaveButton = function() {
 
 
 var hideDeleteButton = function() {
-	$('#deletebutton').html('<button class="menubuttonoff"><span>DELETE</span></button>');
+	$('#deletebutton').html('<button class="menubuttonoff"><span>DEPRECATE</span></button>');
 }
 
 var hideEditButton = function() {
