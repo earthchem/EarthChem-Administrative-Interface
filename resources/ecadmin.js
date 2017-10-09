@@ -2269,6 +2269,7 @@ fetchVocab("/vocabulary/chemicalAnalysisType","chemical_analysis_types").then(fu
 								buildSelect('new_organization_type',vocabs.organization_types);
 								buildSelect('new_equipment_type_num',vocabs.equipment_types);
 								buildSelect('new_method_type_num',vocabs.method_types);
+								pageLoad();
 							});
 						});
 					});
@@ -2379,13 +2380,15 @@ function pageLoad(){ //check for GET variable "page" and pre-load content
     }
 }
 
+/*
+deprecated due to vocabulary loading
 if(window.addEventListener){
 	window.addEventListener('load',pageLoad,false); //W3C
 }
 else{
 	window.attachEvent('onload',pageLoad); //IE
 }
-
+*/
 
 function findGetParameter(parameterName) {
     var result = null,
