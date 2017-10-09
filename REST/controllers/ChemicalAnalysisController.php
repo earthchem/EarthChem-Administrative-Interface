@@ -22,7 +22,7 @@ class ChemicalAnalysisController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid and status=1");
 
 				if($row->action_num){
 
@@ -49,11 +49,11 @@ class ChemicalAnalysisController extends RESTController
 						
 				}else{
 					header("Not Found", true, 404);
-					$data["Error"] = "Expedition $id not found.";
+					$data["Error"] = "Chemical Analysis $id not found.";
 				}
 			}else{
 				header("Not Found", true, 404);
-				$data["Error"] = "Expedition $id not found.";
+				$data["Error"] = "Chemical Analysis $id not found.";
 			}
 
         } else {
@@ -75,7 +75,8 @@ class ChemicalAnalysisController extends RESTController
 														act.organization_num,
 														act.action_description,
 														act.begin_date_time,
-														act.end_date_time, 
+														act.end_date_time,
+														act.status,
 													
 														(select method_name from earthchem.method where method_num = act.method_num) as method_name,
 														
@@ -100,6 +101,7 @@ class ChemicalAnalysisController extends RESTController
 													--or lower(lab_name) like '%$querystring%'
 													--or lower(method_name) like '%$querystring%'
 													--or lower(equipment_name) like '%$querystring%'
+													and status = 1
 													$numquery order by action_name
 													
 													
@@ -157,7 +159,40 @@ class ChemicalAnalysisController extends RESTController
     }
 
     public function deleteAction($request) {
-		//deprecate
+    
+        if(isset($request->url_elements[2])) {
+			
+			$id = $request->url_elements[2];
+			$searchid = (int)$id;
+
+			if(is_int($searchid) && $searchid!=0){
+				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+
+				if($row->action_num){
+
+					$id = (int)$request->url_elements[2];
+					
+					$this->db->query("update earthchem.action set status=0 where action_num = $searchid");
+
+					$data['Success']="true";
+	
+				}else{
+					header("Not Found", true, 404);
+					$data["Error"] = "Chemical Analysis $id not found.";
+				}
+			}else{
+				header("Not Found", true, 404);
+				$data["Error"] = "Chemical Analysis $id not found.";
+			}
+
+
+        } else {
+
+			header("Bad Request", true, 400);
+			$data["Error"] = "Invalid Request.";
+
+        }
+        return $data;
     }
 
     public function postAction($request) {

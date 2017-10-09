@@ -60,7 +60,7 @@ var hideBottomButtons = function() {
 }
 
 var showDeleteButton = function() {
-	$('#deletebutton').html('<button class="menubutton" onClick="doDelete();"><span>DELETE</span></button>');
+	$('#deletebutton').html('<button class="menubutton" onClick="doDeprecate();"><span>DELETE</span></button>');
 }
 
 var showEditButton = function() {
@@ -1256,6 +1256,191 @@ var doSave = function() {
 	}
 
 }
+
+
+
+var doDeprecate = function() {
+
+	var result = confirm("Are you sure you want to deprecate this item?");
+	if (result) {	
+
+		var selectedObject = $('#objselect').find(":selected").val();
+
+		if(selectedObject!=""){
+	
+			if(selectedObject=="equipment"){
+
+				var id = $('#equipmentid').val();
+			
+				if(id!=""){
+			
+					console.log(id);
+				
+					//deprecate (DELETE)
+					var url = "/REST/equipment/"+id;
+
+					$.ajax({
+						type: "DELETE",
+						url: url,
+						contentType: "application/json",
+						success: function (msg) {
+							doSearch();
+							$("#successmessage").html('Equipment deprecated Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error deprecating Equipment.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}
+			
+			}else if(selectedObject=="expedition"){
+
+				var id = $('#expeditionid').val();
+			
+				if(id!=""){
+			
+					console.log(id);
+				
+					//deprecate (DELETE)
+					var url = "/REST/expedition/"+id;
+
+					$.ajax({
+						type: "DELETE",
+						url: url,
+						contentType: "application/json",
+						success: function (msg) {
+							doSearch();
+							$("#successmessage").html('Expedition deprecated Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error deprecating Expedition.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}
+				
+			}else if(selectedObject=="analytical_method"){
+
+				var id = $('#analytical_methodid').val();
+
+				if(id!=""){
+			
+					console.log(id);
+				
+					//deprecate (DELETE)
+					var url = "/REST/method/"+id;
+
+					$.ajax({
+						type: "DELETE",
+						url: url,
+						contentType: "application/json",
+						success: function (msg) {
+							doSearch();
+							$("#successmessage").html('Method deprecated Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error deprecating Method.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}
+				
+
+
+			}else if(selectedObject=="chemical_analysis"){
+
+				var id = $('#chemical_analysisid').val();
+
+				if(id!=""){
+			
+					console.log(id);
+				
+					//deprecate (DELETE)
+					var url = "/REST/chemicalanalysis/"+id;
+
+					$.ajax({
+						type: "DELETE",
+						url: url,
+						contentType: "application/json",
+						success: function (msg) {
+							doSearch();
+							$("#successmessage").html('Chemical Analysis deprecated successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error deprecating Chemical Analysis.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}
+				
+			}else if(selectedObject=="reporting_variable"){
+
+				var id = $('#reporting_variableid').val();
+
+				if(id!=""){
+			
+					console.log(id);
+				
+					//deprecate (DELETE)
+					var url = "/REST/resulttemplate/"+id;
+
+					$.ajax({
+						type: "DELETE",
+						url: url,
+						contentType: "application/json",
+						success: function (msg) {
+							doSearch();
+							$("#successmessage").html('Reporting Variable deprecated successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error deprecating Reporting Variable.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}
+
+			}
+
+		}else{
+
+		}
+
+		$("#rightwrapper").html("");
+		hideBottomButtons();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
 
 
 var checkForm = function() {

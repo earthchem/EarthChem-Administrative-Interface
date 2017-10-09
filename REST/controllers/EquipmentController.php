@@ -21,7 +21,7 @@ class EquipmentController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid");
+				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid and status = 1");
 
 				if($row->equipment_num){
 
@@ -53,6 +53,7 @@ class EquipmentController extends RESTController
 													lower(equipment_type_name) = '$querystring'
 													$numquery 
 													)
+													and status = 1
 													order by equipment_name;";
 													
 					//echo $query;exit();
@@ -116,7 +117,44 @@ class EquipmentController extends RESTController
     }
 
     public function deleteAction($request) {
-		//deprecate
+    
+        if(isset($request->url_elements[2])) {
+			
+			$id = $request->url_elements[2];
+			$searchid = (int)$id;
+
+			if(is_int($searchid) && $searchid!=0){
+				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid");
+
+				if($row->equipment_num){
+
+					$id = (int)$request->url_elements[2];
+
+
+					$this->db->query("
+										update earthchem.equipment set
+										status = 0
+										where equipment_num = $id
+									");
+
+					$data['Success']="true";
+	
+				}else{
+					header("Not Found", true, 404);
+					$data["Error"] = "Equipment $id not found.";
+				}
+			}else{
+				header("Not Found", true, 404);
+				$data["Error"] = "Equipment $id not found.";
+			}
+
+        } else {
+
+			header("Bad Request", true, 400);
+			$data["Error"] = "Invalid Request.";
+
+        }
+        return $data;
     }
 
     public function postAction($request) {

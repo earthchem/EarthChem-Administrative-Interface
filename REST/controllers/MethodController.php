@@ -21,7 +21,7 @@ class MethodController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.method where method_num = $searchid");
+				$row = $this->db->get_row("select * from earthchem.method where method_num = $searchid and status = 1");
 
 				if($row->method_num){
 
@@ -45,7 +45,7 @@ class MethodController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or method_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.method where lower(method_name) like '%$querystring%' $numquery order by method_name;");
+					$rows = $this->db->get_results("select * from earthchem.method where lower(method_name) like '%$querystring%' $numquery and status = 1 order by method_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -104,7 +104,43 @@ class MethodController extends RESTController
     }
 
     public function deleteAction($request) {
-		//deprecate
+    
+        if(isset($request->url_elements[2])) {
+			
+			$id = $request->url_elements[2];
+			$searchid = (int)$id;
+
+			if(is_int($searchid) && $searchid!=0){
+				$row = $this->db->get_row("select * from earthchem.method where method_num = $searchid");
+
+				if($row->method_num){
+
+					$id = (int)$request->url_elements[2];
+
+					$query = "update earthchem.method set
+										status = 0
+										where method_num = $id";
+
+					$this->db->query($query);
+
+					$data['Success']="true";
+	
+				}else{
+					header("Not Found", true, 404);
+					$data["Error"] = "Method $id not found.";
+				}
+			}else{
+				header("Not Found", true, 404);
+				$data["Error"] = "Method $id not found.";
+			}
+
+        } else {
+
+			header("Bad Request", true, 400);
+			$data["Error"] = "Invalid Request.";
+
+        }
+        return $data;
     }
 
     public function postAction($request) {

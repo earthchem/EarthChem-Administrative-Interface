@@ -22,7 +22,7 @@ class ExpeditionController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid and status = 1");
 
 				if($row->action_num){
 
@@ -92,7 +92,7 @@ class ExpeditionController extends RESTController
 					
 					$rows = $this->db->get_results("select * from earthchem.action where 
 													action_type_num in (3,11,12,25,19)
-													and lower(action_name) like '%$querystring%' $numquery order by action_name;");
+													and lower(action_name) like '%$querystring%' $numquery and status = 1 order by action_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -151,7 +151,43 @@ class ExpeditionController extends RESTController
     }
 
     public function deleteAction($request) {
-		//deprecate
+    
+        if(isset($request->url_elements[2])) {
+			
+			$id = $request->url_elements[2];
+			$searchid = (int)$id;
+
+			if(is_int($searchid) && $searchid!=0){
+				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+
+				if($row->action_num){
+
+					$id = (int)$request->url_elements[2];
+
+					$this->db->query("
+										update earthchem.action set
+										status = 0
+										where action_num = $id
+									");
+
+					$data['Success']="true";
+	
+				}else{
+					header("Not Found", true, 404);
+					$data["Error"] = "Equipment $id not found.";
+				}
+			}else{
+				header("Not Found", true, 404);
+				$data["Error"] = "Equipment $id not found.";
+			}
+
+        } else {
+
+			header("Bad Request", true, 400);
+			$data["Error"] = "Invalid Request.";
+
+        }
+        return $data;
     }
 
     public function postAction($request) {

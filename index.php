@@ -266,7 +266,7 @@ function dumpVar($var){
 
 						<div id="bottombuttons" style="text-align:center;padding-left:50px;display:none;">
 							<div id="editbutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doEdit();"><span>EDIT</span></button></div>
-							<div id="deletebutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doDelete();"><span>DELETE</span></button></div>
+							<div id="deletebutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doDeprecate();"><span>DELETE</span></button></div>
 							<div id="cancelbutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doCancel();"><span>CANCEL</span></button></div>
 							<div id="savebutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doSave();"><span>SAVE</span></button></div>
 						</div>
