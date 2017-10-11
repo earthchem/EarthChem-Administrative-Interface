@@ -42,14 +42,12 @@ function dumpVar($var){
 	<!-- Additional CSS Themes file - not required-->
 	<link rel="stylesheet" href="/resources/easyautocomplete/easy-autocomplete.themes.min.css"> 
 
-	
-
 </head>
 <body>
 	
 	<div id="wrapper">
 		<div class="clearfloat" id="header">
-		EarthChem Admin Interface
+		EarthChem Admin
 		</div>
 		<div class="loginbar">
 			Logged in as <?=$firstname?> <?=$lastname?> - <?=$email?> <a href="/logout">(Logout)</a>
@@ -84,18 +82,10 @@ function dumpVar($var){
 							<div><input type="text" id="searchbox" class="ectextbox" id="searchstring" size="10"></div>
 						</div>
 
-						
-
 						<div id="searchlist" style="padding-top:20px;">
-						
 
-
-
-						
 						</div>
-						
-						
-						
+
 						<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 					</div>
 
@@ -267,7 +257,6 @@ function dumpVar($var){
 					
 					</div>
 
-
 						<div id="bottombuttons" style="text-align:center;padding-left:50px;display:none;">
 							<div id="editbutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doEdit();"><span>EDIT</span></button></div>
 							<div id="deletebutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doDeprecate();"><span>DEPRECATE</span></button></div>
@@ -275,45 +264,17 @@ function dumpVar($var){
 							<div id="savebutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="doSave();"><span>SAVE</span></button></div>
 						</div>
 
-
 				</td>
 			
 			</tr>
 		
 		</table>
-		
-		
-		
 
-					<!---
-					<div id="leftBarContent">
-						<div class="selectlabel">Object:</div>
-						<div class="styled-select slate">
-						<select id="objselect">
-							<option value="">Select...</option>
-							<option value="equipment">Equipment</option>
-							<option value="expedition">Expedition</option>
-						</select>
-						</div>
-						<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-					</div>
-					--->
-
-
-
-
-		
 		</div>
 		
-
 	</div>
 
 	<script src="/resources/autocomplete_setups.js"></script>
-
-
-
-
-
 
 	<div style="display: none;" id="add_organization_hidden">
 		<div class="templateHeader">Add New Organization</div>
@@ -370,8 +331,6 @@ function dumpVar($var){
 				</td>
 			</tr>
 
-
-
 			<tr>
 				<td>Address:</td>
 				<td>
@@ -385,8 +344,6 @@ function dumpVar($var){
 				</td>
 			</tr>
 
-
-
 			</table>
 			
 			<div style="padding-top:30px;padding-left:150px;">
@@ -394,20 +351,9 @@ function dumpVar($var){
 				<div id="savemodalbutton" style="float:left;padding-right:20px;"><button class="menubutton" onClick="saveNewOrg();"><span>SAVE</span></button></div>
 			</div>
 
-
 		</div>
-		
 
-		
 	</div>
-
-
-
-
-
-
-
-
 
 	<div style="display: none;" id="add_equipment_hidden">
 
@@ -466,10 +412,6 @@ function dumpVar($var){
 		</div>
 
 	</div>
-
-
-
-
 
 	<div style="display: none;" id="add_analytical_method_hidden">
 	
@@ -532,28 +474,6 @@ function dumpVar($var){
 		</div>
 	
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>
