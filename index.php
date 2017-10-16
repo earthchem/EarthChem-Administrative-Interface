@@ -79,7 +79,7 @@ function dumpVar($var){
 						
 						<div id="searchboxwrapper" style="display:block;display:none;">
 							<div class="selectlabel" style="padding-top:10px;">Search:</div>
-							<div><input type="text" id="searchbox" class="ectextbox" id="searchstring" size="10"></div>
+							<div><input type="text" id="searchbox" class="ectextbox" id="searchstring" size="10"/></div>
 						</div>
 
 						<div id="searchlist" style="padding-top:20px;">

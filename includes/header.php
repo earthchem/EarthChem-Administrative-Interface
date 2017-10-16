@@ -47,7 +47,7 @@ function dumpVar($var){
 
 	<div id="wrapper">
 		<div class="clearfloat" id="header">
-		EarthChem Admin Interface
+		EarthChem Admin
 		</div>
 		
 		<!--
