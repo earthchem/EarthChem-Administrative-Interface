@@ -3,14 +3,14 @@
 /*
 ******************************************************************
 EC Admin REST API
-Chemical Analysis Controller
+Analysis Event Controller
 Author: Jason Ash (jasonash@ku.edu)
 Description: This controller enables the creation/retrieval of
 				chemical analysis entries in the ECDB.
 ******************************************************************
 */
 
-class ChemicalAnalysisController extends RESTController
+class AnalysisEventController extends RESTController
 {
  
     public function getAction($request) {
@@ -27,9 +27,9 @@ class ChemicalAnalysisController extends RESTController
 				if($row->action_num){
 
 						
-						$data['chemical_analysis_num']=$row->action_num;
-						$data['chemical_analysis_name']=$row->action_name;
-						$data['chemical_analysis_type_num']=$row->action_type_num;
+						$data['analysis_event_num']=$row->action_num;
+						$data['analysis_event_name']=$row->action_name;
+						$data['analysis_event_type_num']=$row->action_type_num;
 						$data['method_num']=$row->method_num;
 						$data['lab_num']=$row->organization_num;
 						$data['description']=$row->action_description;
@@ -49,11 +49,11 @@ class ChemicalAnalysisController extends RESTController
 						
 				}else{
 					header("Not Found", true, 404);
-					$data["Error"] = "Chemical Analysis $id not found.";
+					$data["Error"] = "Analysis Event $id not found.";
 				}
 			}else{
 				header("Not Found", true, 404);
-				$data["Error"] = "Chemical Analysis $id not found.";
+				$data["Error"] = "Analysis Event $id not found.";
 			}
 
         } else {
@@ -115,9 +115,9 @@ class ChemicalAnalysisController extends RESTController
 						foreach($rows as $row){
 							
 							$action_num = $row->action_num;
-							$thisresult['chemical_analysis_num']=$row->action_num;
-							$thisresult['chemical_analysis_name']=$row->action_name;
-							$thisresult['chemical_analysis_type_num']=$row->action_type_num;
+							$thisresult['analysis_event_num']=$row->action_num;
+							$thisresult['analysis_event_name']=$row->action_name;
+							$thisresult['analysis_event_type_num']=$row->action_type_num;
 							$thisresult['method_num']=$row->method_num;
 							$thisresult['lab_num']=$row->organization_num;
 							$thisresult['description']=$row->action_description;
@@ -178,11 +178,11 @@ class ChemicalAnalysisController extends RESTController
 	
 				}else{
 					header("Not Found", true, 404);
-					$data["Error"] = "Chemical Analysis $id not found.";
+					$data["Error"] = "Analysis Event $id not found.";
 				}
 			}else{
 				header("Not Found", true, 404);
-				$data["Error"] = "Chemical Analysis $id not found.";
+				$data["Error"] = "Analysis Event $id not found.";
 			}
 
 
@@ -206,8 +206,8 @@ class ChemicalAnalysisController extends RESTController
 
 			$p = $request->parameters;
 
-			if($p['chemical_analysis_name']!=""){ $action_name = "'".$p['chemical_analysis_name']."',"; }else{ $action_name = "null,"; }
-			if($p['chemical_analysis_type_num']!=""){ $action_type_num = $p['chemical_analysis_type_num'].","; }else{ $action_type_num = "null,"; }
+			if($p['analysis_event_name']!=""){ $action_name = "'".$p['analysis_event_name']."',"; }else{ $action_name = "null,"; }
+			if($p['analysis_event_type_num']!=""){ $action_type_num = $p['analysis_event_type_num'].","; }else{ $action_type_num = "null,"; }
 			if($p['description']!=""){ $action_description = "'".$p['description']."',"; }else{ $action_description = "null,"; }
 			if($p['begin_date_time']!=""){ $begin_date_time = "'".$p['begin_date_time']."',"; }else{ $begin_date_time = "null,"; }
 			if($p['end_date_time']!=""){ $end_date_time = "'".$p['end_date_time']."',"; }else{ $end_date_time = "null,"; }
@@ -215,7 +215,7 @@ class ChemicalAnalysisController extends RESTController
 			if($p['lab_num']!=""){ $organization_num = $p['lab_num'].","; }else{ $organization_num = "null,"; }
 
 			$id = $this->db->get_var("select nextval('earthchem.action_action_num_seq')");
-			$p['chemical_analysis_num']=$id;
+			$p['analysis_event_num']=$id;
 			
 			$query = "insert into earthchem.action (	action_num,
 						action_name,
@@ -290,18 +290,18 @@ class ChemicalAnalysisController extends RESTController
 
 					$p = $request->parameters;
 
-					$p['chemical_analysis_num']=$id;
+					$p['analysis_event_num']=$id;
 	
-					if($p['chemical_analysis_name']!="")$chemical_analysis_name = $p['chemical_analysis_name'];
-					if($p['chemical_analysis_type_num']!="")$chemical_analysis_type_num = $p['chemical_analysis_type_num'];
+					if($p['analysis_event_name']!="")$analysis_event_name = $p['analysis_event_name'];
+					if($p['analysis_event_type_num']!="")$analysis_event_type_num = $p['analysis_event_type_num'];
 					if($p['description']!="")$description = $p['description'];
 					if($p['begin_date_time']!="")$begin_date_time = $p['begin_date_time'];
 					if($p['end_date_time']!="")$end_date_time = $p['end_date_time'];
 					if($p['method_num']!="")$method_num = $p['method_num'];
 					if($p['lab_num']!="")$lab_num = $p['lab_num'];
 
-					if($chemical_analysis_name!=""){$query.="action_name = '$chemical_analysis_name',\n";}else{$query.="action_name = null,\n";}
-					if($chemical_analysis_type_num!=""){$query.="action_type_num = '$chemical_analysis_type_num',\n";}else{$query.="action_type_num = null,\n";}
+					if($analysis_event_name!=""){$query.="action_name = '$analysis_event_name',\n";}else{$query.="action_name = null,\n";}
+					if($analysis_event_type_num!=""){$query.="action_type_num = '$analysis_event_type_num',\n";}else{$query.="action_type_num = null,\n";}
 					if($description!=""){$query.="action_description = '$description',\n";}else{$query.="action_description = null,\n";}
 					if($begin_date_time!=""){$query.="begin_date_time = '$begin_date_time',\n";}else{$query.="begin_date_time = null,\n";}
 					if($end_date_time!=""){$query.="end_date_time = '$end_date_time',\n";}else{$query.="end_date_time = null,\n";}
@@ -353,11 +353,11 @@ class ChemicalAnalysisController extends RESTController
 	
 				}else{
 					header("Not Found", true, 404);
-					$data["Error"] = "Equipment $id not found.";
+					$data["Error"] = "Analysis Event $id not found.";
 				}
 			}else{
 				header("Not Found", true, 404);
-				$data["Error"] = "Equipment $id not found.";
+				$data["Error"] = "Analysis Event $id not found.";
 			}
 
 

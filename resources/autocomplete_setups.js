@@ -128,10 +128,10 @@ $( "#method_lab" ).keyup(function() {
 
 
 /*
-chemical_analysis_method
-chemical_analysis_lab
-chemical_analysis_equipment
-chemical_analysis_analyst
+analysis_event_method
+analysis_event_lab
+analysis_event_equipment
+analysis_event_analyst
 */
 
 var thisitem="";
@@ -141,26 +141,26 @@ var thisitem="";
 Chemical Analysis Method
 
 *********************************************/
-thisitem="chemical_analysis_method";
-var chemical_analysis_method_options = base_options;
-chemical_analysis_method_options.url="/REST/method";
-chemical_analysis_method_options.getValue = function(element) {return element.method_name;}
-chemical_analysis_method_options.list.onChooseEvent = function() {
-	var selectedItemValue = $("#chemical_analysis_method").getSelectedItemData();
-	$("#chemical_analysis_method_hidden").val(selectedItemValue.method_num);
+thisitem="analysis_event_method";
+var analysis_event_method_options = base_options;
+analysis_event_method_options.url="/REST/method";
+analysis_event_method_options.getValue = function(element) {return element.method_name;}
+analysis_event_method_options.list.onChooseEvent = function() {
+	var selectedItemValue = $("#analysis_event_method").getSelectedItemData();
+	$("#analysis_event_method_hidden").val(selectedItemValue.method_num);
 };
 		
-chemical_analysis_method_options.preparePostData = function(data) {
-	data.query = $("#chemical_analysis_method").val();
+analysis_event_method_options.preparePostData = function(data) {
+	data.query = $("#analysis_event_method").val();
 	return data;
 };
 
-$("#chemical_analysis_method").easyAutocomplete(chemical_analysis_method_options);
+$("#analysis_event_method").easyAutocomplete(analysis_event_method_options);
 
-$( "#chemical_analysis_method" ).keyup(function() {
+$( "#analysis_event_method" ).keyup(function() {
 	//clear hidden
-	if($('#chemical_analysis_method').val()==""){
-		$("#chemical_analysis_method_hidden").val("");
+	if($('#analysis_event_method').val()==""){
+		$("#analysis_event_method_hidden").val("");
 	}
 });
 
@@ -170,10 +170,10 @@ $( "#chemical_analysis_method" ).keyup(function() {
 Chemical Analysis Lab
 
 *********************************************/
-thisitem="chemical_analysis_lab";
-var chemical_analysis_lab_options = base_options;
-chemical_analysis_lab_options.url="/REST/organization";
-chemical_analysis_lab_options.getValue = function(element) {
+thisitem="analysis_event_lab";
+var analysis_event_lab_options = base_options;
+analysis_event_lab_options.url="/REST/organization";
+analysis_event_lab_options.getValue = function(element) {
 	var showname = "";
 	showname = element.organization_name;
 	if(element.department){
@@ -182,22 +182,22 @@ chemical_analysis_lab_options.getValue = function(element) {
 	return showname;
 }
 
-chemical_analysis_lab_options.list.onChooseEvent = function() {
-	var selectedItemValue = $("#chemical_analysis_lab").getSelectedItemData();
-	$("#chemical_analysis_lab_hidden").val(selectedItemValue.organization_num);
+analysis_event_lab_options.list.onChooseEvent = function() {
+	var selectedItemValue = $("#analysis_event_lab").getSelectedItemData();
+	$("#analysis_event_lab_hidden").val(selectedItemValue.organization_num);
 };
 		
-chemical_analysis_lab_options.preparePostData = function(data) {
-	data.query = $("#chemical_analysis_lab").val();
+analysis_event_lab_options.preparePostData = function(data) {
+	data.query = $("#analysis_event_lab").val();
 	return data;
 };
 
-$("#chemical_analysis_lab").easyAutocomplete(chemical_analysis_lab_options);
+$("#analysis_event_lab").easyAutocomplete(analysis_event_lab_options);
 
-$( "#chemical_analysis_lab" ).keyup(function() {
+$( "#analysis_event_lab" ).keyup(function() {
 	//clear hidden
-	if($('#chemical_analysis_lab').val()==""){
-		$("#chemical_analysis_lab_hidden").val("");
+	if($('#analysis_event_lab').val()==""){
+		$("#analysis_event_lab_hidden").val("");
 	}
 });
 
@@ -207,26 +207,26 @@ $( "#chemical_analysis_lab" ).keyup(function() {
 Chemical Analysis Equipment
 
 *********************************************/
-thisitem="chemical_analysis_equipment";
-var chemical_analysis_equipment_options = base_options;
-chemical_analysis_equipment_options.url="/REST/equipment";
-chemical_analysis_equipment_options.getValue = function(element) {return element.equipment_name;}
-chemical_analysis_equipment_options.list.onChooseEvent = function() {
-	var selectedItemValue = $("#chemical_analysis_equipment").getSelectedItemData();
-	$("#chemical_analysis_equipment_hidden").val(selectedItemValue.equipment_num);
+thisitem="analysis_event_equipment";
+var analysis_event_equipment_options = base_options;
+analysis_event_equipment_options.url="/REST/equipment";
+analysis_event_equipment_options.getValue = function(element) {return element.equipment_name;}
+analysis_event_equipment_options.list.onChooseEvent = function() {
+	var selectedItemValue = $("#analysis_event_equipment").getSelectedItemData();
+	$("#analysis_event_equipment_hidden").val(selectedItemValue.equipment_num);
 };
 		
-chemical_analysis_equipment_options.preparePostData = function(data) {
-	data.query = $("#chemical_analysis_equipment").val();
+analysis_event_equipment_options.preparePostData = function(data) {
+	data.query = $("#analysis_event_equipment").val();
 	return data;
 };
 
-$("#chemical_analysis_equipment").easyAutocomplete(chemical_analysis_equipment_options);
+$("#analysis_event_equipment").easyAutocomplete(analysis_event_equipment_options);
 
-$( "#chemical_analysis_equipment" ).keyup(function() {
+$( "#analysis_event_equipment" ).keyup(function() {
 	//clear hidden
-	if($('#chemical_analysis_equipment').val()==""){
-		$("#chemical_analysis_equipment_hidden").val("");
+	if($('#analysis_event_equipment').val()==""){
+		$("#analysis_event_equipment_hidden").val("");
 	}
 });
 
@@ -236,26 +236,26 @@ $( "#chemical_analysis_equipment" ).keyup(function() {
 Chemical Analysis Analyst
 
 *********************************************/
-thisitem="chemical_analysis_analyst";
-var chemical_analysis_analyst_options = base_options;
-chemical_analysis_analyst_options.url="/REST/personaffiliation";
-chemical_analysis_analyst_options.getValue = function(element) {return element.person_name+' - '+element.organization_name;}
-chemical_analysis_analyst_options.list.onChooseEvent = function() {
-	var selectedItemValue = $("#chemical_analysis_analyst").getSelectedItemData();
-	$("#chemical_analysis_analyst_hidden").val(selectedItemValue.affiliation_num);
+thisitem="analysis_event_analyst";
+var analysis_event_analyst_options = base_options;
+analysis_event_analyst_options.url="/REST/personaffiliation";
+analysis_event_analyst_options.getValue = function(element) {return element.person_name+' - '+element.organization_name;}
+analysis_event_analyst_options.list.onChooseEvent = function() {
+	var selectedItemValue = $("#analysis_event_analyst").getSelectedItemData();
+	$("#analysis_event_analyst_hidden").val(selectedItemValue.affiliation_num);
 };
 		
-chemical_analysis_analyst_options.preparePostData = function(data) {
-	data.query = $("#chemical_analysis_analyst").val();
+analysis_event_analyst_options.preparePostData = function(data) {
+	data.query = $("#analysis_event_analyst").val();
 	return data;
 };
 
-$("#chemical_analysis_analyst").easyAutocomplete(chemical_analysis_analyst_options);
+$("#analysis_event_analyst").easyAutocomplete(analysis_event_analyst_options);
 
-$( "#chemical_analysis_analyst" ).keyup(function() {
+$( "#analysis_event_analyst" ).keyup(function() {
 	//clear hidden
-	if($('#chemical_analysis_analyst').val()==""){
-		$("#chemical_analysis_analyst_hidden").val("");
+	if($('#analysis_event_analyst').val()==""){
+		$("#analysis_event_analyst_hidden").val("");
 	}
 });
 
@@ -423,11 +423,11 @@ $( "#new_method_lab" ).keyup(function() {
 
 
 /*
-thisitem="chemical_analysis_equipment";
-var chemical_analysis_equipment_options = base_options;
-chemical_analysis_equipment_options.url="/REST/equipment";
-chemical_analysis_equipment_options.getValue = function(element) {return element.equipment_name;}
-chemical_analysis_equipment_options.list.onChooseEvent = function() {
+thisitem="analysis_event_equipment";
+var analysis_event_equipment_options = base_options;
+analysis_event_equipment_options.url="/REST/equipment";
+analysis_event_equipment_options.getValue = function(element) {return element.equipment_name;}
+analysis_event_equipment_options.list.onChooseEvent = function() {
 	var selectedItemValue = $("#"+thisitem).getSelectedItemData();
 	$("#"+thisitem+"_hidden").val(selectedItemValue.equipment_num);
 };
@@ -437,7 +437,7 @@ newoptions.preparePostData = function(data) {
 	return data;
 };
 
-$("#"+thisitem).easyAutocomplete(chemical_analysis_equipment_options);
+$("#"+thisitem).easyAutocomplete(analysis_event_equipment_options);
 
 $( "#"+thisitem ).keyup(function() {
 	//clear hidden

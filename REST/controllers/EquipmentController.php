@@ -53,7 +53,7 @@ class EquipmentController extends RESTController
 													lower(equipment_type_name) = '$querystring'
 													$numquery 
 													)
-													and status = 1
+													and eq.status = 1
 													order by equipment_name;";
 													
 					//echo $query;exit();

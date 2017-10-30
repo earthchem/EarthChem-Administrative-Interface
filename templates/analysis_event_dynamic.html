@@ -1,0 +1,86 @@
+
+		<div class="templateHeader">Chemical Analysis Event</div>
+		<div class="templateID">Analysis Event ID: <input type="text" id="analysis_eventid" value="" size="6" readonly="readonly"></div>
+		
+		<table>
+			<tr>
+				<td>Analysis Run Name*:</td>
+				<td>
+					<input type="text" id="analysis_event_action_name" size="59" />
+				</td>
+			</tr>
+			<tr>
+				<td>Analysis Type*:</td>
+				<td>
+					<select id="analysis_event_type_num">
+						<option value="">select...</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Method Name*:</td>
+				<td>
+					<input id="analysis_event_method" size="56"/>
+				</td>
+				<td>
+					<a class="addnewlink" href="javascript:showNewMeth();">Add New Method to Database</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Lab Name*:</td>
+				<td>
+					<input id="analysis_event_lab" size="56"/>
+				</td>
+				<td>
+					<a class="addnewlink" href="javascript:showNewOrg();">Add New Lab to Database</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Equipment Used:</td>
+				<td>
+					<input id="analysis_event_equipment" size="56"/>
+				</td>
+				<td>
+					<a class="addnewlink" href="javascript:showNewEquip();">Add New Equipment to Database</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Analyst/Operator:</td>
+				<td>
+					<input id="analysis_event_analyst" size="56"/>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Description:</td>
+				<td>
+					<textarea id="analysis_event_description" cols="50" rows="7"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Date/Time:</td>
+				<td>Start: <input type="text" id="analysis_event_begin_date" size="10">&nbsp;&nbsp;&nbsp;End: <input type="text" id="analysis_event_end_date" size="10"></td>
+			</tr>
+
+			</table>
+
+
+		<div id="analysis_eventresultsdiv">
+		
+		</div>
+
+		<div style="display:none;">
+			<br><br><br>
+			analysis_event_method_hidden: <input id="analysis_event_method_hidden"/><br>
+			analysis_event_lab_hidden: <input id="analysis_event_lab_hidden"/><br>
+			analysis_event_equipment_hidden: <input id="analysis_event_equipment_hidden"/><br>
+			analysis_event_analyst_hidden: <input id="analysis_event_analyst_hidden"/><br>
+
+		</div>
+
+		<script src="/resources/autocomplete_setups.js"></script>
+
