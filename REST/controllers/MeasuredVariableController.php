@@ -166,8 +166,7 @@ class MeasuredVariableController extends RESTController
 						$variable_name
 						$variable_type_num
 						$variable_code
-						$variable_definition
-						";
+						$variable_definition";
 												
 			
 			$query = substr($query, 0, -1);
@@ -222,11 +221,6 @@ class MeasuredVariableController extends RESTController
 										where variable_num = $id
 									");
 					
-					//delete from action_annotation
-					$ann_nums = array();
-					$db_ann_nums = $this->db->get_results("select aa.annotation_num from earthchem.action_annotation aa, earthchem.annotation ann
-															where aa.annotation_num = ann.annotation_num
-															and aa.action_num = $id");
 
 					$data['Success']="true";
 	

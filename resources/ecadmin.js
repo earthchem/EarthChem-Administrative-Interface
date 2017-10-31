@@ -1286,7 +1286,7 @@ var doSave = function() {
 						data: saveJSON,
 						success: function (msg) {
 							
-							var id = msg.result_template_num;
+							var id = msg.variable_num;
 							//console.log(msg);
 							showStatic(id);
 							$("#successmessage").html('Measured Variable Saved Successfully.');
