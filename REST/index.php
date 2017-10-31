@@ -53,7 +53,7 @@ if (class_exists($controller_name)) {
 }else{
 	//send an error header with brief explanation.
 	header("Bad Request", true, 404);
-	$result['Error']="No such vocabulary (".$showcontroller.")";
+	$result['Error']="No such controller (".$showcontroller.")";
 	header('Content-Type: application/json; charset=utf8');
 
 }

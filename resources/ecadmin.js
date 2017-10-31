@@ -124,9 +124,13 @@ var doSearch = function() {
 	
 			url = "/REST/resulttemplate?query="+val;
 	
+		}else if(selectedObject=="measured_variable"){
+		
+			url = "/REST/measuredvariable?query="+val;
+		
 		}else if(selectedObject==""){
 		
-		
+
 	
 		}
 		
@@ -146,6 +150,8 @@ var doSearch = function() {
 							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.analysis_event_num+'\');">'+res.analysis_event_num+'</div>';
 						}else if (selectedObject=="reporting_variable"){
 							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.result_template_num+'\');">'+res.reporting_variable_name+'</div>';
+						}else if (selectedObject=="measured_variable"){
+							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.variable_num+'\');">'+res.variable_name+'</div>';
 						}
 
 						/*
@@ -470,13 +476,26 @@ var showStatic = function(id) {
 				});
 
 
+			}else if(selectedObject=="measured_variable"){
 
+				$.getJSON("/REST/measuredvariable/"+id, function(data){
+					$('#measured_variableid').val(data.variable_num);
+					$('#measured_variable_name').html(data.variable_name);
+					$('#measured_variable_code').html(data.variable_code);
+					$('#measured_variable_definition').html(data.variable_definition);
 
+					//translate equipment_type_num
+					var show_variable_type = "";
+					_.each(measured_variable_types, function(vtype){
+						if(vtype.num==data.variable_type_num){
+							show_variable_type=vtype.name;
+						}
+					});
+				
+					$('#measured_variable_type').html(show_variable_type);
 
-
-
+				});
 			}
-
 
 			showEditButton();
 			showDeleteButton();
@@ -735,7 +754,20 @@ var doEdit = function() {
 
 				});
 
+			}else if(selectedObject=="measured_variable"){
 
+				$.getJSON("/REST/measuredvariable/"+id, function(data){
+				
+					console.log(data);
+				
+					$('#measured_variableid').val(data.variable_num);
+					$('#measured_variable_name').val(data.variable_name);
+					$('#measured_variable_code').val(data.variable_code);
+					$('#measured_variable_definition').val(data.variable_definition);
+
+					$("#measured_variable_type_num").children('[value='+data.variable_type_num+']').attr('selected', true);
+					
+				});
 
 			}
 
@@ -1191,6 +1223,85 @@ var doSave = function() {
 				
 				}
 				
+			}else if(selectedObject=="measured_variable"){
+
+				var data = {};
+
+				data.variable_name = $('#measured_variable_name').val();
+				data.variable_code = $('#measured_variable_code').val();
+				data.variable_type_num = $('#measured_variable_type_num').val();
+				data.variable_definition = $('#measured_variable_definition').val();
+
+
+
+
+				//console.log(data);
+
+				var saveJSON = JSON.stringify(data);
+				
+				console.log(saveJSON);
+
+				var id = $('#measured_variableid').val();
+
+				
+				
+				if(id!=""){
+			
+					console.log(id);
+				
+					//update (PUT)
+					var url = "/REST/measuredvariable/"+id;
+
+				
+					//console.log(saveJSON);
+				
+					$.ajax({
+						type: "PUT",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							showStatic(id);
+							$("#successmessage").html('Measured Variable Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Measured Variable.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}else{
+					
+					//save new (POST)
+					
+					var url = "/REST/measuredvariable";
+					
+					$.ajax({
+						type: "POST",
+						url: url,
+						contentType: "application/json",
+						data: saveJSON,
+						success: function (msg) {
+							
+							var id = msg.result_template_num;
+							//console.log(msg);
+							showStatic(id);
+							$("#successmessage").html('Measured Variable Saved Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error saving Measured Variable.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+				
+				}
+				
 
 				
 
@@ -1413,6 +1524,37 @@ var doDeprecate = function() {
 						},
 						error: function (err){
 							$("#errormessage").html('There was an error deprecating Reporting Variable.');
+							$("#errormessage").fadeIn();
+							$("#errormessage").fadeOut(2000);
+						}
+					});
+					
+				}
+
+			}else if(selectedObject=="measured_variable"){
+
+
+				var id = $('#measured_variableid').val();
+			
+				if(id!=""){
+
+					console.log(id);
+				
+					//deprecate (DELETE)
+					var url = "/REST/measuredvariable/"+id;
+
+					$.ajax({
+						type: "DELETE",
+						url: url,
+						contentType: "application/json",
+						success: function (msg) {
+							doSearch();
+							$("#successmessage").html('Measured Variable deprecated Successfully.');
+							$("#successmessage").fadeIn();
+							$("#successmessage").fadeOut(2000);
+						},
+						error: function (err){
+							$("#errormessage").html('There was an error deprecating Measured Variable.');
 							$("#errormessage").fadeIn();
 							$("#errormessage").fadeOut(2000);
 						}
@@ -2252,7 +2394,7 @@ function fetchVocab(url,name) {
 
 
 
-console.log(vocabs);
+
 
 var vocabs = {};
 fetchVocab("/vocabulary/chemicalanalysisType","analysis_event_types").then(function(){
@@ -2279,7 +2421,26 @@ fetchVocab("/vocabulary/chemicalanalysisType","analysis_event_types").then(funct
 	});
 });
 
+var measured_variable_types = [];
+measured_variable_types.push({num:1,name:"Ratio"});
+measured_variable_types.push({num:2,name:"Rock_Mode"});
+measured_variable_types.push({num:3,name:"Model_Data"});
+measured_variable_types.push({num:4,name:"Speciation_Ratio"});
+measured_variable_types.push({num:5,name:"Age"});
+measured_variable_types.push({num:6,name:"End-Member"});
+measured_variable_types.push({num:7,name:"Radiogenic_Isotopes"});
+measured_variable_types.push({num:8,name:"Stable_Isotopes"});
+measured_variable_types.push({num:9,name:"Major_Oxide/Element"});
+measured_variable_types.push({num:10,name:"Noble_Gas"});
+measured_variable_types.push({num:11,name:"Rare_Earth_Element"});
+measured_variable_types.push({num:12,name:"Trace_Element"});
+measured_variable_types.push({num:13,name:"Uranium_Series"});
+measured_variable_types.push({num:14,name:"Volatile"});
+measured_variable_types.push({num:15,name:"Geospatial"});
+measured_variable_types.push({num:16,name:"Environmental Parameter"});
+measured_variable_types.push({num:17,name:"Physical Property"});
 
+console.log(measured_variable_types);
 
 
 //fetchVocab("/vocabulary/analysiseventType","analysis_event_types");
