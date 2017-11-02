@@ -21,7 +21,7 @@ class OrganizationController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.organization where organization_num = $searchid");
+				$row = $this->db->get_row("select * from organization where organization_num = $searchid");
 
 				if($row->organization_num){
 
@@ -45,7 +45,7 @@ class OrganizationController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or organization_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.organization where 
+					$rows = $this->db->get_results("select * from organization where 
 													lower(organization_name) like '%$querystring%' or 
 													lower(department) like '%$querystring%' or
 													lower(organization_name)||' - '||lower(department) like '%$querystring%'
@@ -165,10 +165,10 @@ zip
 */
 
 			
-			$organization_num = $this->db->get_var("select nextval('earthchem.organization_organization_num_seq')");
+			$organization_num = $this->db->get_var("select nextval('organization_organization_num_seq')");
 			$p['organization_num']=$organization_num;
 			
-			$query = "insert into earthchem.organization (organization_num,
+			$query = "insert into organization (organization_num,
 						organization_type_num,
 						organization_code,
 						organization_name,

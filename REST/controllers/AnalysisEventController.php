@@ -22,7 +22,7 @@ class AnalysisEventController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid and status=1");
+				$row = $this->db->get_row("select * from action where action_num = $searchid and status=1");
 
 				if($row->action_num){
 
@@ -37,12 +37,12 @@ class AnalysisEventController extends RESTController
 						$data['end_date_time']=$row->end_date_time;
 						
 						
-						$data['equipment_num']=$this->db->get_var("select e.equipment_num from earthchem.equipment e, earthchem.equipment_action ea
+						$data['equipment_num']=$this->db->get_var("select e.equipment_num from equipment e, equipment_action ea
 													where e.equipment_num = ea.equipment_num and
 													ea.action_num = $row->action_num
 													");
 						
-						$data['personaffiliation_num']=$this->db->get_var("select a.affiliation_num from earthchem.affiliation a, earthchem.action_by ab
+						$data['personaffiliation_num']=$this->db->get_var("select a.affiliation_num from affiliation a, action_by ab
 													where a.affiliation_num = ab.affiliation_num and
 													ab.action_num = $row->action_num
 													");
@@ -78,23 +78,23 @@ class AnalysisEventController extends RESTController
 														act.end_date_time,
 														act.status,
 													
-														(select method_name from earthchem.method where method_num = act.method_num) as method_name,
+														(select method_name from method where method_num = act.method_num) as method_name,
 														
-														(select organization_name from earthchem.organization where organization_num = act.organization_num) as lab_name,
+														(select organization_name from organization where organization_num = act.organization_num) as lab_name,
 													
-														(select e.equipment_name from earthchem.equipment e, earthchem.equipment_action ea
+														(select e.equipment_name from equipment e, equipment_action ea
 															where e.equipment_num = ea.equipment_num and
 															ea.action_num = act.action_num) as equipment_name,
 													
-														(select e.equipment_num from earthchem.equipment e, earthchem.equipment_action ea
+														(select e.equipment_num from equipment e, equipment_action ea
 															where e.equipment_num = ea.equipment_num and
 															ea.action_num = act.action_num) as equipment_num,
 													
-														(select a.affiliation_num from earthchem.affiliation a, earthchem.action_by ab
+														(select a.affiliation_num from affiliation a, action_by ab
 															where a.affiliation_num = ab.affiliation_num and
 															ab.action_num = act.action_num) as affiliation_num
 													
-														from earthchem.action act where 
+														from action act where 
 														action_type_num in (20,28,29,30,31)
 													) foo where 
 													lower(action_name) like '%$querystring%' 
@@ -166,13 +166,13 @@ class AnalysisEventController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
 					$id = (int)$request->url_elements[2];
 					
-					$this->db->query("update earthchem.action set status=0 where action_num = $searchid");
+					$this->db->query("update action set status=0 where action_num = $searchid");
 
 					$data['Success']="true";
 	
@@ -214,10 +214,10 @@ class AnalysisEventController extends RESTController
 			if($p['method_num']!=""){ $method_num = $p['method_num'].","; }else{ $method_num = "null,"; }
 			if($p['lab_num']!=""){ $organization_num = $p['lab_num'].","; }else{ $organization_num = "null,"; }
 
-			$id = $this->db->get_var("select nextval('earthchem.action_action_num_seq')");
+			$id = $this->db->get_var("select nextval('action_action_num_seq')");
 			$p['analysis_event_num']=$id;
 			
-			$query = "insert into earthchem.action (	action_num,
+			$query = "insert into action (	action_num,
 						action_name,
 						action_type_num,
 						organization_num,
@@ -247,7 +247,7 @@ class AnalysisEventController extends RESTController
 			if($p['equipment_num']!=""){
 				$equipment_num=$p['equipment_num'];
 				
-				$query = "insert into earthchem.equipment_action (action_num,equipment_num)values($id,$equipment_num)";
+				$query = "insert into equipment_action (action_num,equipment_num)values($id,$equipment_num)";
 				
 				//echo "$query\n\n\n";
 				
@@ -258,7 +258,7 @@ class AnalysisEventController extends RESTController
 			if($p['personaffiliation_num']!=""){
 				$personaffiliation_num=$p['personaffiliation_num'];
 				
-				$query = "insert into earthchem.action_by (action_num,affiliation_num,is_action_lead)values($id,$personaffiliation_num,0)";
+				$query = "insert into action_by (action_num,affiliation_num,is_action_lead)values($id,$personaffiliation_num,0)";
 				
 				//echo "$query\n\n\n";exit();
 				
@@ -282,7 +282,7 @@ class AnalysisEventController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
@@ -311,7 +311,7 @@ class AnalysisEventController extends RESTController
 					$query = substr($query, 0, -2);
 
 					$query = "
-										update earthchem.action set
+										update action set
 										$query
 										where action_num = $id
 									";
@@ -321,16 +321,16 @@ class AnalysisEventController extends RESTController
 					$this->db->query($query);
 					
 					//delete from equipment_action
-					$this->db->query("delete from earthchem.equipment_action where action_num = $id");
+					$this->db->query("delete from equipment_action where action_num = $id");
 					
 					//delete from action_by
-					$this->db->query("delete from earthchem.action_by where action_num = $id");
+					$this->db->query("delete from action_by where action_num = $id");
 					
 					//put in equipment
 					if($p['equipment_num']!=""){
 						$equipment_num=$p['equipment_num'];
 						
-						$query = "insert into earthchem.equipment_action (action_num,equipment_num)values($id,$equipment_num)";
+						$query = "insert into equipment_action (action_num,equipment_num)values($id,$equipment_num)";
 						
 						//echo "$query\n\n\n";
 						
@@ -341,7 +341,7 @@ class AnalysisEventController extends RESTController
 					if($p['personaffiliation_num']!=""){
 						$personaffiliation_num=$p['personaffiliation_num'];
 						
-						$query = "insert into earthchem.action_by (action_num,affiliation_num,is_action_lead)values($id,$personaffiliation_num,0)";
+						$query = "insert into action_by (action_num,affiliation_num,is_action_lead)values($id,$personaffiliation_num,0)";
 						
 						//echo "$query\n\n\n";exit();
 						

@@ -22,7 +22,7 @@ class PersonAffiliationController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.person p, earthchem.affiliation a, earthchem.organization o  where 
+				$row = $this->db->get_row("select * from person p, affiliation a, organization o  where 
 											p.person_num = a.person_num and
 											a.organization_num = o.organization_num and
 											a.affiliation_num = $searchid");
@@ -53,7 +53,7 @@ class PersonAffiliationController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or a.affiliation_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.person p, earthchem.affiliation a, earthchem.organization o  where
+					$rows = $this->db->get_results("select * from person p, affiliation a, organization o  where
 													p.person_num = a.person_num and
 													a.organization_num = o.organization_num and
 													(

@@ -2397,14 +2397,14 @@ function fetchVocab(url,name) {
 
 
 var vocabs = {};
-fetchVocab("/vocabulary/chemicalanalysisType","analysis_event_types").then(function(){
-	fetchVocab("/vocabulary/equipmentType","equipment_types").then(function(){
-		fetchVocab("/vocabulary/expeditionType","expedition_types").then(function(){
-			fetchVocab("/vocabulary/methodType","method_types").then(function(){
-				fetchVocab("/vocabulary/organizationType","organization_types").then(function(){
-					fetchVocab("/vocabulary/uncertaintyType","uncertainty_types").then(function(){
-						fetchVocab("/vocabulary/country","countries").then(function(){
-							fetchVocab("/vocabulary/state","states").then(function(){
+fetchVocab("http://vocab.earthchemportal.org/vocabulary/chemicalanalysisType","analysis_event_types").then(function(){
+	fetchVocab("http://vocab.earthchemportal.org/vocabulary/equipmentType","equipment_types").then(function(){
+		fetchVocab("http://vocab.earthchemportal.org/vocabulary/expeditionType","expedition_types").then(function(){
+			fetchVocab("http://vocab.earthchemportal.org/vocabulary/methodType","method_types").then(function(){
+				fetchVocab("http://vocab.earthchemportal.org/vocabulary/organizationType","organization_types").then(function(){
+					fetchVocab("http://vocab.earthchemportal.org/vocabulary/uncertaintyType","uncertainty_types").then(function(){
+						fetchVocab("http://vocab.earthchemportal.org/vocabulary/country","countries").then(function(){
+							fetchVocab("http://vocab.earthchemportal.org/vocabulary/state","states").then(function(){
 								//console.log(vocabs.states);
 								buildSelect('new_organization_state',vocabs.states);
 								buildSelect('new_organization_country',vocabs.countries);

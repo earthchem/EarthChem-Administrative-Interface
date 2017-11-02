@@ -22,7 +22,7 @@ class MeasuredVariableController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.variable where variable_num = $searchid and status = 1");
+				$row = $this->db->get_row("select * from variable where variable_num = $searchid and status = 1");
 
 				if($row->variable_num){
 
@@ -53,7 +53,7 @@ class MeasuredVariableController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or variable_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.variable where 
+					$rows = $this->db->get_results("select * from variable where 
 													lower(variable_name) like '%$querystring%' $numquery and status = 1 order by variable_name;");
 					
 					$data['resultcount']=count($rows);
@@ -84,7 +84,7 @@ class MeasuredVariableController extends RESTController
         	
         	}else{
 
-				$rows = $this->db->get_results("select * from earthchem.variable where status = 1 order by variable_name;");
+				$rows = $this->db->get_results("select * from variable where status = 1 order by variable_name;");
 				
 				$data['resultcount']=count($rows);
 
@@ -115,14 +115,14 @@ class MeasuredVariableController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.variable where variable_num = $searchid");
+				$row = $this->db->get_row("select * from variable where variable_num = $searchid");
 
 				if($row->variable_num){
 
 					$id = (int)$request->url_elements[2];
 
 					$this->db->query("
-										update earthchem.variable set
+										update variable set
 										status = 0
 										where variable_num = $id
 									");
@@ -167,10 +167,10 @@ class MeasuredVariableController extends RESTController
 
 			
 
-			$id = $this->db->get_var("select nextval('earthchem.variable_variable_num_seq')");
+			$id = $this->db->get_var("select nextval('variable_variable_num_seq')");
 			$p['variable_num']=$id;
 			
-			$query = "insert into earthchem.variable (	variable_num,
+			$query = "insert into variable (	variable_num,
 						variable_name,
 						variable_type_num,
 						variable_code,
@@ -209,7 +209,7 @@ class MeasuredVariableController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
@@ -230,7 +230,7 @@ class MeasuredVariableController extends RESTController
 					$query = substr($query, 0, -2);
 
 					$this->db->query("
-										update earthchem.variable set
+										update variable set
 										$query
 										where variable_num = $id
 									");

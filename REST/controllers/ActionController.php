@@ -22,7 +22,7 @@ class ActionController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
@@ -48,7 +48,7 @@ class ActionController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or action_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.action where 
+					$rows = $this->db->get_results("select * from action where 
 													--action_type_num in (3,11,12,25,19) and
 													lower(action_name) like '%$querystring%' $numquery order by action_name;");
 					

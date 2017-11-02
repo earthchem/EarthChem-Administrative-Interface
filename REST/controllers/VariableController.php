@@ -22,7 +22,7 @@ class VariableController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.variable where variable_num = $searchid");
+				$row = $this->db->get_row("select * from variable where variable_num = $searchid");
 
 				if($row->variable_num){
 
@@ -48,7 +48,7 @@ class VariableController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or action_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.variable where
+					$rows = $this->db->get_results("select * from variable where
 													lower(variable_name) like '%$querystring%' $numquery order by variable_name;");
 					
 					$data['resultcount']=count($rows);

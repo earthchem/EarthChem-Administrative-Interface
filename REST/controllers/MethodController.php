@@ -21,7 +21,7 @@ class MethodController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.method where method_num = $searchid and status = 1");
+				$row = $this->db->get_row("select * from method where method_num = $searchid and status = 1");
 
 				if($row->method_num){
 
@@ -45,7 +45,7 @@ class MethodController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or method_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.method where lower(method_name) like '%$querystring%' $numquery and status = 1 order by method_name;");
+					$rows = $this->db->get_results("select * from method where lower(method_name) like '%$querystring%' $numquery and status = 1 order by method_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -111,13 +111,13 @@ class MethodController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.method where method_num = $searchid");
+				$row = $this->db->get_row("select * from method where method_num = $searchid");
 
 				if($row->method_num){
 
 					$id = (int)$request->url_elements[2];
 
-					$query = "update earthchem.method set
+					$query = "update method set
 										status = 0
 										where method_num = $id";
 
@@ -176,10 +176,10 @@ organization_num
 */
 
 			
-			$method_num = $this->db->get_var("select nextval('earthchem.method_method_num_seq')");
+			$method_num = $this->db->get_var("select nextval('method_method_num_seq')");
 			$p['method_num']=$method_num;
 			
-			$query = "insert into earthchem.method (	method_num,
+			$query = "insert into method (	method_num,
 						method_type_num,
 						method_code,
 						method_name,
@@ -218,7 +218,7 @@ organization_num
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.method where method_num = $searchid");
+				$row = $this->db->get_row("select * from method where method_num = $searchid");
 
 				if($row->method_num){
 
@@ -244,7 +244,7 @@ organization_num
 
 					$query = substr($query, 0, -2);
 
-					$query = "update earthchem.method set
+					$query = "update method set
 										$query
 										where method_num = $id";
 

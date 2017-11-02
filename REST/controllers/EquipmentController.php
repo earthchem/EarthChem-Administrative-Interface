@@ -21,7 +21,7 @@ class EquipmentController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid and status = 1");
+				$row = $this->db->get_row("select * from equipment where equipment_num = $searchid and status = 1");
 
 				if($row->equipment_num){
 
@@ -45,7 +45,7 @@ class EquipmentController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or equipment_num = $querystring";}
 					
-					$query = "select * from earthchem.equipment eq, earthchem.equipment_type et 
+					$query = "select * from equipment eq, equipment_type et 
 													where 
 													eq.equipment_type_num = et.equipment_type_num and
 													(
@@ -124,7 +124,7 @@ class EquipmentController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid");
+				$row = $this->db->get_row("select * from equipment where equipment_num = $searchid");
 
 				if($row->equipment_num){
 
@@ -132,7 +132,7 @@ class EquipmentController extends RESTController
 
 
 					$this->db->query("
-										update earthchem.equipment set
+										update equipment set
 										status = 0
 										where equipment_num = $id
 									");
@@ -183,10 +183,10 @@ class EquipmentController extends RESTController
 			if($p['equipment_photo_file_name']!=""){ $equipment_photo_file_name = "'".$p['equipment_photo_file_name']."',"; }else{ $equipment_photo_file_name = "null,"; }
 			if($p['equipment_description']!=""){ $equipment_description = "'".$p['equipment_description']."',"; }else{ $equipment_description = "null,"; }
 			
-			$equipment_num = $this->db->get_var("select nextval('earthchem.equipment_equipment_num_seq')");
+			$equipment_num = $this->db->get_var("select nextval('equipment_equipment_num_seq')");
 			$p['equipment_num']=$equipment_num;
 			
-			$query = "insert into earthchem.equipment (	equipment_num,
+			$query = "insert into equipment (	equipment_num,
 						equipment_code,
 						equipment_name,
 						equipment_type_num,
@@ -237,7 +237,7 @@ class EquipmentController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.equipment where equipment_num = $searchid");
+				$row = $this->db->get_row("select * from equipment where equipment_num = $searchid");
 
 				if($row->equipment_num){
 
@@ -273,7 +273,7 @@ class EquipmentController extends RESTController
 					$query = substr($query, 0, -2);
 
 					$this->db->query("
-										update earthchem.equipment set
+										update equipment set
 										$query
 										where equipment_num = $id
 									");

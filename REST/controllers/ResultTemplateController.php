@@ -21,7 +21,7 @@ class ResultTemplateController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.result_template where result_template_num = $searchid");
+				$row = $this->db->get_row("select * from result_template where result_template_num = $searchid");
 
 				if($row->variable_num){
 
@@ -45,7 +45,7 @@ class ResultTemplateController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or result_template_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.result_template where lower(reporting_variable_name) like '%$querystring%' $numquery order by reporting_variable_name;");
+					$rows = $this->db->get_results("select * from result_template where lower(reporting_variable_name) like '%$querystring%' $numquery order by reporting_variable_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -143,10 +143,10 @@ description
 */
 
 			
-			$result_template_num = $this->db->get_var("select nextval('earthchem.result_template_result_template_num_seq')");
+			$result_template_num = $this->db->get_var("select nextval('result_template_result_template_num_seq')");
 			$p['result_template_num']=$result_template_num;
 			
-			$query = "insert into earthchem.result_template (	result_template_num,
+			$query = "insert into result_template (	result_template_num,
 						reporting_variable_name,
 						analysis_event,
 						variable_num,
@@ -190,7 +190,7 @@ description
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.result_template where result_template_num = $searchid");
+				$row = $this->db->get_row("select * from result_template where result_template_num = $searchid");
 
 				if($row->result_template_num){
 
@@ -230,7 +230,7 @@ description
 
 					$query = substr($query, 0, -2);
 
-					$query = "update earthchem.result_template set
+					$query = "update result_template set
 										$query
 										where result_template_num = $id";
 

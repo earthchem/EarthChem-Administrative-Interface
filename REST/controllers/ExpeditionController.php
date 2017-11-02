@@ -22,7 +22,7 @@ class ExpeditionController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid and status = 1");
+				$row = $this->db->get_row("select * from action where action_num = $searchid and status = 1");
 
 				if($row->action_num){
 
@@ -35,7 +35,7 @@ class ExpeditionController extends RESTController
 						$data['begin_date_time']=$row->begin_date_time;
 						$data['end_date_time']=$row->end_date_time;
 						
-						$eqs=$this->db->get_results("select e.equipment_num from earthchem.equipment e, earthchem.equipment_action ea
+						$eqs=$this->db->get_results("select e.equipment_num from equipment e, equipment_action ea
 													where e.equipment_num = ea.equipment_num and
 													ea.action_num = $row->action_num
 													");
@@ -47,14 +47,14 @@ class ExpeditionController extends RESTController
 						
 						$data['equipment_nums']=$eqnums;
 						
-						$data['identifier']=$this->db->get_var("select an.annotation_text from earthchem.annotation an, earthchem.action_annotation aa 
+						$data['identifier']=$this->db->get_var("select an.annotation_text from annotation an, action_annotation aa 
 																where aa.action_num = $row->action_num
 																and aa.annotation_num = an.annotation_num
 																and an.annotation_type_num = 39
 																limit 1
 																");
 						
-						$alternate_names=$this->db->get_results("select an.annotation_text from earthchem.annotation an, earthchem.action_annotation aa 
+						$alternate_names=$this->db->get_results("select an.annotation_text from annotation an, action_annotation aa 
 																where aa.action_num = $row->action_num
 																and aa.annotation_num = an.annotation_num
 																and an.annotation_type_num = 40
@@ -90,7 +90,7 @@ class ExpeditionController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or action_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from earthchem.action where 
+					$rows = $this->db->get_results("select * from action where 
 													action_type_num in (3,11,12,25,19)
 													and lower(action_name) like '%$querystring%' $numquery and status = 1 order by action_name;");
 					
@@ -158,14 +158,14 @@ class ExpeditionController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
 					$id = (int)$request->url_elements[2];
 
 					$this->db->query("
-										update earthchem.action set
+										update action set
 										status = 0
 										where action_num = $id
 									");
@@ -221,10 +221,10 @@ expedition_begin_date
 expedition_end_date
 */
 
-			$id = $this->db->get_var("select nextval('earthchem.action_action_num_seq')");
+			$id = $this->db->get_var("select nextval('action_action_num_seq')");
 			$p['expedition_num']=$id;
 			
-			$query = "insert into earthchem.action (	action_num,
+			$query = "insert into action (	action_num,
 						action_name,
 						action_type_num,
 						organization_num,
@@ -253,8 +253,8 @@ expedition_end_date
 
 			//put in expedition_identifier
 			if($expedition_identifier!=""){
-				$new_annotation_num = $this->db->get_var("select nextval('earthchem.annotation_annotation_num_seq')");
-				$this->db->query("insert into earthchem.annotation (	
+				$new_annotation_num = $this->db->get_var("select nextval('annotation_annotation_num_seq')");
+				$this->db->query("insert into annotation (	
 													annotation_num,
 													annotation_type_num,
 													annotation_text,
@@ -269,7 +269,7 @@ expedition_end_date
 												)
 												");
 				
-				$this->db->query("insert into earthchem.action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
+				$this->db->query("insert into action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
 				
 			}
 			
@@ -277,8 +277,8 @@ expedition_end_date
 			if(count($alternate_names)>0){
 				foreach($alternate_names as $an){
 
-					$new_annotation_num = $this->db->get_var("select nextval('earthchem.annotation_annotation_num_seq')");
-					$this->db->query("insert into earthchem.annotation (	
+					$new_annotation_num = $this->db->get_var("select nextval('annotation_annotation_num_seq')");
+					$this->db->query("insert into annotation (	
 														annotation_num,
 														annotation_type_num,
 														annotation_text,
@@ -293,14 +293,14 @@ expedition_end_date
 													)
 													");
 													
-					$this->db->query("insert into earthchem.action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
+					$this->db->query("insert into action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
 
 				}
 			}
 			
 			if(count($equipment_nums)>0){
 				foreach($equipment_nums as $enum){
-					$this->db->query("insert into earthchem.equipment_action (equipment_num, action_num) values ($enum,$id);");
+					$this->db->query("insert into equipment_action (equipment_num, action_num) values ($enum,$id);");
 				}
 			}
 
@@ -321,7 +321,7 @@ expedition_end_date
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from earthchem.action where action_num = $searchid");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
@@ -349,14 +349,14 @@ expedition_end_date
 					$query = substr($query, 0, -2);
 
 					$this->db->query("
-										update earthchem.action set
+										update action set
 										$query
 										where action_num = $id
 									");
 					
 					//delete from action_annotation
 					$ann_nums = array();
-					$db_ann_nums = $this->db->get_results("select aa.annotation_num from earthchem.action_annotation aa, earthchem.annotation ann
+					$db_ann_nums = $this->db->get_results("select aa.annotation_num from action_annotation aa, annotation ann
 															where aa.annotation_num = ann.annotation_num
 															and aa.action_num = $id");
 					
@@ -366,17 +366,17 @@ expedition_end_date
 
 					if(count($ann_nums) > 0){
 						$ann_nums_string = implode(",",$ann_nums);
-						$this->db->query("delete from earthchem.action_annotation where annotation_num in ($ann_nums_string);");
-						$this->db->query("delete from earthchem.annotation where annotation_num in ($ann_nums_string);");
+						$this->db->query("delete from action_annotation where annotation_num in ($ann_nums_string);");
+						$this->db->query("delete from annotation where annotation_num in ($ann_nums_string);");
 					}
 
 					//delete from equipment_action
-					$this->db->query("delete from earthchem.equipment_action where action_num = $id");
+					$this->db->query("delete from equipment_action where action_num = $id");
 
 					//put in expedition_identifier
 					if($expedition_identifier!=""){
-						$new_annotation_num = $this->db->get_var("select nextval('earthchem.annotation_annotation_num_seq')");
-						$this->db->query("insert into earthchem.annotation (	
+						$new_annotation_num = $this->db->get_var("select nextval('annotation_annotation_num_seq')");
+						$this->db->query("insert into annotation (	
 															annotation_num,
 															annotation_type_num,
 															annotation_text,
@@ -391,7 +391,7 @@ expedition_end_date
 														)
 														");
 						
-						$this->db->query("insert into earthchem.action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
+						$this->db->query("insert into action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
 						
 					}
 					
@@ -399,8 +399,8 @@ expedition_end_date
 					if(count($alternate_names)>0){
 						foreach($alternate_names as $an){
 
-							$new_annotation_num = $this->db->get_var("select nextval('earthchem.annotation_annotation_num_seq')");
-							$this->db->query("insert into earthchem.annotation (	
+							$new_annotation_num = $this->db->get_var("select nextval('annotation_annotation_num_seq')");
+							$this->db->query("insert into annotation (	
 																annotation_num,
 																annotation_type_num,
 																annotation_text,
@@ -415,14 +415,14 @@ expedition_end_date
 															)
 															");
 															
-							$this->db->query("insert into earthchem.action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
+							$this->db->query("insert into action_annotation (action_num, annotation_num) values ($id, $new_annotation_num);");
 
 						}
 					}
 					
 					if(count($equipment_nums)>0){
 						foreach($equipment_nums as $enum){
-							$this->db->query("insert into earthchem.equipment_action (equipment_num, action_num) values ($enum,$id);");
+							$this->db->query("insert into equipment_action (equipment_num, action_num) values ($enum,$id);");
 						}
 					}
 
