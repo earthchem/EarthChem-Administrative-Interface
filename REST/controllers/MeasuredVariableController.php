@@ -84,8 +84,22 @@ class MeasuredVariableController extends RESTController
         	
         	}else{
 
-				header("Bad Request", true, 400);
-				$data["Error"] = "Invalid Request.";
+				$rows = $this->db->get_results("select * from earthchem.variable where status = 1 order by variable_name;");
+				
+				$data['resultcount']=count($rows);
+
+				$results = [];
+				foreach($rows as $row){
+					
+					$thisresult['variable_num']=$row->variable_num;
+					$thisresult['variable_name']=$row->variable_name;
+					$thisresult['variable_code']=$row->variable_code;
+					$thisresult['variable_type_num']=$row->variable_type_num;
+					$thisresult['variable_definition']=$row->variable_definition;
+		
+					$data['results'][]=$thisresult;
+
+				}
 
         	}
 
