@@ -2539,6 +2539,9 @@ function pageLoad(){ //check for GET variable "page" and pre-load content
     		doNew();
 		}
     }
+    
+    console.log(vocabs);
+    
     $('#loadingmessage').hide();
 }
 
