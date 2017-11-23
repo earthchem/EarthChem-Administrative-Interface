@@ -14,23 +14,31 @@ var updateRightSide = function() {
 	
 	var selectedObject = $('#objselect').find(":selected").val();
 	
-	$('#searchbox').val('');
-	
-	if(selectedObject!=""){
-	
-		$('#newbutton').show();
-		$('#searchboxwrapper').show();
-		$("#searchlist").html("");
-		$("#rightwrapper").html("");
-		hideBottomButtons();
-	
+	if(selectedObject=="google_test"){
+		window.location.href = "https://www.google.com";
+	}else if(selectedObject=="foo"){
+		alert("foo");
 	}else{
+	
+		$('#searchbox').val('');
+	
+		if(selectedObject!=""){
+	
+			$('#newbutton').show();
+			$('#searchboxwrapper').show();
+			$("#searchlist").html("");
+			$("#rightwrapper").html("");
+			hideBottomButtons();
+	
+		}else{
 		
-		$('#newbutton').hide();
-		$('#searchboxwrapper').hide();
-		$("#searchlist").html("");
-		$("#rightwrapper").html("");
-		hideBottomButtons();
+			$('#newbutton').hide();
+			$('#searchboxwrapper').hide();
+			$("#searchlist").html("");
+			$("#rightwrapper").html("");
+			hideBottomButtons();
+	
+		}
 	
 	}
 
