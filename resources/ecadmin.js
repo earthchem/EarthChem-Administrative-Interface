@@ -14,10 +14,18 @@ var updateRightSide = function() {
 	
 	var selectedObject = $('#objselect').find(":selected").val();
 	
-	if(selectedObject=="google_test"){
-		window.location.href = "https://www.google.com";
-	}else if(selectedObject=="foo"){
-		alert("foo");
+	if(selectedObject=="citation"){
+		window.location.href = "http://dev-ecadm-vm.earthchem.org:8080/EarthChemDataTool/faces/EarthChemAdmin.xhtml?search=citation";
+
+	}else if(selectedObject=="citation_list"){
+		window.location.href = "http://dev-ecadm-vm.earthchem.org:8080/EarthChemDataTool/faces/EarthChemAdmin.xhtml?search=citation_list";
+
+	}else if(selectedObject=="organization"){
+		window.location.href = "http://dev-ecadm-vm.earthchem.org:8080/EarthChemDataTool/faces/EarthChemAdmin.xhtml?search=organization";
+
+	}else if(selectedObject=="person"){
+		window.location.href = "http://dev-ecadm-vm.earthchem.org:8080/EarthChemDataTool/faces/EarthChemAdmin.xhtml?search=person";
+
 	}else{
 	
 		$('#searchbox').val('');
@@ -2543,6 +2551,13 @@ function pageLoad(){ //check for GET variable "page" and pre-load content
     		doNew();
     	}else if(landingpage=="expedition_new"){
     		$("#objselect").children('[value=\'expedition\']').attr('selected', true);
+    		updateRightSide();
+    		doNew();
+    	}else if(landingpage=="measuredvariable"){
+    		$("#objselect").children('[value=\'measured_variable\']').attr('selected', true);
+    		updateRightSide();
+    	}else if(landingpage=="measuredvariable_new"){
+    		$("#objselect").children('[value=\'measured_variable\']').attr('selected', true);
     		updateRightSide();
     		doNew();
 		}

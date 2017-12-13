@@ -71,10 +71,13 @@ function dumpVar($var){
 							<option value="">Select...</option>
 							<option value="analytical_method">Analytical Method</option>
 							<option value="analysis_event">Analysis Event</option>
+							<option value="citation">Citation</option>
+							<option value="citation_list">Citation List</option>
 							<option value="equipment">Equipment</option>
 							<option value="expedition">Expedition</option>
 							<option value="measured_variable">Measured Variable</option>
-							<option value="google_test">Google Test</option>
+							<option value="organization">Organization</option>
+							<option value="person">Person</option>
 						</select>
 						
 						<div id="newbutton" style="padding-top:20px;display:none;"><button class="menubutton" onClick="doNew();"><span>NEW</span></button></div>
