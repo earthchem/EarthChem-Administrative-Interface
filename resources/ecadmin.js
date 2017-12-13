@@ -161,7 +161,7 @@ var doSearch = function() {
 						}else if (selectedObject=="expedition"){
 							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.expedition_num+'\');">'+res.expedition_name+'</div>';
 						}else if (selectedObject=="analytical_method"){
-							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.method_num+'\');">'+res.method_name+'</div>';
+							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.method_num+'\');">'+res.method_name+'<br>('+res.method_short_name+')</div>';
 						}else if (selectedObject=="analysis_event"){
 							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.analysis_event_num+'\');">'+res.analysis_event_num+'</div>';
 						}else if (selectedObject=="reporting_variable"){

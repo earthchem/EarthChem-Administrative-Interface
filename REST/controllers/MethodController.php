@@ -45,7 +45,7 @@ class MethodController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or method_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from method where lower(method_name) like '%$querystring%' $numquery and status = 1 order by method_name;");
+					$rows = $this->db->get_results("select * from method where lower(method_name) like '%$querystring%' or lower(method_code) like '%$querystring%' $numquery and status = 1 order by method_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -54,9 +54,11 @@ class MethodController extends RESTController
 							
 							$num = $row->method_num;
 							$name = $row->method_name;
+							$short_name = $row->method_code;
 							
 							$thisresult['method_num']=$num;
 							$thisresult['method_name']=$name;
+							$thisresult['method_short_name']=$short_name;
 					
 							$data['results'][]=$thisresult;
 							
