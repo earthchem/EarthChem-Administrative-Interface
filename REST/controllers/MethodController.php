@@ -21,7 +21,7 @@ class MethodController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from method where method_num = $searchid and status = 1");
+				$row = $this->db->get_row("select * from method where method_num = $searchid");
 
 				if($row->method_num){
 
@@ -43,9 +43,13 @@ class MethodController extends RESTController
 
 					$querystring = strtolower($_GET['query']);
 					
+					if($_GET['publiconly']=="yes"){
+						$publicstring = " and status = 1";
+					}
+					
 					if($this->is_whole_int($querystring)){$numquery = " or method_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from method where lower(method_name) like '%$querystring%' or lower(method_code) like '%$querystring%' $numquery and status = 1 order by method_name;");
+					$rows = $this->db->get_results("select * from method where (lower(method_name) like '%$querystring%' or lower(method_code) like '%$querystring%' $numquery) $publicstring order by method_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -55,10 +59,12 @@ class MethodController extends RESTController
 							$num = $row->method_num;
 							$name = $row->method_name;
 							$short_name = $row->method_code;
+							$status = $row->status;
 							
 							$thisresult['method_num']=$num;
 							$thisresult['method_name']=$name;
 							$thisresult['method_short_name']=$short_name;
+							$thisresult['status']=$status;
 					
 							$data['results'][]=$thisresult;
 							
@@ -162,6 +168,7 @@ class MethodController extends RESTController
 			if($p['method_description']!=""){ $method_description = "'".$p['method_description']."',"; }else{ $method_description = "null,"; }
 			if($p['method_link']!=""){ $method_link = "'".$p['method_link']."',"; }else{ $method_link = "null,"; }
 			if($p['organization_num']!=""){ $organization_num = $p['organization_num'].","; }else{ $organization_num = "null,"; }
+			if($p['status']!=""){ $status = $p['status'].","; }else{ $status = "1,"; }
 
 
 
@@ -187,7 +194,8 @@ organization_num
 						method_name,
 						method_description,
 						method_link,
-						organization_num
+						organization_num,
+						status
 					) values (
 						$method_num,
 						$method_type_num
@@ -195,7 +203,8 @@ organization_num
 						$method_name
 						$method_description
 						$method_link
-						$organization_num";
+						$organization_num
+						$status";
 												
 			
 			$query = substr($query, 0, -1);
@@ -228,12 +237,15 @@ organization_num
 
 					$p = $request->parameters;
 						
+					//print_r($p);exit();
+					
 					if($p['method_type_num']!="")$method_type_num = $p['method_type_num'];
 					if($p['method_code']!="")$method_code = $p['method_code'];
 					if($p['method_name']!="")$method_name = $p['method_name'];
 					if($p['method_description']!="")$method_description = $p['method_description'];
 					if($p['method_link']!="")$method_link = $p['method_link'];
 					if($p['organization_num']!="")$organization_num = $p['organization_num'];
+					if($p['status']!="")$status = $p['status'];
 
 
 					if($p['method_type_num']!=""){$query.="method_type_num = $method_type_num,\n";}else{$query.="method_type_num = null,\n";}
@@ -242,7 +254,7 @@ organization_num
 					if($p['method_description']!=""){$query.="method_description = '$method_description',\n";}else{$query.="method_description = null,\n";}
 					if($p['method_link']!=""){$query.="method_link = '$method_link',\n";}else{$query.="method_link = null,\n";}
 					if($p['organization_num']!=""){$query.="organization_num = $organization_num,\n";}else{$query.="organization_num = null,\n";}
-
+					if($p['status']!=""){$query.="status = $status,\n";}else{$query.="status = 1,\n";}
 
 					$query = substr($query, 0, -2);
 
@@ -250,6 +262,8 @@ organization_num
 										$query
 										where method_num = $id";
 
+					//echo $query;exit();
+					
 					$this->db->query($query);
 
 					$data['Success']="true";

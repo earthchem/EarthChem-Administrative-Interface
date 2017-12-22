@@ -156,18 +156,25 @@ var doSearch = function() {
 				if(data.resultcount>0){
 					_.each(data.results, function(res){
 						
+						var deprecatedclass="";
+						if(res.status=="0"){
+							deprecatedclass=" searchItemDeprecated";
+						}else{
+							deprecatedclass="";
+						}
+						
 						if(selectedObject=="equipment"){
-							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.equipment_num+'\');">'+res.equipment_name+'</div>';
+							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.equipment_num+'\');">'+res.equipment_name+'</div>';
 						}else if (selectedObject=="expedition"){
-							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.expedition_num+'\');">'+res.expedition_name+'</div>';
+							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.expedition_num+'\');">'+res.expedition_name+'</div>';
 						}else if (selectedObject=="analytical_method"){
-							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.method_num+'\');">'+res.method_name+'<br>('+res.method_short_name+')</div>';
+							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.method_num+'\');">'+res.method_name+'<br>('+res.method_short_name+')</div>';
 						}else if (selectedObject=="analysis_event"){
-							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.analysis_event_num+'\');">'+res.analysis_event_num+'</div>';
+							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.analysis_event_num+'\');">'+res.analysis_event_num+'</div>';
 						}else if (selectedObject=="reporting_variable"){
-							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.result_template_num+'\');">'+res.reporting_variable_name+'</div>';
+							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.result_template_num+'\');">'+res.reporting_variable_name+'</div>';
 						}else if (selectedObject=="measured_variable"){
-							thishtml=thishtml+'<div class="searchItem" onclick="showStatic(\''+res.variable_num+'\');">'+res.variable_name+'</div>';
+							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.variable_num+'\');">'+res.variable_name+'</div>';
 						}
 
 						/*
@@ -246,12 +253,16 @@ var doNew = function() {
 
 }
 
+
+
 var showStatic = function(id) {
 
 	//window.scrollTo(0, 0);
 	$("html, body").animate({ scrollTop: 0 }, "fast");
 	var selectedObject = $('#objselect').find(":selected").val();
 	var html = "";
+	
+	
 	
 	if(selectedObject!=""){
 	
@@ -278,6 +289,23 @@ var showStatic = function(id) {
 					$('#equipment_photo_file_name').html(data.equipment_photo_file_name);
 					$('#equipment_description').html(data.equipment_description);
 
+					var statusdiv = $('#equipment_status');
+					if(data.status=="0"){
+						statusdiv.html("Deprecated");
+						hideDeleteButton();
+					}else if(data.status=="1"){
+						statusdiv.html("Active");
+						showDeleteButton();
+					}else if(data.status=="2"){
+						statusdiv.html("Proposed");
+						showDeleteButton();
+					}else if(data.status=="3"){
+						statusdiv.html("Superseded");
+						showDeleteButton();
+					}
+					
+
+					
 					//translate equipment_type_num
 					var show_equipment_type = "";
 					_.each(vocabs.equipment_types, function(eqtype){
@@ -330,6 +358,23 @@ var showStatic = function(id) {
 						$("#expedition_alternate_names").html(data.alternate_names.join(", "));
 					}
 
+					var statusdiv = $('#expedition_status');
+					if(data.status=="0"){
+						statusdiv.html("Deprecated");
+						hideDeleteButton();
+					}else if(data.status=="1"){
+						statusdiv.html("Active");
+						showDeleteButton();
+					}else if(data.status=="2"){
+						statusdiv.html("Proposed");
+						showDeleteButton();
+					}else if(data.status=="3"){
+						statusdiv.html("Superseded");
+						showDeleteButton();
+					}
+					
+
+					
 					//get equipment
 					if(data.equipment_nums.length>0){
 						_.each(data.equipment_nums, function(eqnum){
@@ -376,10 +421,25 @@ var showStatic = function(id) {
 					$("#method_description").html(data.method_description);
 					$("#method_link").html(data.method_link);
 					
+					var statusdiv = $('#method_status');
+					if(data.status=="0"){
+						statusdiv.html("Deprecated");
+						hideDeleteButton();
+					}else if(data.status=="1"){
+						statusdiv.html("Active");
+						showDeleteButton();
+					}else if(data.status=="2"){
+						statusdiv.html("Proposed");
+						showDeleteButton();
+					}else if(data.status=="3"){
+						statusdiv.html("Superseded");
+						showDeleteButton();
+					}
+					
 
 
-
-
+					//console.log("status: "+data.status);
+					
 
 				});
 				
@@ -436,7 +496,20 @@ var showStatic = function(id) {
 						});
 					}
 					
-
+					var statusdiv = $('#analysis_event_status');
+					if(data.status=="0"){
+						statusdiv.html("Deprecated");
+						hideDeleteButton();
+					}else if(data.status=="1"){
+						statusdiv.html("Active");
+						showDeleteButton();
+					}else if(data.status=="2"){
+						statusdiv.html("Proposed");
+						showDeleteButton();
+					}else if(data.status=="3"){
+						statusdiv.html("Superseded");
+						showDeleteButton();
+					}
 
 					
 					$('#analysis_event_description').html(data.description);
@@ -489,6 +562,21 @@ var showStatic = function(id) {
 					$('#reporting_variable_uncertainty_value').html(data.uncertainty_value);
 					$('#reporting_variable_description').html(data.description);
 
+					var statusdiv = $('#reporting_variable_status');
+					if(data.status=="0"){
+						statusdiv.html("Deprecated");
+						hideDeleteButton();
+					}else if(data.status=="1"){
+						statusdiv.html("Active");
+						showDeleteButton();
+					}else if(data.status=="2"){
+						statusdiv.html("Proposed");
+						showDeleteButton();
+					}else if(data.status=="3"){
+						statusdiv.html("Superseded");
+						showDeleteButton();
+					}
+
 				});
 
 
@@ -510,11 +598,27 @@ var showStatic = function(id) {
 				
 					$('#measured_variable_type').html(show_variable_type);
 
+					var statusdiv = $('#measured_variable_status');
+					
+					if(data.status=="0"){
+						statusdiv.html("Deprecated");
+						hideDeleteButton();
+					}else if(data.status=="1"){
+						statusdiv.html("Active");
+						showDeleteButton();
+					}else if(data.status=="2"){
+						statusdiv.html("Proposed");
+						showDeleteButton();
+					}else if(data.status=="3"){
+						statusdiv.html("Superseded");
+						showDeleteButton();
+					}
+
+
 				});
 			}
 
 			showEditButton();
-			showDeleteButton();
 			hideCancelButton();
 			hideSaveButton();
 			showBottomButtons();
@@ -565,6 +669,8 @@ var doEdit = function() {
 					//$('#equipment_type_num option[value=data.equipment_type_num]').prop('selected', true)
 					//$('#equipment_type_num option[value=data.equipment_type_num]').attr("selected", "selected");
 					$("#equipment_type_num").children('[value='+data.equipment_type_num+']').attr('selected', true);
+					
+					$("#equipment_status").children('[value='+data.status+']').attr('selected', true);
 					
 				});
 			
@@ -622,6 +728,7 @@ var doEdit = function() {
 						});
 					}
 					
+					$("#expedition_status").children('[value='+data.status+']').attr('selected', true);
 
 				});
 
@@ -654,7 +761,8 @@ var doEdit = function() {
 
 					$("#method_description").val(data.method_description);
 					$("#method_link").val(data.method_link);
-										
+					
+					$("#method_status").children('[value='+data.status+']').attr('selected', true);				
 
 				});
 
@@ -723,7 +831,7 @@ var doEdit = function() {
 					$('#analysis_event_begin_date').val(data.begin_date_time);
 					$('#analysis_event_end_date').val(data.end_date_time);
 					
-
+					$("#analysis_event_status").children('[value='+data.status+']').attr('selected', true);
 
 					//$('#analysis_event_lab_hidden').val("12345");
 
@@ -767,6 +875,8 @@ var doEdit = function() {
 
 					$('#reporting_variable_uncertainty_value').val(data.uncertainty_value);
 					$('#reporting_variable_description').val(data.description);
+					
+					$("#reporting_variable_status").children('[value='+data.status+']').attr('selected', true);
 
 				});
 
@@ -782,6 +892,8 @@ var doEdit = function() {
 					$('#measured_variable_definition').val(data.variable_definition);
 
 					$("#measured_variable_type_num").children('[value='+data.variable_type_num+']').attr('selected', true);
+					
+					$("#measured_variable_status").children('[value='+data.status+']').attr('selected', true);
 					
 				});
 
@@ -830,6 +942,7 @@ var doSave = function() {
 				data.equipment_phurchase_date = $('#equipment_phurchase_date').val();
 				data.equipment_photo_file_name = $('#equipment_photo_file_name').val();
 				data.equipment_description = $('#equipment_description').val();
+				data.status = $('#equipment_status').val();
 
 				var saveJSON = JSON.stringify(data);
 				
@@ -854,6 +967,7 @@ var doSave = function() {
 						data: saveJSON,
 						success: function (msg) {
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Equipment Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -881,6 +995,7 @@ var doSave = function() {
 							var id = msg.equipment_num;
 							//console.log(msg);
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Equipment Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -909,6 +1024,7 @@ var doSave = function() {
 				data.expedition_begin_date = $('#expedition_begin_date').val();
 				data.expedition_end_date = $('#expedition_end_date').val();
 				data.expedition_identifier = $('#expedition_identifier').val();
+				data.status = $('#expedition_status').val();
 				
 				//expedition_alternate_names alternate_names
 				var altnames = [];
@@ -956,6 +1072,7 @@ var doSave = function() {
 						data: saveJSON,
 						success: function (msg) {
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Expedition Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -983,6 +1100,7 @@ var doSave = function() {
 							var id = msg.expedition_num;
 							//console.log(msg);
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Expedition Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1006,7 +1124,7 @@ var doSave = function() {
 				data.method_description = $('#method_description').val();
 				data.method_link = $('#method_link').val();
 				data.organization_num = $('#method_lab_hidden').val();
-
+				data.status = $('#method_status').val();
 				
 				console.log(data);
 
@@ -1034,6 +1152,7 @@ var doSave = function() {
 						data: saveJSON,
 						success: function (msg) {
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Method Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1061,6 +1180,7 @@ var doSave = function() {
 							var id = msg.method_num;
 							//console.log(msg);
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Method Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1089,7 +1209,8 @@ var doSave = function() {
 				data.description = $('#analysis_event_description').val();
 				data.begin_date_time = $('#analysis_event_begin_date').val();
 				data.end_date_time = $('#analysis_event_end_date').val();
-
+				data.status = $('#analysis_event_status').val();
+				
 				//console.log(data);
 
 				var saveJSON = JSON.stringify(data);
@@ -1117,6 +1238,7 @@ var doSave = function() {
 						data: saveJSON,
 						success: function (msg) {
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Chemical Analysis Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1144,6 +1266,7 @@ var doSave = function() {
 							var id = msg.analysis_event_num;
 							//console.log(msg);
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Chemical Analysis Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1171,6 +1294,7 @@ var doSave = function() {
 				data.uncertainty_type = $('#reporting_variable_uncertainty_type').val();
 				data.uncertainty_value = $('#reporting_variable_uncertainty_value').val();
 				data.description = $('#reporting_variable_description').val();
+				data.status = $('#reporting_variable_status').val();
 
 				//console.log(data);
 
@@ -1199,6 +1323,7 @@ var doSave = function() {
 						data: saveJSON,
 						success: function (msg) {
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Reporting Variable Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1226,6 +1351,7 @@ var doSave = function() {
 							var id = msg.result_template_num;
 							//console.log(msg);
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Reporting Variable Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1247,7 +1373,7 @@ var doSave = function() {
 				data.variable_code = $('#measured_variable_code').val();
 				data.variable_type_num = $('#measured_variable_type_num').val();
 				data.variable_definition = $('#measured_variable_definition').val();
-
+				data.status = $('#measured_variable_status').val();
 
 
 
@@ -1278,6 +1404,7 @@ var doSave = function() {
 						data: saveJSON,
 						success: function (msg) {
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Measured Variable Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1305,6 +1432,7 @@ var doSave = function() {
 							var id = msg.variable_num;
 							//console.log(msg);
 							showStatic(id);
+							doSearch();
 							$("#successmessage").html('Measured Variable Saved Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1375,6 +1503,8 @@ var doSave = function() {
 
 		}
 		
+		
+		
 	}else{
 	
 		errors = "Error!\n" + errors;
@@ -1412,6 +1542,7 @@ var doDeprecate = function() {
 						contentType: "application/json",
 						success: function (msg) {
 							doSearch();
+							$("#equipment_status").html("Deprecated");
 							$("#successmessage").html('Equipment deprecated Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1442,6 +1573,7 @@ var doDeprecate = function() {
 						contentType: "application/json",
 						success: function (msg) {
 							doSearch();
+							$("#expedition_status").html("Deprecated");
 							$("#successmessage").html('Expedition deprecated Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1472,6 +1604,7 @@ var doDeprecate = function() {
 						contentType: "application/json",
 						success: function (msg) {
 							doSearch();
+							$("#method_status").html("Deprecated");
 							$("#successmessage").html('Method deprecated Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1504,6 +1637,7 @@ var doDeprecate = function() {
 						contentType: "application/json",
 						success: function (msg) {
 							doSearch();
+							$("#analysis_event_status").html("Deprecated");
 							$("#successmessage").html('Chemical Analysis deprecated successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1534,6 +1668,7 @@ var doDeprecate = function() {
 						contentType: "application/json",
 						success: function (msg) {
 							doSearch();
+							$("#reporting_variable_status").html("Deprecated");
 							$("#successmessage").html('Reporting Variable deprecated successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1565,6 +1700,7 @@ var doDeprecate = function() {
 						contentType: "application/json",
 						success: function (msg) {
 							doSearch();
+							$("#measured_variable_status").html("Deprecated");
 							$("#successmessage").html('Measured Variable deprecated Successfully.');
 							$("#successmessage").fadeIn();
 							$("#successmessage").fadeOut(2000);
@@ -1584,8 +1720,9 @@ var doDeprecate = function() {
 
 		}
 
-		$("#rightwrapper").html("");
-		hideBottomButtons();
+		//$("#rightwrapper").html("");
+		//hideBottomButtons();
+		hideDeleteButton();
 
 	}
 

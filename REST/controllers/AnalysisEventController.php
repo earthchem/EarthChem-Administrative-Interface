@@ -22,7 +22,7 @@ class AnalysisEventController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from action where action_num = $searchid and status=1");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
@@ -35,7 +35,7 @@ class AnalysisEventController extends RESTController
 						$data['description']=$row->action_description;
 						$data['begin_date_time']=$row->begin_date_time;
 						$data['end_date_time']=$row->end_date_time;
-						
+						$data['status']=$row->status;
 						
 						$data['equipment_num']=$this->db->get_var("select e.equipment_num from equipment e, equipment_action ea
 													where e.equipment_num = ea.equipment_num and
@@ -101,7 +101,7 @@ class AnalysisEventController extends RESTController
 													--or lower(lab_name) like '%$querystring%'
 													--or lower(method_name) like '%$querystring%'
 													--or lower(equipment_name) like '%$querystring%'
-													and status = 1
+													--and status = 1
 													$numquery order by action_name
 													
 													
@@ -129,6 +129,7 @@ class AnalysisEventController extends RESTController
 							$thisresult['lab_name']=$row->lab_name;
 							$thisresult['method_name']=$row->method_name;
 							$thisresult['equipment_name']=$row->equipment_name;
+							$thisresult['status']=$row->status;
 					
 							$data['results'][]=$thisresult;
 							
@@ -213,6 +214,7 @@ class AnalysisEventController extends RESTController
 			if($p['end_date_time']!=""){ $end_date_time = "'".$p['end_date_time']."',"; }else{ $end_date_time = "null,"; }
 			if($p['method_num']!=""){ $method_num = $p['method_num'].","; }else{ $method_num = "null,"; }
 			if($p['lab_num']!=""){ $organization_num = $p['lab_num'].","; }else{ $organization_num = "null,"; }
+			if($p['status']!=""){ $status = $p['status'].","; }else{ $status = "1,"; }
 
 			$id = $this->db->get_var("select nextval('action_action_num_seq')");
 			$p['analysis_event_num']=$id;
@@ -224,7 +226,8 @@ class AnalysisEventController extends RESTController
 						action_description,
 						begin_date_time,
 						end_date_time,
-						method_num
+						method_num,
+						status
 					) values (
 						$id,
 						$action_name
@@ -233,7 +236,8 @@ class AnalysisEventController extends RESTController
 						$action_description
 						$begin_date_time
 						$end_date_time
-						$method_num";
+						$method_num
+						$status";
 												
 			
 			$query = substr($query, 0, -1);
@@ -299,6 +303,7 @@ class AnalysisEventController extends RESTController
 					if($p['end_date_time']!="")$end_date_time = $p['end_date_time'];
 					if($p['method_num']!="")$method_num = $p['method_num'];
 					if($p['lab_num']!="")$lab_num = $p['lab_num'];
+					if($p['status']!="")$status = $p['status'];
 
 					if($analysis_event_name!=""){$query.="action_name = '$analysis_event_name',\n";}else{$query.="action_name = null,\n";}
 					if($analysis_event_type_num!=""){$query.="action_type_num = '$analysis_event_type_num',\n";}else{$query.="action_type_num = null,\n";}
@@ -307,6 +312,7 @@ class AnalysisEventController extends RESTController
 					if($end_date_time!=""){$query.="end_date_time = '$end_date_time',\n";}else{$query.="end_date_time = null,\n";}
 					if($method_num!=""){$query.="method_num = '$method_num',\n";}else{$query.="method_num = null,\n";}
 					if($lab_num!=""){$query.="organization_num = '$lab_num',\n";}else{$query.="organization_num = null,\n";}
+					if($status!=""){$query.="status = $status,\n";}else{$query.="status = 1,\n";}
 
 					$query = substr($query, 0, -2);
 

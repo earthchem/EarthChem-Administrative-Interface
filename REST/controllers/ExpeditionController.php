@@ -22,7 +22,7 @@ class ExpeditionController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from action where action_num = $searchid and status = 1");
+				$row = $this->db->get_row("select * from action where action_num = $searchid");
 
 				if($row->action_num){
 
@@ -34,6 +34,7 @@ class ExpeditionController extends RESTController
 						$data['description']=$row->action_description;
 						$data['begin_date_time']=$row->begin_date_time;
 						$data['end_date_time']=$row->end_date_time;
+						$data['status']=$row->status;
 						
 						$eqs=$this->db->get_results("select e.equipment_num from equipment e, equipment_action ea
 													where e.equipment_num = ea.equipment_num and
@@ -92,7 +93,7 @@ class ExpeditionController extends RESTController
 					
 					$rows = $this->db->get_results("select * from action where 
 													action_type_num in (3,11,12,25,19)
-													and lower(action_name) like '%$querystring%' $numquery and status = 1 order by action_name;");
+													and lower(action_name) like '%$querystring%' $numquery order by action_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -101,9 +102,11 @@ class ExpeditionController extends RESTController
 							
 							$num = $row->action_num;
 							$name = $row->action_name;
+							$status = $row->status;
 							
 							$thisresult['expedition_num']=$num;
 							$thisresult['expedition_name']=$name;
+							$thisresult['status']=$status;
 					
 							$data['results'][]=$thisresult;
 							
@@ -211,6 +214,7 @@ class ExpeditionController extends RESTController
 			if($p['expedition_identifier']!="")$expedition_identifier = $p['expedition_identifier'];
 			if($p['alternate_names']!="")$alternate_names = $p['alternate_names'];
 			if($p['equipment_nums']!="")$equipment_nums = $p['equipment_nums'];
+			if($p['status']!=""){ $status = "'".$p['status']."',"; }else{ $status = "1,"; }
 
 /*
 expedition_name
@@ -231,7 +235,8 @@ expedition_end_date
 						action_description,
 						begin_date_time,
 						end_date_time,
-						method_num
+						method_num,
+						status
 					) values (
 						$id,
 						$action_name
@@ -240,7 +245,8 @@ expedition_end_date
 						$action_description
 						$begin_date_time
 						$end_date_time
-						1";
+						1
+						$status";
 												
 			
 			//$query = substr($query, 0, -1);
@@ -338,6 +344,7 @@ expedition_end_date
 					if($p['expedition_identifier']!="")$expedition_identifier = $p['expedition_identifier'];
 					if($p['alternate_names']!="")$alternate_names = $p['alternate_names'];
 					if($p['equipment_nums']!="")$equipment_nums = $p['equipment_nums'];
+					if($p['status']!="")$status = $p['status'];
 
 					if($expedition_name!=""){$query.="action_name = '$expedition_name',\n";}else{$query.="action_name = null,\n";}
 					if($expedition_type_num!=""){$query.="action_type_num = $expedition_type_num,\n";}else{$query.="action_type_num = null,\n";}
@@ -345,6 +352,7 @@ expedition_end_date
 					if($expedition_description!=""){$query.="action_description = '$expedition_description',\n";}else{$query.="action_description = null,\n";}
 					if($expedition_begin_date!=""){$query.="begin_date_time = '$expedition_begin_date',\n";}else{$query.="begin_date_time = null,\n";}
 					if($expedition_end_date!=""){$query.="end_date_time = '$expedition_end_date',\n";}else{$query.="end_date_time = null,\n";}
+					if($status!=""){$query.="status = $status,\n";}else{$query.="status = 1,\n";}
 
 					$query = substr($query, 0, -2);
 

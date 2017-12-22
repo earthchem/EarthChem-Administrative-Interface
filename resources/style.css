@@ -154,6 +154,12 @@ body {
 	border:1px #d8d8d8 solid;
 }
 
+.searchItemDeprecated {
+	color:#b30000;
+	background-color:#ffe6e6;
+}
+
+
 
 #successmessage {
 	background-color:#30ae4f;

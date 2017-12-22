@@ -42,14 +42,18 @@ class OrganizationController extends RESTController
         		if($_GET['query']){
 
 					$querystring = strtolower($_GET['query']);
-					
+
+					if($_GET['publiconly']=="yes"){
+						$publicstring = " and status = 1";
+					}
+
 					if($this->is_whole_int($querystring)){$numquery = " or organization_num = $querystring";}
 					
 					$rows = $this->db->get_results("select * from organization where 
-													lower(organization_name) like '%$querystring%' or 
+													(lower(organization_name) like '%$querystring%' or 
 													lower(department) like '%$querystring%' or
 													lower(organization_name)||' - '||lower(department) like '%$querystring%'
-													$numquery order by organization_name;");
+													$numquery) $publicstring order by organization_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -59,10 +63,12 @@ class OrganizationController extends RESTController
 							$num = $row->organization_num;
 							$name = $row->organization_name;
 							$department = $row->department;
+							$status = $row->status;
 							
 							$thisresult['organization_num']=$num;
 							$thisresult['organization_name']=$name;
 							$thisresult['department']=$department;
+							$thisresult['status']=$status;
 					
 							$data['results'][]=$thisresult;
 							

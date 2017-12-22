@@ -30,20 +30,24 @@ Expedition Sponsor Organization
 var expedition_sponsor_organization_options = base_options;
 expedition_sponsor_organization_options.url="/REST/organization";
 expedition_sponsor_organization_options.getValue = function(element) {return element.organization_name;}
+
 expedition_sponsor_organization_options.getValue = function(element) {
 	var showname = "";
 	showname = element.organization_name;
 	if(element.department){
 		showname+=' - '+element.department;
 	}
+	
 	return showname;
 }
+
 expedition_sponsor_organization_options.list.onChooseEvent = function() {
 	var selectedItemValue = $("#expedition_sponsor_organization").getSelectedItemData();
 	$("#expedition_hidden_sponsor_organization").val(selectedItemValue.organization_num);
 };
 expedition_sponsor_organization_options.preparePostData = function(data) {
 	data.query = $("#expedition_sponsor_organization").val();
+	data.publiconly="yes";
 return data;
 };
 
@@ -74,6 +78,7 @@ _.each(eqnums, function(eqnum){
 		
 	expedition_equipment_options.preparePostData = function(data) {
 		data.query = $("#expedition_equipment"+eqnum).val();
+		data.publiconly="yes";
 		return data;
 	};
 
@@ -110,6 +115,7 @@ method_lab_options.list.onChooseEvent = function() {
 		
 method_lab_options.preparePostData = function(data) {
 	data.query = $("#method_lab").val();
+	data.publiconly="yes";
 return data;
 };
 
@@ -152,6 +158,7 @@ analysis_event_method_options.list.onChooseEvent = function() {
 		
 analysis_event_method_options.preparePostData = function(data) {
 	data.query = $("#analysis_event_method").val();
+	data.publiconly="yes";
 	return data;
 };
 
@@ -189,6 +196,7 @@ analysis_event_lab_options.list.onChooseEvent = function() {
 		
 analysis_event_lab_options.preparePostData = function(data) {
 	data.query = $("#analysis_event_lab").val();
+	data.publiconly="yes";
 	return data;
 };
 
@@ -218,6 +226,7 @@ analysis_event_equipment_options.list.onChooseEvent = function() {
 		
 analysis_event_equipment_options.preparePostData = function(data) {
 	data.query = $("#analysis_event_equipment").val();
+	data.publiconly="yes";
 	return data;
 };
 
@@ -247,6 +256,7 @@ analysis_event_analyst_options.list.onChooseEvent = function() {
 		
 analysis_event_analyst_options.preparePostData = function(data) {
 	data.query = $("#analysis_event_analyst").val();
+	data.publiconly="yes";
 	return data;
 };
 
@@ -277,6 +287,7 @@ reporting_variable_action_num_options.list.onChooseEvent = function() {
 		
 reporting_variable_action_num_options.preparePostData = function(data) {
 	data.query = $("#reporting_variable_action_num").val();
+	data.publiconly="yes";
 	return data;
 };
 
@@ -306,6 +317,7 @@ reporting_variable_variable_num_options.list.onChooseEvent = function() {
 		
 reporting_variable_variable_num_options.preparePostData = function(data) {
 	data.query = $("#reporting_variable_variable_num").val();
+	data.publiconly="yes";
 	return data;
 };
 
@@ -354,6 +366,7 @@ reporting_variable_unit_num_options.list.onChooseEvent = function() {
 		
 reporting_variable_unit_num_options.preparePostData = function(data) {
 	data.query = $("#reporting_variable_unit_num").val();
+	data.publiconly="yes";
 	return data;
 };
 
@@ -383,6 +396,7 @@ new_method_lab_options.list.onChooseEvent = function() {
 		
 new_method_lab_options.preparePostData = function(data) {
 	data.query = $("#new_method_lab").val();
+	data.publiconly="yes";
 	return data;
 };
 

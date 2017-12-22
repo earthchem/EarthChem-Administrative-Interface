@@ -205,7 +205,7 @@ description
 					if($p['uncertainty_type']!="")$uncertainty_type = $p['uncertainty_type'];
 					if($p['uncertainty_value']!="")$uncertainty_value = $p['uncertainty_value'];
 					if($p['description']!="")$description = $p['description'];
-
+					if($p['status']!="")$status = $p['status'];
 
 /*
 reporting_variable_name
@@ -226,7 +226,7 @@ description
 					if($p['uncertainty_type']!=""){$query.="uncertainty_type = $uncertainty_type,\n";}else{$query.="uncertainty_type = null,\n";}
 					if($p['uncertainty_value']!=""){$query.="uncertainty_value = $uncertainty_value,\n";}else{$query.="uncertainty_value = null,\n";}
 					if($p['description']!=""){$query.="description = '$description',\n";}else{$query.="description = null,\n";}
-
+					if($p['status']!=""){$query.="status = $status,\n";}else{$query.="status = 1,\n";}
 
 					$query = substr($query, 0, -2);
 

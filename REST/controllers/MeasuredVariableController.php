@@ -22,7 +22,7 @@ class MeasuredVariableController extends RESTController
 
 			if(is_int($searchid) && $searchid!=0){
 
-				$row = $this->db->get_row("select * from variable where variable_num = $searchid and status = 1");
+				$row = $this->db->get_row("select * from variable where variable_num = $searchid");
 
 				if($row->variable_num){
 
@@ -32,6 +32,7 @@ class MeasuredVariableController extends RESTController
 						$data['variable_code']=$row->variable_code;
 						$data['variable_type_num']=$row->variable_type_num;
 						$data['variable_definition']=$row->variable_definition;
+						$data['status']=$row->status;
 
 						
 				}else{
@@ -54,7 +55,7 @@ class MeasuredVariableController extends RESTController
 					if($this->is_whole_int($querystring)){$numquery = " or variable_num = $querystring";}
 					
 					$rows = $this->db->get_results("select * from variable where 
-													lower(variable_name) like '%$querystring%' $numquery and status = 1 order by variable_name;");
+													(lower(variable_name) like '%$querystring%' $numquery) order by variable_name;");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -63,9 +64,11 @@ class MeasuredVariableController extends RESTController
 							
 							$num = $row->variable_num;
 							$name = $row->variable_name;
+							$status = $row->status;
 							
 							$thisresult['variable_num']=$num;
 							$thisresult['variable_name']=$name;
+							$thisresult['status']=$status;
 					
 							$data['results'][]=$thisresult;
 							
@@ -84,7 +87,7 @@ class MeasuredVariableController extends RESTController
         	
         	}else{
 
-				$rows = $this->db->get_results("select * from variable where status = 1 order by variable_name;");
+				$rows = $this->db->get_results("select * from variable order by variable_name;");
 				
 				$data['resultcount']=count($rows);
 
@@ -96,6 +99,7 @@ class MeasuredVariableController extends RESTController
 					$thisresult['variable_code']=$row->variable_code;
 					$thisresult['variable_type_num']=$row->variable_type_num;
 					$thisresult['variable_definition']=$row->variable_definition;
+					$thisresult['status']=$row->status;
 		
 					$data['results'][]=$thisresult;
 
@@ -164,7 +168,7 @@ class MeasuredVariableController extends RESTController
 			if($p['variable_type_num']!=""){ $variable_type_num = $p['variable_type_num'].","; }else{ $variable_type_num = "null,"; }
 			if($p['variable_code']!=""){ $variable_code = "'".$p['variable_code']."',"; }else{ $variable_code = "null,"; }
 			if($p['variable_definition']!=""){ $variable_definition = "'".$p['variable_definition']."',"; }else{ $variable_definition = "null,"; }
-
+			if($p['status']!=""){ $status = $p['status'].","; }else{ $status = "1,"; }
 			
 
 			$id = $this->db->get_var("select nextval('variable_variable_num_seq')");
@@ -174,13 +178,15 @@ class MeasuredVariableController extends RESTController
 						variable_name,
 						variable_type_num,
 						variable_code,
-						variable_definition
+						variable_definition,
+						status
 					) values (
 						$id,
 						$variable_name
 						$variable_type_num
 						$variable_code
-						$variable_definition";
+						$variable_definition
+						$status";
 												
 			
 			$query = substr($query, 0, -1);
@@ -221,11 +227,13 @@ class MeasuredVariableController extends RESTController
 					if($p['variable_code']!="")$variable_code = $p['variable_code'];
 					if($p['variable_type_num']!="")$variable_type_num = $p['variable_type_num'];
 					if($p['variable_definition']!="")$variable_definition = $p['variable_definition'];
+					if($p['status']!="")$status = $p['status'];
 
 					if($variable_name!=""){$query.="variable_name = '$variable_name',\n";}else{$query.="variable_name = null,\n";}
 					if($variable_code!=""){$query.="variable_code = '$variable_code',\n";}else{$query.="variable_code = null,\n";}
 					if($variable_type_num!=""){$query.="variable_type_num = $variable_type_num,\n";}else{$query.="variable_type_num = null,\n";}
 					if($variable_definition!=""){$query.="variable_definition = '$variable_definition',\n";}else{$query.="variable_definition = null,\n";}
+					if($status!=""){$query.="status = $status,\n";}else{$query.="status = 1,\n";}
 
 					$query = substr($query, 0, -2);
 

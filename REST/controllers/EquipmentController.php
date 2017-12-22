@@ -21,7 +21,12 @@ class EquipmentController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from equipment where equipment_num = $searchid and status = 1");
+				
+				$query="select * from equipment where equipment_num = $searchid";
+				
+				//echo $query;exit();
+				
+				$row = $this->db->get_row($query);
 
 				if($row->equipment_num){
 
@@ -42,10 +47,19 @@ class EquipmentController extends RESTController
         		if($_GET['query']){
 
 					$querystring = strtolower($_GET['query']);
-					
+
+					if($_GET['publiconly']=="yes"){
+						$publicstring = " and eq.status = 1";
+					}
+
 					if($this->is_whole_int($querystring)){$numquery = " or equipment_num = $querystring";}
 					
-					$query = "select * from equipment eq, equipment_type et 
+					$query = "select
+								eq.equipment_num,
+								eq.equipment_name,
+								eq.status
+										
+													from equipment eq, equipment_type et 
 													where 
 													eq.equipment_type_num = et.equipment_type_num and
 													(
@@ -53,7 +67,7 @@ class EquipmentController extends RESTController
 													lower(equipment_type_name) = '$querystring'
 													$numquery 
 													)
-													and eq.status = 1
+													$publicstring
 													order by equipment_name;";
 													
 					//echo $query;exit();
@@ -67,9 +81,11 @@ class EquipmentController extends RESTController
 							
 							$num = $row->equipment_num;
 							$name = $row->equipment_name;
+							$status = $row->status;
 							
 							$thisresult['equipment_num']=$num;
 							$thisresult['equipment_name']=$name;
+							$thisresult['status']=$status;
 					
 							$data['results'][]=$thisresult;
 							
@@ -182,6 +198,7 @@ class EquipmentController extends RESTController
 			if($p['equipment_phurchase_order_num']!=""){ $equipment_phurchase_order_num = $p['equipment_phurchase_order_num'].","; }else{ $equipment_phurchase_order_num = "null,"; }
 			if($p['equipment_photo_file_name']!=""){ $equipment_photo_file_name = "'".$p['equipment_photo_file_name']."',"; }else{ $equipment_photo_file_name = "null,"; }
 			if($p['equipment_description']!=""){ $equipment_description = "'".$p['equipment_description']."',"; }else{ $equipment_description = "null,"; }
+			if($p['status']!=""){ $status = $p['status'].","; }else{ $status = "1,"; }
 			
 			$equipment_num = $this->db->get_var("select nextval('equipment_equipment_num_seq')");
 			$p['equipment_num']=$equipment_num;
@@ -198,7 +215,8 @@ class EquipmentController extends RESTController
 						equipment_phurchase_date,
 						equipment_phurchase_order_num,
 						equipment_photo_file_name,
-						equipment_description
+						equipment_description,
+						status
 					) values (
 						$equipment_num,
 						$equipment_code
@@ -212,7 +230,8 @@ class EquipmentController extends RESTController
 						$equipment_phurchase_date
 						$equipment_phurchase_order_num
 						$equipment_photo_file_name
-						$equipment_description";
+						$equipment_description
+						$status";
 												
 			
 			$query = substr($query, 0, -1);
@@ -257,6 +276,7 @@ class EquipmentController extends RESTController
 					if($p['equipment_phurchase_order_num']!="")$equipment_phurchase_order_num = $p['equipment_phurchase_order_num'];
 					if($p['equipment_photo_file_name']!="")$equipment_photo_file_name = $p['equipment_photo_file_name'];
 					if($p['equipment_description']!="")$equipment_description = $p['equipment_description'];
+					if($p['status']!="")$status = $p['status'];
 
 					if($p['equipment_name']!=""){$query.="equipment_name = '$equipment_name',\n";}else{$query.="equipment_name = null,\n";}
 					if($p['equipment_type_num']!=""){$query.="equipment_type_num = '$equipment_type_num',\n";}else{$query.="equipment_type_num = null,\n";}
@@ -269,7 +289,8 @@ class EquipmentController extends RESTController
 					if($p['equipment_phurchase_order_num']!=""){$query.="equipment_phurchase_order_num = $equipment_phurchase_order_num,\n";}else{$query.="equipment_phurchase_order_num = null,\n";}
 					if($p['equipment_photo_file_name']!=""){$query.="equipment_photo_file_name = '$equipment_photo_file_name',\n";}else{$query.="equipment_photo_file_name = null,\n";}
 					if($p['equipment_description']!=""){$query.="equipment_description = '$equipment_description',\n";}else{$query.="equipment_description = null,\n";}
-
+					if($p['status']!=""){$query.="status = $status,\n";}else{$query.="status = 1,\n";}
+					
 					$query = substr($query, 0, -2);
 
 					$this->db->query("

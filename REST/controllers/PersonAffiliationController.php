@@ -50,7 +50,11 @@ class PersonAffiliationController extends RESTController
         		if($_GET['query']){
 
 					$querystring = strtolower($_GET['query']);
-					
+
+					if($_GET['publiconly']=="yes"){
+						$publicstring = " and p.status = 1";
+					}
+
 					if($this->is_whole_int($querystring)){$numquery = " or a.affiliation_num = $querystring";}
 					
 					$rows = $this->db->get_results("select * from person p, affiliation a, organization o  where
@@ -58,7 +62,9 @@ class PersonAffiliationController extends RESTController
 													a.organization_num = o.organization_num and
 													(
 													lower(organization_name) like '%$querystring%' or
-													lower(last_name)||', '||lower(first_name)||' '||lower(middle_name) like '%$querystring%' $numquery ) order by last_name, first_name
+													lower(last_name)||', '||lower(first_name)||' '||lower(middle_name) like '%$querystring%' $numquery ) 
+													$publicstring
+													order by last_name, first_name
 													;");
 					
 					$data['resultcount']=count($rows);
