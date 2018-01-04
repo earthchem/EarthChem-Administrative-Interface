@@ -152,6 +152,7 @@ var doSearch = function() {
 		
 		if(url!=""){
 			var thishtml = "";
+			var thisextra = "";
 			$.getJSON(url, function(data){
 				if(data.resultcount>0){
 					_.each(data.results, function(res){
@@ -164,17 +165,35 @@ var doSearch = function() {
 						}
 						
 						if(selectedObject=="equipment"){
+						
 							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.equipment_num+'\');">'+res.equipment_name+'</div>';
+						
 						}else if (selectedObject=="expedition"){
-							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.expedition_num+'\');">'+res.expedition_name+'</div>';
+						
+							if(res.expedition_alternate_names!=''){
+								thisextra=" ("+res.expedition_alternate_names+")";
+							}else{
+								thisextra="";
+							}
+						
+							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.expedition_num+'\');">'+res.expedition_name+thisextra+'</div>';
+						
 						}else if (selectedObject=="analytical_method"){
+						
 							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.method_num+'\');">'+res.method_name+'<br>('+res.method_short_name+')</div>';
+						
 						}else if (selectedObject=="analysis_event"){
+						
 							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.analysis_event_num+'\');">'+res.analysis_event_num+'</div>';
+						
 						}else if (selectedObject=="reporting_variable"){
+						
 							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.result_template_num+'\');">'+res.reporting_variable_name+'</div>';
+						
 						}else if (selectedObject=="measured_variable"){
+						
 							thishtml=thishtml+'<div class="searchItem'+deprecatedclass+'" onclick="showStatic(\''+res.variable_num+'\');">'+res.variable_name+'</div>';
+						
 						}
 
 						/*

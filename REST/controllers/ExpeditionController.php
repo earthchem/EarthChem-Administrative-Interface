@@ -91,9 +91,31 @@ class ExpeditionController extends RESTController
 					
 					if($this->is_whole_int($querystring)){$numquery = " or action_num = $querystring";}
 					
-					$rows = $this->db->get_results("select * from action where 
+					$rows = $this->db->get_results("
+												select * from (
+													select 
+													action_num,
+													action_name,
+													status,
+													(
+														select string_agg(an.annotation_text, ', ')
+														from action a, action_annotation aa, annotation an
+														where 
+														a.action_num = aa.action_num
+														and aa.annotation_num = an.annotation_num
+														and an.annotation_type_num=40
+														and a.action_num = act.action_num
+													) as altnames
+													from action act
+													where 
 													action_type_num in (3,11,12,25,19)
-													and lower(action_name) like '%$querystring%' $numquery order by action_name;");
+												) foo
+												where
+												(lower(action_name) like '%$querystring%' or lower(altnames) like '%$querystring%')
+												$numquery
+												order by action_name
+												;
+					");
 					
 					$data['resultcount']=count($rows);
 					if(count($rows) > 0){
@@ -103,9 +125,11 @@ class ExpeditionController extends RESTController
 							$num = $row->action_num;
 							$name = $row->action_name;
 							$status = $row->status;
+							$altnames = $row->altnames;
 							
 							$thisresult['expedition_num']=$num;
 							$thisresult['expedition_name']=$name;
+							$thisresult['expedition_alternate_names']=$altnames;
 							$thisresult['status']=$status;
 					
 							$data['results'][]=$thisresult;
@@ -418,7 +442,7 @@ expedition_end_date
 																$new_annotation_num,
 																40,
 																'$an',
-																0,
+																140,
 																now()
 															)
 															");

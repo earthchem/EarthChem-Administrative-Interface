@@ -3,4 +3,5 @@ debug/
 templates/bkup*
 REST/log.txt
 locked/
+bkup/
 
