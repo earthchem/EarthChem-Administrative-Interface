@@ -215,9 +215,9 @@ class MeasuredVariableController extends RESTController
 			$searchid = (int)$id;
 
 			if(is_int($searchid) && $searchid!=0){
-				$row = $this->db->get_row("select * from action where action_num = $searchid");
+				$row = $this->db->get_row("select * from variable where variable_num = $searchid");
 
-				if($row->action_num){
+				if($row->variable_num){
 
 					$id = (int)$request->url_elements[2];
 
