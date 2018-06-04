@@ -257,6 +257,7 @@ expedition_end_date
 						action_type_num,
 						organization_num,
 						action_description,
+						dataset_num,
 						begin_date_time,
 						end_date_time,
 						method_num,
@@ -267,13 +268,14 @@ expedition_end_date
 						$action_type_num
 						$action_sponsor_organization
 						$action_description
+						0,
 						$begin_date_time
 						$end_date_time
-						1
+						1,
 						$status";
 												
 			
-			//$query = substr($query, 0, -1);
+			$query = substr($query, 0, -1);
 			$query .= "\n);";
 
 			//print_r($query);exit();
@@ -294,7 +296,7 @@ expedition_end_date
 													$new_annotation_num,
 													39,
 													'$expedition_identifier',
-													140,
+													0,
 													now()
 												)
 												");
@@ -418,7 +420,7 @@ expedition_end_date
 															$new_annotation_num,
 															39,
 															'$expedition_identifier',
-															140,
+															0,
 															now()
 														)
 														");
@@ -442,7 +444,7 @@ expedition_end_date
 																$new_annotation_num,
 																40,
 																'$an',
-																140,
+																0,
 																now()
 															)
 															");
